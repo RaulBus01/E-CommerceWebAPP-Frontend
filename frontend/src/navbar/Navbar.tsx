@@ -21,7 +21,7 @@ const Navbar = () => {
             <li className="nav-icons">
                 <NavLink to="/Login">
                     <AccountCircleIcon/>
-                   <span className='nav-text'>My Account</span>
+                   <span className='nav-text'>Account</span>
                 </NavLink>
             </li>
             <li className="nav-icons">
