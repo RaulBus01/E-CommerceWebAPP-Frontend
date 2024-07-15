@@ -1,7 +1,7 @@
 import React from "react";
 import "./category-page.css";
 import { NavLink } from "react-router-dom";
-
+import ProductCard from "../../components/product-card/product-card";
 const CategoryPage = () => {
     return(
         <>
@@ -57,6 +57,7 @@ const CategoryPage = () => {
                             <div className="shop">
                                 
                             </div>
+                            <ProductCard />
                         </div>
                     </div>
                 </div>
