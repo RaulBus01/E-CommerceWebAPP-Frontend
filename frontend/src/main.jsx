@@ -3,15 +3,30 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import Home from "./pages/home/home";
+import X from "./pages/x/x";
+import Y from "./pages/y/y";
+import Z from "./pages/z/z";
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
   },
+
   {
-    path: "about",
-    element: <div>About Frontend</div>,
+    path: "x",
+    element: <X />,
+  },
+
+  {
+    path: "y",
+    element: <Y />,
+  },
+
+  {
+    path: "z",
+    element: <Z />,
   },
 ]);
 
