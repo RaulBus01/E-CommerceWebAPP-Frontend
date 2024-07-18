@@ -1,12 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import "./home.css";
-import { Link } from "react-router-dom";
+import Dropdown from "../dropdown/dropdown";
+import CardSlider from "../cardSlider/cardSlider";
 
 const Home = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div className="home">
-      <h1>Proiecte Colective 2024</h1>
-      <Link to="/about">Frontend</Link>
+      <h1>EmagoAmazoniana</h1>
+      <Dropdown
+        anchorEl={anchorEl}
+        handleClick={handleClick}
+        handleClose={handleClose}
+        open={open}
+      />
+      {/* <div className="card-slider-wrapper">
+        <CardSlider />
+      </div> */}
     </div>
   );
 };

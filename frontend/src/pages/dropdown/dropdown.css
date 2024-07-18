@@ -1,0 +1,29 @@
+.dropdown-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.dropdown-button {
+  background-color: #ff9001;
+  color: #ff9001;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 32px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-button:hover {
+  background-color: #115293;
+}
+
+.dropdown-item {
+  font-size: 16px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+}
