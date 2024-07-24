@@ -56,9 +56,16 @@
 .search-dropdown-item {
   padding: 15px;
   cursor: pointer;
+
 }
 
-.search-dropdown-item:hover {
+.search-dropdown-item:hover:last-child {
   background-color: #f0f0f0;
-  border-radius: 5px;
+  border-radius:0px 0px 25px 25px;
+
 }
+.search-dropdown-item:hover{
+  background-color: #f0f0f0;
+  border-radius: 0px;
+}
+
