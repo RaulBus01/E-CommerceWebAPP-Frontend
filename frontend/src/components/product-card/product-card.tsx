@@ -6,12 +6,9 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const ProductCard: React.FC = () => {
     const [isFavorite, setIsFavorite] = useState(false);
-    const [animationKey, setAnimationKey] = useState(0); // To force re-render of animation
 
-    // Handle toggling the favorite state
     const handleFavorite = () => {
         setIsFavorite((prevState) => !prevState);
-        setAnimationKey((prevKey) => prevKey + 1); // Change key to restart animation
     };
 
     return (
