@@ -5,7 +5,7 @@ import SearchBar from '../components/controls/searchbar/searchBar'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 
 const Navbar = () => {
     const { userId } = useAuth();
@@ -25,7 +25,7 @@ const Navbar = () => {
                 <SearchBar />
             </li>
             <li className="nav-icons">
-                <NavLink to={userId !== null ? "/user" : "/login"}>
+                <NavLink to={userId !== null ? "/myAccount" : "/login"}>
                     <AccountCircleIcon/>
                    <span className='nav-text'>Account</span>
                 </NavLink>

@@ -9,6 +9,7 @@
 
     width: 200px;
     height: 400px;
+    position: relative;
 }
 
 .card-container:hover{
@@ -25,9 +26,12 @@
     cursor: pointer;
 }
 
-.info-container{
+.information-container{
     width: 95%;
     height: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 
     padding: 0 5px;
 }
@@ -35,6 +39,7 @@
 .product-name{
     overflow: hidden;
     text-overflow: ellipsis;
+    line-clamp: 2;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -77,6 +82,9 @@
 
     align-items: center;
     justify-content: center;
+
+    position: relative;
+    overflow: hidden;
 }
 
 .button-container button:hover{

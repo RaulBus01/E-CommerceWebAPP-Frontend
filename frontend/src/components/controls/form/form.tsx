@@ -24,7 +24,6 @@ const Form: React.FC<FormProps> = ({ type, onSubmit }) => {
     if (type === 'Login') {
       onSubmit({ email, password })
     } else if (type === 'Register') {
-      console.log(type)
       onSubmit(type === 'Register' ? {email, password,confirm_password: confirmPassword,first_name: firstName,last_name: lastName} : {email, password});
     }
   }

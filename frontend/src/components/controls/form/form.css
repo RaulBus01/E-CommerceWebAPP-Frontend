@@ -50,3 +50,10 @@ form {
     width: 100%; /* Full width for inputs */
   }
 }
+.icon {
+  font-size: 2rem;
+  margin-right: 0.5rem;
+  padding: 0.2rem;
+  margin-top: 0.5rem;
+}
+

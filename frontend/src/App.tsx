@@ -6,12 +6,14 @@ import RegisterPage from './pages/authentication-page/register';
 import LoginPage from './pages/authentication-page/login';
 import Navbar from './navbar/Navbar';
 import Footer from './footer/Footer';
-import AuthProvider from '../hooks/useAuth';
+import AuthProvider from './hooks/useAuth';
 import PrivateRoute from './pages/authentication-page/privateRoute';
 import PublicRoute from './pages/authentication-page/publicRoute';
-import Account from './pages/account';
+
 import { Toaster } from 'react-hot-toast';
 
+import UserProfilePage from './pages/user-profile-page/user-profile-page'
+import FavoritePage from './pages/favorite-page/favorite-page'
 
 const App = () => {
   const location = useLocation();
@@ -30,7 +32,8 @@ const App = () => {
             <Route path="/login" element={<LoginPage />} />
           </Route>
           <Route element={<PrivateRoute />}>
-            <Route path="/user" element={<Account />} />
+            <Route path="/myAccount" element={<UserProfilePage />} />
+            <Route path="/Favorite" element={<FavoritePage />} />
           </Route>
         </Routes>
         {showNav && <Footer />}

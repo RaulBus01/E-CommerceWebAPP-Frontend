@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginData, registerData } from '../src/types/UserType';
+import { loginData, registerData } from '../types/UserType';
 
 interface AuthContextType {
   token: string | null;
