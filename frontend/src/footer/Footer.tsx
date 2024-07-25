@@ -7,14 +7,14 @@ const Footer = () => {
     <footer>
         <div className="footer-container">
             <div className="footer-section">
-                <text className="footer-section-title">Shop</text>
+                <div className="footer-section-title">Shop</div>
                 <ul>
                     <li><NavLink to="/Products">Products</NavLink></li>
                     <li><NavLink to="/Collections">Collections</NavLink></li>
                 </ul>
             </div>
             <div className="footer-section">
-                <text className="footer-section-title">HELP</text>
+                <div className="footer-section-title">HELP</div>
                 <ul>
                     <li><NavLink to="/ContactUs">Contact Us</NavLink></li>
                     <li><NavLink to="/FAQ">FAQ</NavLink></li>
@@ -23,7 +23,7 @@ const Footer = () => {
                 </ul>
             </div>
             <div className="footer-section">
-                <text className="footer-section-title">ABOUT</text>
+                <div className="footer-section-title">ABOUT</div>
                 <ul>
                     <li><NavLink to="/AboutUs">About Us</NavLink></li>
                     <li><NavLink to="/Privacy">Privacy Policy</NavLink></li>

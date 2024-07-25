@@ -1,0 +1,115 @@
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-color: var(--dark-color);
+
+  }
+  .auth-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white-color);
+    height: 70vh; 
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80vw;
+    max-width: 960px; 
+  }
+  
+.auth-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 50vw;
+    width: 50vw;
+    padding-left: 3rem;
+  }
+  
+  .auth-image {
+   
+ 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25rem;
+    padding-right: 2rem;
+    gap: 1rem;
+  }
+  
+  .auth-image img {
+    border-radius: 10px;
+    min-width: 80%;
+    
+    width: 80%;
+    height: auto;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .icon {
+    font-size: 2rem;
+    margin-right: 0.5rem;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  
+  
+  
+  .member-text {
+    margin-top: 1rem;
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  .create-account {
+    margin-top: 1rem;
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  .social-login {
+    margin-top: 1rem;
+  }
+  
+  .social-login p {
+    margin-bottom: 0.5rem;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .social-btn {
+    background-color: #ddd;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .social-btn:hover {
+    background-color: #ccc;
+  }
+  @media (max-width: 768px) {
+    .auth-content {
+      flex-direction: column; /* Stack vertically on smaller screens */
+    }
+  
+    .auth-container, .auth-content {
+      height: auto; /* Adjust height for smaller screens */
+      padding: 20px; /* Add some padding */
+    }
+  
+    .auth-box, .auth-image {
+      padding: 2rem;
+      width: 50vh; /* Full width for smaller screens */
+    }
+  }

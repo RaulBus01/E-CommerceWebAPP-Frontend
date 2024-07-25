@@ -12,8 +12,21 @@
   --black-color: #000;
   --gray-color: #6c757d;
   --light-gray-color: #f8f9fa;
+
+
+
 }
 body {
   margin: 0;
   padding: 0;
+  
 } 
+a{
+  text-decoration: none;
+  color: var(--info-color);
+}
+a:hover{
+
+  transform: scale(1.1);
+
+}
