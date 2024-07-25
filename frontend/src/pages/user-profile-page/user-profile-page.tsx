@@ -8,11 +8,13 @@ import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import useUser from "../../hooks/useUser";
+import useOrder from "../../hooks/useOrder";
 
 const UserProfilePage = () => {
     const [selectedMenu, setSelectedMenu] = useState<string>("Personal information");
     const {logout, userId, token} = useAuth();
-    const {user, loading} = useUser(userId, token);
+    const {user, loading: userLoading} = useUser(userId, token);
+    const {orders, loading: ordersLoading} = useOrder(userId, token);
     const navigate = useNavigate();
 
     const loadSelectedMenu = () => {
@@ -21,7 +23,7 @@ const UserProfilePage = () => {
                 case "Personal information":
                     return <PersonalInformationMenu user={user} />;
                 case "My orders":
-                    return <MyOrdersMenu />;
+                    return <MyOrdersMenu orders={orders} loading={ordersLoading} />;
                 case "My reviews":
                     return <MyReviewsMenu />;
                 default:
@@ -38,7 +40,7 @@ const UserProfilePage = () => {
 
     return(
         <>
-            <div className="main-container">
+            <div className="user-profile-main-container">
                 <div className="top-container">
                     <h2>Your account</h2>
                     <button className="signOut-btn" onClick={handleLogOut}>Sign out</button>

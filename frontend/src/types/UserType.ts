@@ -18,5 +18,4 @@ interface loginData {
     isVerified: boolean;
     createdAt: string;
   }
-
 export type { loginData, registerData , userData};
