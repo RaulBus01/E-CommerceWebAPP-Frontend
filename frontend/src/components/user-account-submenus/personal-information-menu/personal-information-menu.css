@@ -1,0 +1,22 @@
+.personal-info-menu{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 100px;
+}
+
+.info-cell{
+    width: 400px;
+    height: 40%;
+    border: 1px solid var(--gray-color);
+    box-shadow: 2px 2px 2px var(--gray-color);
+}
