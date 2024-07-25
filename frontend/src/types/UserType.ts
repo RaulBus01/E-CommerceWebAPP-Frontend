@@ -10,5 +10,13 @@ interface loginData {
     confirm_password: string;
   
   }
+  interface userData {
+    address: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    isVerified: boolean;
+    createdAt: string;
+  }
 
-export type { loginData, registerData };
+export type { loginData, registerData , userData};

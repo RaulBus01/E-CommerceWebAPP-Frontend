@@ -7,29 +7,34 @@ import MyReviewsMenu from "../../components/user-account-submenus/my-reviews-men
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import useUser from "../../hooks/useUser";
+
 const UserProfilePage = () => {
     const [selectedMenu, setSelectedMenu] = useState<string>("Personal information");
-    const {logout} = useAuth() 
+    const {logout, userId, token} = useAuth();
+    const {user, loading} = useUser(userId, token);
     const navigate = useNavigate();
 
     const loadSelectedMenu = () => {
-        switch (selectedMenu) {
-            case "Personal information":
-                return <PersonalInformationMenu />;
-            case "My orders":
-                return <MyOrdersMenu />;
-            case "My reviews":
-                return <MyReviewsMenu />;
-            default:
-                return <PersonalInformationMenu />;
+        if(user){
+            switch (selectedMenu) {
+                case "Personal information":
+                    return <PersonalInformationMenu user={user} />;
+                case "My orders":
+                    return <MyOrdersMenu />;
+                case "My reviews":
+                    return <MyReviewsMenu />;
+                default:
+                    return <PersonalInformationMenu user={user} />;
+            }
         }
-    }
+    };
+
     const handleLogOut = () => {
-        
         logout();
         navigate('/')
         toast.success('You have been logged out')
-    }
+    };
 
     return(
         <>
