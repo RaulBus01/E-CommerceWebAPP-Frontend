@@ -24,10 +24,11 @@ const useUser = (userId: string, token: string): UseUserResult => {
                 if(!response.ok){
                     throw new Error(`Error: ${response.status}`);
                 }
+                await new Promise(f => setTimeout(f, 2000));
                 const res: userData = await response.json();
                 setUser(res);
             }catch(error: any){
-                console.log(error);
+                console.error(error);
             } finally{
                 setLoading(false);
             }

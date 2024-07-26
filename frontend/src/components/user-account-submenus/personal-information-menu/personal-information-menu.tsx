@@ -1,7 +1,16 @@
 import React from "react";
 import './personal-information-menu.css';
+import Spinner from "../../spinner/spinner";
 
-const PersonalInformationMenu = ({user}) => {
+const PersonalInformationMenu = ({user, loading}) => {
+    if(loading){
+        return(
+            <div className="personal-info-menu">
+                <Spinner/>
+            </div>
+        );
+    }
+    
     return(
         <>
             <div className="personal-info-menu">

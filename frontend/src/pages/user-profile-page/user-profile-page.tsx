@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./user-profile-page.css"
 import SideMenu from "../../components/sideMenu/sideMenu";
 import PersonalInformationMenu from "../../components/user-account-submenus/personal-information-menu/personal-information-menu";
@@ -9,25 +9,27 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import useUser from "../../hooks/useUser";
 import useOrder from "../../hooks/useOrder";
+import useReview from "../../hooks/useReview";
 
 const UserProfilePage = () => {
     const [selectedMenu, setSelectedMenu] = useState<string>("Personal information");
     const {logout, userId, token} = useAuth();
     const {user, loading: userLoading} = useUser(userId, token);
     const {orders, loading: ordersLoading} = useOrder(userId, token);
+    const {reviews, loading: reviewsLoading} = useReview(userId, token);
     const navigate = useNavigate();
 
     const loadSelectedMenu = () => {
         if(user){
             switch (selectedMenu) {
                 case "Personal information":
-                    return <PersonalInformationMenu user={user} />;
+                    return <PersonalInformationMenu user={user} loading={userLoading}/>;
                 case "My orders":
                     return <MyOrdersMenu orders={orders} loading={ordersLoading} />;
                 case "My reviews":
-                    return <MyReviewsMenu />;
+                    return <MyReviewsMenu reviews={reviews} loading={reviewsLoading} />;
                 default:
-                    return <PersonalInformationMenu user={user} />;
+                    return <PersonalInformationMenu user={user} loading={userLoading}/>;
             }
         }
     };

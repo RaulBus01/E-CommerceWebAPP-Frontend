@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
-import { orderData } from "../types/OrderType";
+import { reviewData } from "../types/ReviewType";
 
-interface UseOrderResult{
-    orders: orderData[] | null;
+interface UseReviewResult{
+    reviews: reviewData[] | null;
     loading: boolean;
 }
 
-const useOrder = (userId: string, token: string): UseOrderResult => {
-    const [orders, setOrders] = useState<orderData[] | null>(null);
+const useReview = (userId: string, token: string): UseReviewResult => {
+    const [reviews, setReviews] = useState<reviewData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        const fetchOrdersByUser = async (userId: string, token: string) => {
+        const fetchReviewsByUser = async (userId: string, token: string) => {
             setLoading(true);
             try{
-                const response = await fetch(`http://localhost:3001/api/orders/yourOrders/${userId}`, {
+                const response = await fetch(`http://localhost:3001/api/reviews/getReviewsByUser/${userId}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -24,20 +24,20 @@ const useOrder = (userId: string, token: string): UseOrderResult => {
                 if(!response.ok){
                     throw new Error(`Error: ${response.status}`);
                 }
-                const res: orderData[] = await response.json();
-                setOrders(res);
+                const res: reviewData[] = await response.json();
+                setReviews(res);
             }catch(error:any){
-                console.error(error);
+                console.log(error);
             }finally{
                 setLoading(false);
             }
         };
 
         if(userId){
-            fetchOrdersByUser(userId, token);
+            fetchReviewsByUser(userId, token);
         }
     },[userId, token]);
-    return {orders, loading};
+    return {reviews, loading};
 }
 
-export default useOrder;
+export default useReview;
