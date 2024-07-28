@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { userData } from "../types/UserType"
+import { userData } from "../types/UserType";
 
 interface UseUserResult{
     user: userData | null;
@@ -9,7 +9,7 @@ interface UseUserResult{
 const useUser = (userId: string, token: string): UseUserResult => {
     const [user, setUser] = useState<userData | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-
+    
     useEffect(() => {
         const fetchUser = async (userId: string, token: string) => {
             setLoading(true);

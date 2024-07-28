@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./user-profile-page.css"
-import SideMenu from "../../components/sideMenu/sideMenu";
+import SideMenu from "../../components/side-menu/sideMenu";
 import PersonalInformationMenu from "../../components/user-account-submenus/personal-information-menu/personal-information-menu";
 import MyOrdersMenu from "../../components/user-account-submenus/my-orders-menu/my-orders-menu";
 import MyReviewsMenu from "../../components/user-account-submenus/my-reviews-menu/my-reviews-menu";
@@ -13,7 +13,8 @@ import useReview from "../../hooks/useReview";
 
 const UserProfilePage = () => {
     const [selectedMenu, setSelectedMenu] = useState<string>("Personal information");
-    const {logout, userId, token} = useAuth();
+    const {userId, token, logout} = useAuth();
+ 
     const {user, loading: userLoading} = useUser(userId, token);
     const {orders, loading: ordersLoading} = useOrder(userId, token);
     const {reviews, loading: reviewsLoading} = useReview(userId, token);
