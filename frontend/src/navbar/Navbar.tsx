@@ -10,8 +10,6 @@ import { useAuth } from '../hooks/useAuth';
 const Navbar = () => {
     const { userId } = useAuth();
 
-  
-
 
   return (
     <nav>

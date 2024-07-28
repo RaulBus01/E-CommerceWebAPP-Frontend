@@ -17,7 +17,7 @@ import FavoritePage from './pages/favorite-page/favorite-page'
 
 const App = () => {
   const location = useLocation();
-  const disableNavPaths = ['/login', '/register'];
+  const disableNavPaths = ['/login', '/register', '/distributor/login', '/distributor/register', '/admin/login'];
   const showNav = !disableNavPaths.includes(location.pathname);
 
   return (
@@ -28,8 +28,12 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/category" element={<CategoryPage />} />
           <Route element={<PublicRoute />}>
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
+            
+            <Route path="/register" element={<RegisterPage userType='User' />} />
+            <Route path="/login" element={<LoginPage  userType='User'/>} />
+            <Route path="/distributor/register" element={<RegisterPage userType='Distributor'/>} />
+            <Route path="/distributor/login" element={<LoginPage userType='Distributor' />} />
+            <Route path="/admin/login" element={<LoginPage userType='Admin' />} />
           </Route>
           <Route element={<PrivateRoute />}>
             <Route path="/myAccount" element={<UserProfilePage />} />
