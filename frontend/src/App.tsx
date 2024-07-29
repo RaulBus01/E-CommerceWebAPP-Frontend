@@ -37,10 +37,12 @@ const App = () => {
             <Route path="/distributor/register" element={<RegisterPage userType='Distributor'/>} />
             <Route path="/distributor/login" element={<LoginPage userType='Distributor' />} />
             <Route path="/admin/login" element={<LoginPage userType='Admin' />} />
+          
           </Route>
           <Route element={<PrivateRoute  userType='User'/>}>
             <Route path="/user-dashboard/:id" element={<UserProfilePage />} />
             <Route path="/Favorite" element={<FavoritePage />} />
+            <Route path="/cart" element={<CartPage />} />
           </Route>
           <Route element={<PrivateRoute  userType='Distributor'/>}>
             <Route path="/distributor-dashboard/:id" element={<DistributorProfilePage />} />
