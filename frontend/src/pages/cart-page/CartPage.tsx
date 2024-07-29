@@ -2,15 +2,15 @@ import React from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { Favorite, DeleteOutline } from "@mui/icons-material";
 import useCart from "../../hooks/useCart";
-import useFavourites from "../../hooks/useFavourites";
+
 import "./CartPage.css";
 
 const CartPage = () => {
   const { token, userId } = useAuth();
   const { cart, editProductQuantity, removeProduct } = useCart(userId, token);
 
-  const handleEditProductQuantity = async (productId, quantity) => {
-    await editProductQuantity(userId, productId, token, quantity);
+  const handleEditProductQuantity = async (product, quantity) => {
+    await editProductQuantity(userId, product, token, quantity);
   };
 
   return (
@@ -21,32 +21,32 @@ const CartPage = () => {
           return product ? (
             <div className="cart-item" key={product._id}>
               <img
-                src={product.productId.imageUrl}
+                src={product.product.imageUrl}
                 alt={product.name}
                 className="cart-item-image"
               />
               <div className="cart-item-details">
-                <h2 className="cart-item-title">{product.productId.name}</h2>
+                <h2 className="cart-item-title">{product.product.name}</h2>
                 <div className="cart-item-description">
-                  {product.productId.description}
+                  {product.product.description}
                 </div>
                 <div className="cart-item-seller">
-                  Seller: {product.productId.distributorId}
+                  Seller: {product.product.distributorId}
                 </div>
                 <div className="cart-item-availability">
-                  Availability: {product.productId.stock}
+                  Availability: {product.product.stock}
                 </div>
               </div>
               <div className="cart-item-right">
                 <div className="cart-item-price">
-                  <div>{product.productId.price} Lei</div>
+                  <div>{product.product.price} Lei</div>
                 </div>
                 <div className="cart-item-quantity">
                   <button
                     className="remove-quantity-button"
                     onClick={() =>
                       handleEditProductQuantity(
-                        product.productId,
+                        product.product,
                         product.quantity - 1
                       )
                     }
@@ -58,7 +58,7 @@ const CartPage = () => {
                     className="add-quantity-button"
                     onClick={() =>
                       handleEditProductQuantity(
-                        product.productId,
+                        product.product,
                         product.quantity + 1
                       )
                     }
@@ -69,14 +69,14 @@ const CartPage = () => {
                 <div className="cart-item-actions">
                   <div
                     className="cart-item-action-favourites"
-                    onClick={() => moveToFavourites(product.productId, userId)}
+                    onClick={() => moveToFavourites(product.product, userId)}
                   >
                     <Favorite style={{ marginRight: "8px", color: "red" }} />
                     Move to Favourites
                   </div>
                   <div
                     className="cart-item-action-remove"
-                    onClick={() => removeProduct(userId, product.productId, token)}
+                    onClick={() => removeProduct(userId, product.product, token)}
                   >
                     <DeleteOutline style={{ marginRight: "8px" }} />
                     Remove

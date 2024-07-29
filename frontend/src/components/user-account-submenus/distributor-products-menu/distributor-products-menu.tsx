@@ -3,6 +3,8 @@ import React from 'react'
 import Spinner from '../../spinner/spinner'
 import useProduct from '../../../hooks/useProduct';
 import { useAuth } from '../../../hooks/useAuth';
+import ProductForm from './distributor-product-form';
+import { Modal } from '@mui/material';
 
 const DistributorProductsMenu = ({products,loading}) => {
    
@@ -17,6 +19,14 @@ const DistributorProductsMenu = ({products,loading}) => {
           </div>
       );
   }
+
+  const handleOpenProductForm = () => {
+    console.log('open product form')
+    return <ProductForm/>
+    }
+
+
+
   const handleDeleteProduct = (productId) => {
     deleteProduct(productId);
     window.location.reload();
@@ -27,7 +37,7 @@ const DistributorProductsMenu = ({products,loading}) => {
             <div className="my-orders-menu">
                 <h2>My Products
                 </h2>
-                <button className="btn btn-primary">
+                <button className="btn btn-primary" onClick={handleOpenProductForm}>
                     Add Product
                 </button>
 
