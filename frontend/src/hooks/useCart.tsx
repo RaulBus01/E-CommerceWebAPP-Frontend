@@ -30,7 +30,7 @@ const useCart = (userId, token) => {
   }, [userId, token]);
   
   
-  const editProductQuantity = async (userId, productId, token, quantity) => {
+  const editProductQuantity = async (userId, product, token, quantity) => {
     try {
       await fetch(`http://localhost:3001/api/cart/edit`, {
         method: 'PUT',
@@ -38,14 +38,14 @@ const useCart = (userId, token) => {
           'Content-Type': 'application/json',
           'Token': `Bearer ${token}`,
         },
-        body: JSON.stringify({ id: userId, productId: productId._id, quantity: quantity }),
+        body: JSON.stringify({ id: userId, productId: product._id, quantity: quantity }),
       });
     } catch (err) {
       console.error('Failed to edit product quantity:', err);
     }
   }
 
-  const removeProduct = async (userId, productId, token) => {
+  const removeProduct = async (userId, product, token) => {
     try {
       await fetch(`http://localhost:3001/api/cart/deleteProduct`, {
         method: 'DELETE',
@@ -53,7 +53,7 @@ const useCart = (userId, token) => {
           'Content-Type': 'application/json',
           'Token': `Bearer ${token}`,
         },
-        body: JSON.stringify({ id: userId, productId: productId._id }),
+        body: JSON.stringify({ id: userId, productId: product._id }),
       });
     } catch (err) {
       console.error('Failed to remove product:', err);
