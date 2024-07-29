@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import favouriteData from "../types/FavouriteType";
 
 interface UseFavouriteResult{
@@ -12,11 +12,11 @@ interface UseFavouriteResult{
 const useFavourite = (userId: string, token: string): UseFavouriteResult => {
     const [favourites, setFavourites] = useState<favouriteData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    const [favouriteSet, setFavouriteSet] = useState<Set<string>>(new Set());
 
-    const isProductFavourite = (productId: string) => {
-        console.log(favourites);
-        return favourites?.some(fav => fav.productId._id === productId) || false;
-    };
+    const isProductFavourite = useCallback((productId: string) => {
+        return favouriteSet.has(productId);
+    }, [favouriteSet]);
 
     useEffect(() => {
         const fetchFavouritesByUser = async () => {
@@ -33,8 +33,8 @@ const useFavourite = (userId: string, token: string): UseFavouriteResult => {
                     throw new Error(`Error: ${response.status}`);
                 }
                 const res: favouriteData[] = await response.json();
-                console.log(favourites);
                 setFavourites(res);
+                setFavouriteSet(new Set(res.map(fav => fav.product._id)));
             }catch(error:any){
                 console.log(error);
             }finally{
@@ -62,6 +62,7 @@ const useFavourite = (userId: string, token: string): UseFavouriteResult => {
             }
             const newFavourite = await response.json();
             setFavourites((prevFavourites) => (prevFavourites ? [...prevFavourites, newFavourite] : [newFavourite]));
+            setFavouriteSet((prevSet) => new Set(prevSet).add(productId));
         }catch (error: any) {
             console.log("Error adding to favorites:", error);
         }
@@ -80,7 +81,12 @@ const useFavourite = (userId: string, token: string): UseFavouriteResult => {
             if(!response.ok){
                 throw new Error(`Error: ${response.status}`);
             }
-            setFavourites((prevFavourites) => prevFavourites?.filter((fav) => fav.id !== productId) || []);
+            setFavourites((prevFavourites) => prevFavourites?.filter((fav) => fav.product._id !== productId) || []);
+            setFavouriteSet((prevSet) => {
+                const newSet = new Set(prevSet);
+                newSet.delete(productId);
+                return newSet;
+            });
         }catch(error:any){
             console.log("Error removing from favourites:", error);
         }

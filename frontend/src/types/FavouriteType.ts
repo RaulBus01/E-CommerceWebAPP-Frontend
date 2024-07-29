@@ -1,7 +1,7 @@
 import { productData } from "./ProductType";
 
 interface favouriteData{
-    products: productData;
+    product: productData;
     id: string;
 }
 export default favouriteData;

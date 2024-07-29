@@ -6,11 +6,10 @@ import ProductCard from "../../components/product-card/product-card";
 
 const Home = () => {
   const {products, loading} = useProduct();
-  console.log(products);
   return (
     <div className="home">
                     {products?.map((product) => (
-                        <ProductCard key={product._id} favourite={{productId: product}} loading={loading}/>
+                        <ProductCard key={product._id} product={ product } loading={loading}/>
                     ))}
     </div>
   );

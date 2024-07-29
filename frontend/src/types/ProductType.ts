@@ -2,8 +2,9 @@ interface productDataForOrder{
     productId: string;
     quantity: number;
 }
-interface productData{
-    productId: string;
+interface productData {
+    _id: string;            
+    id: string;             
     name: string;
     price: number;
     category: string[];
@@ -13,7 +14,8 @@ interface productData{
     distributorId: string;
     createdAt: string;
     updatedAt: string;
-    numberOfReviews: number;
     ratingProduct: number;
-}
+    numberOfReviews: number;
+  }
+  
 export type {productDataForOrder, productData} 

@@ -8,14 +8,13 @@ const FavoritePage = () => {
     const {userId, token} = useAuth();
 
     const {favourites, loading} = useFavourite(userId, token);
-    console.log(favourites);
     return(
         <>
             <div className="main-container">
                 <h1>Your favorite items</h1>
                 <div className="items-container">
                     {favourites?.map((favourite) => (
-                        <ProductCard key={favourite.id} favourite={favourite} loading={loading}/>
+                        <ProductCard key={favourite.id} product={favourite.product} loading={loading}/>
                     ))}
                 </div>
             </div>
