@@ -18,6 +18,22 @@ interface loginData {
     isVerified: boolean;
     createdAt: string;
   }
+  interface distributorData {
+    address: string;
+    name: string;
+    email: string;
+    isVerified: boolean;
+    createdAt: string;
+    isDistributor: boolean;
+
+  }
+  interface questionData {
+    content: string;
+    createdAt: string;
+    replies: string;
+    
+  }
+
 
   interface address {
     country: string;
@@ -38,4 +54,4 @@ interface loginData {
   }
 
 
-export type { loginData, registerDataUser, registerDataDistributor,userData };
+export type { loginData,questionData, registerDataUser, registerDataDistributor,userData,distributorData,address };

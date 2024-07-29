@@ -10,7 +10,7 @@ import LoginForm from '../../components/controls/form/loginForm.tsx'
 
 
 const LoginPage: React.FC<{userType:string}> = ({userType}) => {
-  const { loginUser,loginDistributor,loginAdmin } = useAuth();
+  const { userId,loginUser,loginDistributor,loginAdmin } = useAuth();
   const navigate = useNavigate()
 
   const loginFunctions ={
@@ -42,8 +42,18 @@ const LoginPage: React.FC<{userType:string}> = ({userType}) => {
       
       if (result === 'success') {
         toast.success('Login successful')
-        navigate('/')
+        if(userType === 'Admin'){
+          navigate(`/admin-dashboard/${userId}`)
+        
+        }
+        else if(userType === 'User'){
+          navigate('/')
+        }
+        else if(userType === 'Distributor'){
+          navigate(`/distributor-dashboard/${userId}`)
       }
+    }
+
       else{
       toast.error('Login failed. Please check your credentials')
       return

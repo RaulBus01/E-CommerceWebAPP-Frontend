@@ -3,8 +3,8 @@ import '../my-orders-menu/my-orders-menu.css'
 import Spinner from "../../spinner/spinner";
 import  formatDateTime  from "../../../utils/formatDataTime";
 
-const MyOrdersMenu = ({reviews, loading}) => {
-   
+const MyReviewsMenu = ({reviews, loading}) => {
+    
     if(loading){
         return(
             <div className="my-orders-menu">
@@ -12,6 +12,7 @@ const MyOrdersMenu = ({reviews, loading}) => {
             </div>
         );
     }
+  
 
     return (
         <>
@@ -29,10 +30,10 @@ const MyOrdersMenu = ({reviews, loading}) => {
                         ))}
                     </div>
                 ) : (
-                    <p>You didn't write any reviews :'(</p>
+                    <p>You didn't write any reviews :'</p>
                 )}
             </div>
         </>
       );
 }
-export default MyOrdersMenu
+export default MyReviewsMenu

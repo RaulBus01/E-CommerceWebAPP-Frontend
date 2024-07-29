@@ -4,7 +4,7 @@ import StarIcon from '@mui/icons-material/Star';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
-const ProductCard: React.FC<{key,product}>   = (key, product) => {
+const ProductCard: React.FC<{key,product}>   = (key, productkey,product) => {
     const [isFavorite, setIsFavorite] = useState(false);
 
     const handleFavorite = () => {
@@ -38,5 +38,6 @@ const ProductCard: React.FC<{key,product}>   = (key, product) => {
         </div>
     );
 };
+
 
 export default ProductCard;

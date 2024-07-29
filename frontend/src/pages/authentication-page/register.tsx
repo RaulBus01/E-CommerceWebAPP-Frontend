@@ -10,7 +10,7 @@ import RegisterForm from '../../components/controls/form/registerForm.tsx'
 
 
 const RegisterPage: React.FC<{userType:string}> = ({userType}) => {
-  const { registerUser,registerDistributor } = useAuth()
+  const { userId,registerUser,registerDistributor } = useAuth()
   const navigate = useNavigate()
 
   const registerFunctions ={
@@ -37,7 +37,16 @@ const RegisterPage: React.FC<{userType:string}> = ({userType}) => {
   
       if (result === "success") {
         toast.success('Registration successful')
-        navigate('/')
+        if(userType === 'User'){
+          navigate('/')
+        }
+        else if(userType === 'Distributor'){
+          navigate(`/distributor-dashboard/${userId}`)
+        }
+        else if(userType === 'Admin'){
+          navigate(`/admin-dashboard/${userId}`)
+        }
+        
       }
       else{
       toast.error('Registration failed')

@@ -1,33 +1,27 @@
-import { useEffect, useState } from 'react';
 
-const useProduct = (productId) => {
-  const [product, setProduct] = useState(null);
+const useProduct = (userId: string | null, token: string | null) => {
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await fetch(`http://localhost:3001/api/products/find/${productId}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+  const deleteProduct = async (productId: string) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/products/delete`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+            "Token": `Bearer ${token}`,
+        },
+        body: JSON.stringify({id: productId}),
         });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+        if(!response.ok){
+            throw new Error(`Error: ${response.status}`);
         }
-        const res = await response.json();
-        setProduct(res);
-      } catch (err) {
-        console.error('Failed to fetch product:', err);
-      }
-    };
-
-    if (productId) {
-      fetchProduct();
+        return true;
+    } catch (error: any) {
+        console.error(error);
+        return false;
     }
-  }, [productId]);
+ }
+return {deleteProduct}
 
-  return { product };
-};
+}
 
-export default useProduct;1
+export default useProduct;
