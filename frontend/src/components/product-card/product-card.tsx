@@ -4,19 +4,22 @@ import StarIcon from '@mui/icons-material/Star';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
-const ProductCard: React.FC = () => {
+const ProductCard: React.FC<{key,product}>   = (key, product) => {
     const [isFavorite, setIsFavorite] = useState(false);
 
     const handleFavorite = () => {
         setIsFavorite((prevState) => !prevState);
     };
 
+    console.log(product);
     return (
-        <div className="card-container">
+        <div className="card-container" key={key}>
             <img src="https://via.placeholder.com/200" alt="product-image" />
             <div className="information-container">
                 <p className="product-name">
-                    Name this is the name of the product 128gb, 2024 v2.0
+                    
+                    {product.name}
+                
                 </p>
                 <h2>799.99 lei</h2>
             </div>

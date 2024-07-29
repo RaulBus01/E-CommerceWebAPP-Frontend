@@ -5,7 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 const PublicRoute: React.FC = () => {
   const { token } = useAuth() as { token: string };
 
-  return !token ? <Outlet /> : <Navigate to="/myAccount" />;
+  return !token ? <Outlet /> : <Navigate to="/my-account" />;
 };
 
 export default PublicRoute;

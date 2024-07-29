@@ -9,6 +9,8 @@ import Footer from './footer/Footer';
 import AuthProvider from './hooks/useAuth';
 import PrivateRoute from './pages/authentication-page/privateRoute';
 import PublicRoute from './pages/authentication-page/publicRoute';
+import CartPage from './pages/cart-page/CartPage';
+import PaymentCheckoutPage from './pages/payment-checkout-page/PaymentCheckoutPage';
 
 import { Toaster } from 'react-hot-toast';
 
@@ -36,8 +38,11 @@ const App = () => {
             <Route path="/admin/login" element={<LoginPage userType='Admin' />} />
           </Route>
           <Route element={<PrivateRoute />}>
-            <Route path="/myAccount" element={<UserProfilePage />} />
-            <Route path="/Favorite" element={<FavoritePage />} />
+            <Route path="/my-account" element={<UserProfilePage />} />
+            <Route path="/favourites" element={<FavoritePage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/payment-checkout" element={<PaymentCheckoutPage />} />
+
           </Route>
         </Routes>
         {showNav && <Footer />}

@@ -33,7 +33,7 @@ const Navbar = () => {
                 </NavLink>
             </li>
             <li className="nav-icons">
-                <NavLink to="/Cart">
+                <NavLink to="/cart">
                     <ShoppingCartIcon/>
                     <span className='nav-text'>Cart</span>
                 </NavLink>
