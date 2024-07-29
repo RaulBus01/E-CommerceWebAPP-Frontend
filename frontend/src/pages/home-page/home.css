@@ -7,6 +7,11 @@
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
+
+  display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    justify-items: center;
 }
 
 .card-slider-wrapper {
