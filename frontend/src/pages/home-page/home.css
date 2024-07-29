@@ -1,16 +1,16 @@
 .home {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  padding: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
   box-sizing: border-box;
 }
 
-.card-slider-wrapper {
-  width: 100%;
-  max-width: 1200px;
+.home-dropdown {
   margin-top: 20px;
+  width: 200px;
 }
