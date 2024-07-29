@@ -45,6 +45,22 @@ const useCart = (userId, token) => {
     }
   }
 
+  const addProductToCart = async (userId, product, token) => {
+    try {
+      await fetch(`http://localhost:3001/api/cart/add`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Token': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ id: userId, productId: product._id, quantity: 1 }),
+      });
+    } catch (err) {
+      console.error('Failed to add product to cart:', err);
+    }
+  }
+
+
   const removeProduct = async (userId, product, token) => {
     try {
       await fetch(`http://localhost:3001/api/cart/deleteProduct`, {
@@ -60,7 +76,7 @@ const useCart = (userId, token) => {
     }
   }
 
-  return { cart, editProductQuantity, removeProduct };
+  return { cart, editProductQuantity, removeProduct, addProductToCart };
 };
 
 export default useCart;

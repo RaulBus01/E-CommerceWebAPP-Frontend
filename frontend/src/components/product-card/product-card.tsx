@@ -6,6 +6,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useAuth } from "../../hooks/useAuth";
 import useFavourite from "../../hooks/useFavourite";
 import { productData } from "../../types/ProductType";
+import  useCart  from "../../hooks/useCart";
 
 interface ProductCardProps {
   product: productData;
@@ -15,6 +16,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
   const { userId, token } = useAuth();
   const { addToFavourite, removeFavourite, isProductFavourite } = useFavourite(userId, token);
+  const { addProductToCart } = useCart(userId, token);
 
   const isFavorite = isProductFavourite(product._id);
 
@@ -25,6 +27,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
       await addToFavourite(product._id);
     }
   }, [isFavorite, product._id, addToFavourite, removeFavourite]);
+
+  const handleAddToCart = useCallback(async () => {
+    await addProductToCart(userId, product, token);
+  }
+  , [addProductToCart, product]);
+
+  if (loading) {
+    return <div>Loading
+    </div>;
+  }
+
 
   return (
     <div className="card-container">
@@ -40,7 +53,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
         </p>
       </div>
       <div className="button-container">
-        <button>
+        <button onClick={handleAddToCart} className="add-to-cart-button">
           <AddShoppingCartIcon />
         </button>
         <button onClick={handleFavorite} className="favorite-button">

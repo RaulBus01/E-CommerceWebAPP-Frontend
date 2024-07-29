@@ -23,7 +23,6 @@ const CartPage = () => {
     }
   };
 
-
   return (
     <div className="cart-page">
       <h1 className="cart-page-title">Cart Page</h1>
