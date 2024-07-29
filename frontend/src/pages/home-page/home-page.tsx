@@ -3,9 +3,11 @@ import "./home.css";
 import Dropdown from "../../components/dropdown/dropdown";
 import useProduct from "../../hooks/useProduct";
 import ProductCard from "../../components/product-card/product-card";
+import { useAuth } from "../../hooks/useAuth";
 
 const Home = () => {
-  const {products, loading} = useProduct();
+  const { userId, token } = useAuth();
+  const {products, loading} = useProduct(userId, token);
   return (
     <div className="home">
                     {products?.map((product) => (

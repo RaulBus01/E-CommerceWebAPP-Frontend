@@ -60,7 +60,6 @@ const useCart = (userId, token) => {
     }
   }
 
-  
   return { cart, editProductQuantity, removeProduct };
 };
 
