@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import './Navbar.css'
 import SearchBar from '../components/controls/searchbar/searchBar'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -8,7 +8,10 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useAuth } from '../hooks/useAuth';
 
 const Navbar = () => {
+
     const { userId } = useAuth();
+ 
+
   return (
     <nav>
         <ul>
@@ -21,7 +24,7 @@ const Navbar = () => {
                 <SearchBar />
             </li>
             <li className="nav-icons">
-                <NavLink to={userId !== null ? "/myAccount" : "/login"}>
+                <NavLink to={userId !== null ? `/user-dashboard/${userId}` : "/login"}>
                     <AccountCircleIcon/>
                    <span className='nav-text'>Account</span>
                 </NavLink>

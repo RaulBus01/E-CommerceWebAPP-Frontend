@@ -14,6 +14,7 @@ import { Toaster } from 'react-hot-toast';
 
 import UserProfilePage from './pages/user-profile-page/user-profile-page'
 import FavoritePage from './pages/favorite-page/favorite-page'
+import DistributorProfilePage from './pages/distributor-profile-page/distributor-profile-page';
 
 const App = () => {
   const location = useLocation();
@@ -35,9 +36,15 @@ const App = () => {
             <Route path="/distributor/login" element={<LoginPage userType='Distributor' />} />
             <Route path="/admin/login" element={<LoginPage userType='Admin' />} />
           </Route>
-          <Route element={<PrivateRoute />}>
-            <Route path="/myAccount" element={<UserProfilePage />} />
+          <Route element={<PrivateRoute  userType='User'/>}>
+            <Route path="/user-dashboard/:id" element={<UserProfilePage />} />
             <Route path="/Favorite" element={<FavoritePage />} />
+          </Route>
+          <Route element={<PrivateRoute  userType='Distributor'/>}>
+            <Route path="/distributor-dashboard/:id" element={<DistributorProfilePage />} />
+          </Route>
+          <Route element={<PrivateRoute  userType='Admin'/>}>
+            <Route path="/admin-dashboard" element={<div>Admin Dashboard</div>} />
           </Route>
         </Routes>
         {showNav && <Footer />}
