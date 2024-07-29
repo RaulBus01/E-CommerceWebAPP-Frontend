@@ -1,21 +1,21 @@
 import React from "react";
 import './favorite-page.css';
 import ProductCard from "../../components/product-card/product-card";
+import useFavourite from "../../hooks/useFavourite";
+import { useAuth } from "../../hooks/useAuth";
 
 const FavoritePage = () => {
+    const {userId, token} = useAuth();
+
+    const {favourites, loading} = useFavourite(userId, token);
     return(
         <>
             <div className="main-container">
                 <h1>Your favorite items</h1>
                 <div className="items-container">
-                    <ProductCard/>
-                    <ProductCard/>
-                    <ProductCard/>
-                    <ProductCard/>
-                    <ProductCard/>
-                    <ProductCard/>
-                    <ProductCard/>
-                    <ProductCard/>
+                    {favourites?.map((favourite) => (
+                        <ProductCard key={favourite.id} product={favourite.product} loading={loading}/>
+                    ))}
                 </div>
             </div>
         </>

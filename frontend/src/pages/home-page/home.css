@@ -8,6 +8,11 @@
   padding: 24px;
   margin-bottom: 20px;
   box-sizing: border-box;
+
+  display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    justify-items: center;
 }
 
 .home-dropdown {
