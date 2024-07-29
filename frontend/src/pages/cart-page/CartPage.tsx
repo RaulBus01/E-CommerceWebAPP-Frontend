@@ -2,18 +2,27 @@ import React from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { Favorite, DeleteOutline } from "@mui/icons-material";
 import useCart from "../../hooks/useCart";
-//useFavourites de la Vlad
+import useFavourite from "../../hooks/useFavourite";
 import "./CartPage.css";
 
 const CartPage = () => {
   const { token, userId } = useAuth();
   const { cart, editProductQuantity, removeProduct } = useCart(userId, token);
+  const { addToFavourite, removeFavourite } = useFavourite(userId, token);
 
   const handleEditProductQuantity = async (product, quantity) => {
     await editProductQuantity(userId, product, token, quantity);
   };
 
-  
+  const handleFavourites = async (product) => {
+    if (addToFavourite) {
+      await addToFavourite(product._id);
+      removeProduct(userId, product, token);
+    } else {
+      await removeFavourite(product._id);
+    }
+  };
+
 
   return (
     <div className="cart-page">
@@ -69,13 +78,13 @@ const CartPage = () => {
                   </button>
                 </div>
                 <div className="cart-item-actions">
-                  {/* <div
+                  <div
                     className="cart-item-action-favourites"
-                    onClick={() => moveToFavourites(product.product, userId)}
+                    onClick={() => handleFavourites(product.product)}
                   >
                     <Favorite style={{ marginRight: "8px", color: "red" }} />
                     Move to Favourites
-                  </div> */}
+                  </div>
                   <div
                     className="cart-item-action-remove"
                     onClick={() => removeProduct(userId, product.product, token)}

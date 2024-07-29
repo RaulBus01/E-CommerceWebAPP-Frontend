@@ -26,6 +26,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
     }
   }, [isFavorite, product._id, addToFavourite, removeFavourite]);
 
+  const addProductToCart = 
+
   return (
     <div className="card-container">
       <img src={product.image} alt="product" />
