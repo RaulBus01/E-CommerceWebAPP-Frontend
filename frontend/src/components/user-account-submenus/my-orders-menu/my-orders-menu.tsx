@@ -1,7 +1,7 @@
 import React from "react";
 import './my-orders-menu.css';
 import Spinner from "../../spinner/spinner";
-import  formatDateTime  from "../../../utils/formatDataTime";
+import  {formatDateTime}  from "../../../utils/formatDataTime";
 
 const MyOrdersMenu = ({orders, loading}) => {
 

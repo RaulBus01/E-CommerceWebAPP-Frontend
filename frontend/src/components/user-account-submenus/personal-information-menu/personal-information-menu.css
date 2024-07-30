@@ -11,16 +11,12 @@
     height: 100%;
     display: flex;
     flex-wrap: wrap;
+    
     gap: 100px;
 }
 
-.info-cell{
-    width: 400px;
-    height: 40%;
-    padding: 10px 20px;
-
-    border: 1px solid var(--gray-color);
-    box-shadow: 2px 2px 2px var(--gray-color);
-    border-radius: 20px;
-    background-color: var(--primary-color);
+.address-data-display{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 5px;
 }

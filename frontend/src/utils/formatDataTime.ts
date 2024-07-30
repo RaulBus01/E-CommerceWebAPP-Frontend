@@ -8,5 +8,17 @@ const formatDateTime = (dateString: string) => {
     
     return `${day}-${month}-${year}: ${hours}:${minutes}`;
 };
+const getNumberOfDays = (dateString: string) => {
+    const date = new Date(dateString);
+    const today = new Date();
 
-export default formatDateTime;
+    date.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    const timeDifference = date.getTime() - today.getTime();
+    const daysDifference = -Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+    return daysDifference;
+}
+
+export {formatDateTime, getNumberOfDays};
