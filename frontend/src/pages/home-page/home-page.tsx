@@ -7,7 +7,7 @@ import { useAuth } from "../../hooks/useAuth";
 
 const Home = () => {
   const { userId, token } = useAuth();
-  const {products, loading} = useProduct(userId, token);
+  const {products, loading} = useProduct(token);
   return (
     <div className="home">
                     {products?.map((product) => (

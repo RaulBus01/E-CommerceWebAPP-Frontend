@@ -5,7 +5,7 @@ import useFavourite from "../../hooks/useFavourite";
 import { useAuth } from "../../hooks/useAuth";
 
 const FavoritePage = () => {
-    const {userId, token} = useAuth();
+    const {userId, token,} = useAuth();
 
     const {favourites, loading} = useFavourite(userId, token);
     return(

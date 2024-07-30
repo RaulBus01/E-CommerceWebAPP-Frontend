@@ -9,18 +9,21 @@ interface UseFavouriteResult{
     isProductFavourite: (productId: string) => boolean;
 }
 
-const useFavourite = (userId: string, token: string): UseFavouriteResult => {
+const useFavourite = (userId: string | null, token: string |null): UseFavouriteResult => {
     const [favourites, setFavourites] = useState<favouriteData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [favouriteSet, setFavouriteSet] = useState<Set<string>>(new Set());
 
     const isProductFavourite = useCallback((productId: string) => {
+        
         return favouriteSet.has(productId);
     }, [favouriteSet]);
 
     useEffect(() => {
         const fetchFavouritesByUser = async () => {
             setLoading(true);
+       
+           
             try{
                 const response = await fetch(`http://localhost:3001/api/favourites/find/${userId}`, {
                     method: "GET",
@@ -41,8 +44,8 @@ const useFavourite = (userId: string, token: string): UseFavouriteResult => {
                 setLoading(false);
             }
         };
-
-        if(userId){
+        
+        if(userId && token ){
             fetchFavouritesByUser();
         }
     },[userId, token]);
@@ -91,7 +94,6 @@ const useFavourite = (userId: string, token: string): UseFavouriteResult => {
             console.log("Error removing from favourites:", error);
         }
     };
-
 
     return {favourites, loading, addToFavourite, removeFavourite, isProductFavourite};
 }

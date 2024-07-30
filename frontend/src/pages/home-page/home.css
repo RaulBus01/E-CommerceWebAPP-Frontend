@@ -8,6 +8,7 @@
   padding: 24px;
   margin-bottom: 20px;
   box-sizing: border-box;
+  overflow: scroll;
 
   display: grid;
     grid-template-columns: repeat(4, 1fr);

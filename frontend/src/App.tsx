@@ -17,12 +17,18 @@ import { Toaster } from 'react-hot-toast';
 import UserProfilePage from './pages/user-profile-page/user-profile-page'
 import FavoritePage from './pages/favorite-page/favorite-page'
 import DistributorProfilePage from './pages/distributor-profile-page/distributor-profile-page';
+import AddProductPage from './pages/add-product/add-product';
+import EditProductPage from './pages/edit-product/edit-product';
 
 const App = () => {
   const location = useLocation();
-  const disableNavPaths = ['/login', '/register', '/distributor/login', '/distributor/register', '/admin/login'];
+  const disableNavPaths = ['/login', '/register', '/distributor/login', '/distributor/register', '/admin/login', '/distributor-dashboard/:id/add-product'];
   const showNav = !disableNavPaths.includes(location.pathname);
-
+  // const showNav = !disableNavPaths.some(path => {
+  //   const regexPath = path.replace(/:\w+/g, '[^/]+');
+  //   const regex = new RegExp(`^${regexPath}$`);
+  //   return regex.test(location.pathname);
+  // });
   return (
     <>
       <AuthProvider>
@@ -46,6 +52,8 @@ const App = () => {
           </Route>
           <Route element={<PrivateRoute  userType='Distributor'/>}>
             <Route path="/distributor-dashboard/:id" element={<DistributorProfilePage />} />
+            <Route path="/distributor-dashboard/:userId/add-product" element={<AddProductPage/>} />
+            <Route path="/distributor-dashboard/:userId/edit-product/:productId" element={<EditProductPage/>} />
           </Route>
           <Route element={<PrivateRoute  userType='Admin'/>}>
             <Route path="/admin-dashboard" element={<div>Admin Dashboard</div>} />

@@ -18,6 +18,7 @@ const UserProfilePage = () => {
     const [selectedMenu, setSelectedMenu] = useState<string>("Personal information");
     const {userId, token, logout} = useAuth();
     const { userId: userIdPath } = useParams<{ userId: string }>();
+    
 
    
 

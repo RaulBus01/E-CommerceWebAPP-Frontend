@@ -42,7 +42,9 @@
 .user-info-container{
     height: 90%;
     width: 100%;
-
+    align-items: center;
+    justify-content: center;
+    overflow: scroll;
     display: flex;
     flex-direction: row;
     gap: 10px;

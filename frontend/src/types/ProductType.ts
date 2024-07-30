@@ -17,5 +17,15 @@ interface productData {
     ratingProduct: number;
     numberOfReviews: number;
   }
+interface productFormData {
+    
+    name: string;
+    description: string;
+    price: string;
+    image: string;
+    category: string;
+    stock: string;
+}
+
   
-export type {productDataForOrder, productData} 
+export type {productDataForOrder, productData, productFormData}; 
