@@ -17,6 +17,7 @@ import { Toaster } from 'react-hot-toast';
 import UserProfilePage from './pages/user-profile-page/user-profile-page'
 import FavoritePage from './pages/favorite-page/favorite-page'
 import DistributorProfilePage from './pages/distributor-profile-page/distributor-profile-page';
+import ProductPage from './pages/product-page/product-page';
 
 const App = () => {
   const location = useLocation();
@@ -30,6 +31,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/category" element={<CategoryPage />} />
+          <Route path="/product/:productId" element={<ProductPage />}/>
           <Route element={<PublicRoute />}>
             
             <Route path="/register" element={<RegisterPage userType='User' />} />

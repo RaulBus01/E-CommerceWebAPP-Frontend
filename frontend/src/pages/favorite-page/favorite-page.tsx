@@ -6,8 +6,19 @@ import { useAuth } from "../../hooks/useAuth";
 
 const FavoritePage = () => {
     const {userId, token} = useAuth();
-
     const {favourites, loading} = useFavourite(userId, token);
+    console.log(favourites);
+
+    if(favourites?.length <= 0){
+        return(
+            <div className="main-container">
+                <h1>Your favourite items</h1>
+                <div>
+                    <p>No item saved as favourite</p>
+                </div>
+            </div>
+        );
+    }
     return(
         <>
             <div className="main-container">
