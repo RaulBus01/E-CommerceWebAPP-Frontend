@@ -6,6 +6,8 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useAuth } from "../hooks/useAuth";
+import Dropdown from "../components/dropdown/dropdown";
+
 
 const Navbar = () => {
   const { userId } = useAuth();
@@ -22,6 +24,7 @@ const Navbar = () => {
           <li className="search-bar-container">
             <SearchBar />
           </li>
+          <div className="icons">
           <li className="nav-icons">
             <NavLink
               to={userId !== null ? `/user-dashboard/${userId}` : "/login"}
@@ -30,10 +33,11 @@ const Navbar = () => {
               <span className="nav-text">Account</span>
             </NavLink>
           </li>
+          
           <li className="nav-icons">
-            <NavLink to="/Favorite">
+            <NavLink to="/favourites">
               <FavoriteBorderIcon />
-              <span className="nav-text">Favorites</span>
+              <span className="nav-text">Favourites</span>
             </NavLink>
           </li>
           <li className="nav-icons">
@@ -42,16 +46,11 @@ const Navbar = () => {
               <span className="nav-text">Cart</span>
             </NavLink>
           </li>
+          </div>
         </ul>
       </nav>
       <div className="bottom-navbar">
-        <button className="menu-button">Books</button>
-        <span className="nav-item">Fiction</span>
-        <span className="nav-item">Nonfiction</span>
-        <span className="nav-item">Academic & Textbooks</span>
-        <span className="nav-item">eBooks</span>
-        <span className="nav-item">Audiobooks</span>
-        <span className="nav-item">Book Accessories & Gifts</span>
+        <Dropdown />
       </div>
     </div>
   );

@@ -43,10 +43,19 @@ li {
   border-radius: 20px;
 }
 
+.icons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+
+}
+
 .nav-icons {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  font-size: large;
 }
 
 .nav-icons span {
@@ -84,12 +93,7 @@ li {
   align-items: center;
   width: 100%;
   justify-content: space-between;
-  padding: 10px;
+  padding: 10 0px;
   background: var(--dark-color);
   color: white;
-}
-
-.nav-item {
-  margin-right: 20px;
-  cursor: pointer;
 }

@@ -41,7 +41,7 @@ const App = () => {
           </Route>
           <Route element={<PrivateRoute  userType='User'/>}>
             <Route path="/user-dashboard/:id" element={<UserProfilePage />} />
-            <Route path="/Favorite" element={<FavoritePage />} />
+            <Route path="/favourites" element={<FavoritePage />} />
             <Route path="/cart" element={<CartPage />} />
           </Route>
           <Route element={<PrivateRoute  userType='Distributor'/>}>

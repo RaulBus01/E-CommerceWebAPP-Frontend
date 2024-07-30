@@ -11,7 +11,7 @@ const FavoritePage = () => {
     return(
         <>
             <div className="main-container">
-                <h1>Your favorite items</h1>
+                <h1>Your favourite items</h1>
                 <div className="items-container">
                     {favourites?.map((favourite) => (
                         <ProductCard key={favourite.id} product={favourite.product} loading={loading}/>
