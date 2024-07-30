@@ -82,7 +82,7 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                         title={userType === 'User' ? 'Full Name' : 'Distributor Name'}
                         content={
                             editingField === "full_name" ? (
-                                <div>
+                                <div className="name-data-display">
                                     <input
                                         type="text"
                                         placeholder="First Name"
@@ -97,7 +97,9 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                                     />
                                 </div>
                             ) : (
-                                userType === 'User' ? `${user.first_name} ${user.last_name}` : user.name
+                                <div className="user-info-text">
+                                    <p>{userType === 'User' ? `${user.first_name} ${user.last_name}` : user.name}</p>
+                                </div>
                             )
                         }
                         displayEditButton={editingField !== "full_name"}
@@ -108,6 +110,7 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                                 userType === "User" ? user.last_name : "", "", "", "", "", "", "", "", ""
                             )
                         }
+                        type=""
                     />
                     {/* <InfoCell
                         title="E-mail"
@@ -130,9 +133,11 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                             handleEdit("email", "", "", user.email, "", "")
                         }
                     /> */}
-                    <div className="info-cell">
-                        <h3>Email</h3>
-                        <p>{user.email}</p>
+                    <div className="info-cell-small">
+                        <h2>Email</h2>
+                        <div className="user-info-text">
+                            <p>{user.email}</p>
+                        </div>
                     </div>
                     <InfoCell
                         title="Your saved address"
@@ -177,7 +182,7 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                                     />
                                 </div>
                             ) : (
-                                <div>
+                                <div className="user-info-text">
                                     <p>{user.address.country}</p>
                                     <p>{user.address.county}</p>
                                     <p>{user.address.city}</p>
@@ -191,6 +196,7 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                         handleEdit={() => 
                             handleEdit("address", "", "", "", user.address.country, user.address.county, user.address.city, user.address.street, user.address.number, user.address.zip, "")
                         }
+                        type="big"
                     />
                     <InfoCell 
                         title="Phone number"
@@ -205,7 +211,9 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                                     />
                                 </div>
                             ) : (
-                                user.phoneNumber
+                                <div>
+                                    <p className="user-info-text">{user.phoneNumber}</p>
+                                </div>
                             )
                         }
                         displayEditButton={editingField !== "phone"}
@@ -213,22 +221,29 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                             handleEdit(
                                 "phone", "", "", "", "", "", "", "", "", "", user.phoneNumber
                             )
-                        }                   
+                        }
+                        type=""                   
                     />
-                    <div className="info-cell">
-                        <h3>Member since</h3>
-                        <p>{formattedDate} ({numberOfDays} days)</p>
+                    <div className="info-cell-small">
+                        <h2>Member since</h2>
+                        <div>
+                            <p className="user-info-text">{formattedDate} ({numberOfDays} days)</p>
+                        </div>     
                     </div>
-                    <div className="info-cell">
+                    <div className="info-cell-small">
                         {userType === 'User' ?
                         <>
-                            <h3>Account status</h3>
-                            <p>{user.isVerified ? 'Verified' : 'Not verified'}</p>
+                            <h2>Account status</h2>
+                            <div>
+                                <p className="user-info-text">{user.isVerified ? 'Verified' : 'Not verified'}</p>
+                            </div> 
                         </>
                         : userType === 'Distributor' ?
                         <>
-                            <h3>Distributor status</h3>
-                            <p>{user.isAuthorized ? 'Authorized' : 'Not Authorized'}</p>
+                            <h2>Distributor status</h2>
+                            <div className="user-info-text">
+                                <p>{user.isAuthorized ? 'Authorized' : 'Not Authorized'}</p>
+                            </div>
                         </>
                         : null}
                     </div>

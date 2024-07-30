@@ -15,8 +15,50 @@
     gap: 100px;
 }
 
+.info-wrapper input{
+    height: 25px;
+    width: 250px;
+    padding: 2px 5px;
+
+    border: none;
+    border-radius: 15px;
+    background-color: var(--secondary-color);
+    color: var(--gray-color);
+    font-weight: 800;
+}
+
+.info-wrapper input:focus{
+    box-shadow: 3px 3px 3px ;
+}
+
 .address-data-display{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px 5px;
+}
+
+.name-data-display{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.user-info-text{
+    color: #5a6064;
+    font-size: large;
+    font-weight: 800;
+}
+
+.info-cell-small{
+    width: 400px;
+    height: 20%;
+    padding: 10px 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid var(--gray-color);
+    box-shadow: 2px 2px 2px var(--gray-color);
+    border-radius: 20px;
+    background-color: var(--primary-color);
 }
