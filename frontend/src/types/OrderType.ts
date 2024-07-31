@@ -4,6 +4,7 @@ import { productDataForOrder } from "./ProductType";
 interface orderData{
     address: addressData;
     id: string;
+    _id: string;
     userId: string;
     products: productDataForOrder[];
     status: string;

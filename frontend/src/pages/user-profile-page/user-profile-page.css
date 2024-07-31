@@ -4,7 +4,7 @@
     box-sizing: border-box;
  }
 .user-profile-main-container{
-    height: 100vh;
+    height:auto;
     width: 100%;
     background-color: var(--light-color);
 
@@ -40,14 +40,14 @@
 }
 
 .user-info-container{
-    height: 90%;
+    
     width: 100%;
 
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    overflow: scroll;
+
     gap: 10px;
 }
 

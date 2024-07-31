@@ -19,6 +19,7 @@ import FavoritePage from './pages/favorite-page/favorite-page'
 import DistributorProfilePage from './pages/distributor-profile-page/distributor-profile-page';
 import AddProductPage from './pages/add-product/add-product';
 import EditProductPage from './pages/edit-product/edit-product';
+import OrderDetails from './components/order/orderDetails';
 
 const App = () => {
   const location = useLocation();
@@ -54,12 +55,16 @@ const App = () => {
             <Route path="/distributor-dashboard/:id" element={<DistributorProfilePage />} />
             <Route path="/distributor-dashboard/:userId/add-product" element={<AddProductPage/>} />
             <Route path="/distributor-dashboard/:userId/edit-product/:productId" element={<EditProductPage/>} />
+            <Route path="/distributor-dashboard/:userId/order/:orderId" element={<OrderDetails/>} />
           </Route>
           <Route element={<PrivateRoute  userType='Admin'/>}>
             <Route path="/admin-dashboard" element={<div>Admin Dashboard</div>} />
           </Route>
         </Routes>
-        {showNav && <Footer />}
+        {showNav && <footer>
+          <Footer />
+        </footer>
+} 
         <Toaster />
       </AuthProvider>
     </>

@@ -16,7 +16,10 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
   const { userId, token,userRole } = useAuth();
-  const { addToFavourite, removeFavourite, isProductFavourite } = useFavourite(userId, token);
+  const { addToFavourite, removeFavourite, isProductFavourite } = useFavourite(
+    userRole === "User" ? userId : null,
+    userRole === "User" ? token : null
+  );
   const {deleteProduct} = useProduct(token);
   const navigate = useNavigate();
  

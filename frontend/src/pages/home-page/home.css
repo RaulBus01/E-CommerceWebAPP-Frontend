@@ -3,12 +3,12 @@
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-  height: 100vh;
+  height: auto;
   width: 100%;
   padding: 24px;
   margin-bottom: 20px;
   box-sizing: border-box;
-  overflow: scroll;
+
 
   display: grid;
     grid-template-columns: repeat(4, 1fr);

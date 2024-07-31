@@ -45,7 +45,7 @@ const EditProductPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form data being submitted:", formData);
-    const result = await editProduct(formData); // Ensure correct function and data
+    const result = await editProduct(formData); 
     if (result) {
       navigate(`/distributor-dashboard/${userId}`);
     }

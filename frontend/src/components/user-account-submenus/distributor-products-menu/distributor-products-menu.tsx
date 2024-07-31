@@ -1,63 +1,74 @@
-import React from 'react'
-import './distributor-prodcuts-menu.css'
-import Spinner from '../../spinner/spinner'
-import useProduct from '../../../hooks/useProduct';
-import { useAuth } from '../../../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import './distributor-products-menu.css';
+import Spinner from '../../spinner/spinner';
 import ProductCard from '../../product-card/product-card';
 import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
+import { useNavigate } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
 
-
-const DistributorProductsMenu = ({products,loading}) => {
-   
-  const {userId, token} = useAuth();
+const DistributorProductsMenu = ({ products, loading }) => {
   const navigate = useNavigate();
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  useEffect(() => {
+    setFilteredProducts(products);
+  }, [products]);
 
-
-
-  if(loading){
-      return(
-          <div className="my-orders-menu">
-              <Spinner/>
-          </div>
-      );
-  }
   const handleNavigate = (path) => {
     navigate(path);
-  }
+  };
 
-  
+  const searchProducts = (e) => {
+    const searchValue = e.target.value.toLowerCase();
+    const filtered = products.filter(product =>
+      product.name.toLowerCase().includes(searchValue)
+    );
+    setFilteredProducts(filtered);
+  };
+
   return (
+    <div className="distributor-products-menu">
+      <div className="top-container">
+        <h2>Search your product list</h2>
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search products"
+            onChange={searchProducts}
+            className="search-input"
+            
+          />
+          <SearchIcon className="icon" />
+        </div>
+      </div>
+
+      <div className="add-product-container">
+        <h3>Add New Product</h3>
+        <AddCircleOutline className="icon" onClick={() => handleNavigate('add-product')} />
+      </div>
+
+      {loading ? (
+        <Spinner />
+      ) : (
         <>
-            <div className="my-orders-menu">
-                <div className="top-container">
-                    <h2>Your products</h2>
-                    <AddCircleOutline className="icon" onClick={()=>handleNavigate('add-product')}/>
-                </div>
-
-              
-
-
-                {products !==undefined && products.length > 0 ? (
-                    <div className="products-container">
-                        {products.map((product) => (
-                            <ProductCard
-                                key={product._id}
-                                product={product}
-                                loading={loading}
-                            />
-
-                        ))}
-                    </div>
-                ) : (
-                    <p>No products found.</p>
-                )}
+        
+          {filteredProducts && filteredProducts.length > 0 ? (
+            <div className="products-container">
+              {filteredProducts.map((product) => (
+                <ProductCard
+                  key={product._id}
+                  product={product}
+                  loading={loading}
+                />
+              ))}
             </div>
+          ) : (
+            <p>No products found.</p>
+          )}
         </>
-        );
-}
+      )}
+    </div>
+  );
+};
 
-
-export default DistributorProductsMenu
+export default DistributorProductsMenu;

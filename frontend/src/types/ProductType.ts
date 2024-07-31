@@ -1,5 +1,5 @@
 interface productDataForOrder{
-    productId: string;
+    product: productData;
     quantity: number;
 }
 interface productData {

@@ -9,14 +9,46 @@
     display: flex;
     flex-direction: row;
     align-items: center; 
+    justify-content: center;
     
+  }
+  .top-container .search-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2rem;
+
+    border: 1px solid #ddd;
+    border-bottom: 2px solid #ddd;
+    border-radius: 20px;
+    transition: border-bottom-color 0.3s ease;
+    resize: vertical; 
   }
   
   .top-container h2 {
     margin-right: 8px; 
   }
+  .top-container input{
+    background-color: transparent;
+    width: 100%;
+    border: none;
+    margin-left: 1rem;
+    
+  }
+  .top-container input:focus {
+    border: none;
+    outline: none;
+  }
+  .add-product-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+  }
   
   .icon {
+    
     cursor: pointer; 
   }
   .icon:hover {
