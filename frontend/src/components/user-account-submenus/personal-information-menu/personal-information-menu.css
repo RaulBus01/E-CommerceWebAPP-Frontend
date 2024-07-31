@@ -36,7 +36,7 @@
     display: flex;
     flex-wrap: wrap;
     
-    gap: 100px;
+    gap: 50px;
 }
 
 .info-wrapper input{
@@ -109,4 +109,30 @@
     box-shadow: 2px 2px 2px var(--gray-color);
     border-radius: 20px;
     background-color: var(--primary-color);
+}
+
+.edit-controls{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.edit-controls button{
+    width: 100px;
+    height: 30px;
+
+    background-color: var(--warning-color);
+    color: var(--gray-color);
+    font-weight: 700;
+    font-size: medium;
+    border: none;
+    border-radius: 15px;
+
+    margin-top: 5%;
+}
+
+.edit-controls button:hover{
+    cursor: pointer;
+    background-color: #ffa807;
+    box-shadow: 2px 2px 2px var(--dark-color);
 }

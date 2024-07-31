@@ -143,7 +143,14 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                                 )
                             }
                             type=""
-                        />
+                        >
+                            {editingField === "full_name" && (
+                                <div className="edit-controls">
+                                    <button onClick={handleSave}>Save</button>
+                                    <button onClick={() => setEditingField(null)}>Cancel</button>
+                                </div>
+                            )}
+                        </InfoCell>
                         <InfoCell 
                             title="Phone number"
                             content={
@@ -168,8 +175,15 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                                     "phone", "", "", "", "", "", "", "", "", "", user.phoneNumber
                                 )
                             }
-                            type=""                   
-                        />
+                            type=""
+                        >
+                            {editingField === "phone" && (
+                                <div className="edit-controls">
+                                    <button onClick={handleSave}>Save</button>
+                                    <button onClick={() => setEditingField(null)}>Cancel</button>
+                                </div>
+                            )}
+                        </InfoCell>                   
                     </div>
                     <div className="big-data-cells">
                         <InfoCell
@@ -230,16 +244,17 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                                 handleEdit("address", "", "", "", user.address.country, user.address.county, user.address.city, user.address.street, user.address.number, user.address.zip, "")
                             }
                             type="big"
-                        />
+                        >
+                            {editingField === "address" && (
+                                <div className="edit-controls">
+                                    <button onClick={handleSave}>Save</button>
+                                    <button onClick={() => setEditingField(null)}>Cancel</button>
+                                </div>
+                            )}
+                        </InfoCell>
                     </div>
                 </div>
-            {editingField && (
-          <div className="edit-controls">
-            <button onClick={handleSave}>Save</button>
-            <button onClick={() => setEditingField(null)}>Cancel</button>
-          </div>
-        )}
-        </div>
+            </div>
         </>
     );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import './info-cell.css';
 
-const InfoCell = ({title, content, displayEditButton = false, handleEdit, type}) => {
+const InfoCell = ({title, content, displayEditButton = false, handleEdit, type, children}) => {
     if(type === "big"){
         return(
             <div className="info-cell-big">
@@ -10,6 +10,7 @@ const InfoCell = ({title, content, displayEditButton = false, handleEdit, type})
                 {displayEditButton && (
                     <button className="edit-info-button-big" onClick={handleEdit}>Edit</button>
                 )}
+                {children}
             </div>
         );
     }
@@ -22,6 +23,7 @@ const InfoCell = ({title, content, displayEditButton = false, handleEdit, type})
             {displayEditButton && (
                 <button className="edit-info-button" onClick={handleEdit}>Edit</button>
             )}
+            {children}
         </div>
     );
 }
