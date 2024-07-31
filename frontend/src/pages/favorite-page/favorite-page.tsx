@@ -3,6 +3,7 @@ import './favorite-page.css';
 import ProductCard from "../../components/product-card/product-card";
 import useFavourite from "../../hooks/useFavourite";
 import { useAuth } from "../../hooks/useAuth";
+import Spinner from "../../components/spinner/spinner";
 
 const FavoritePage = () => {
     const {userId, token} = useAuth();
@@ -19,6 +20,13 @@ const FavoritePage = () => {
             </div>
         );
     }
+
+    if(loading){
+        return(
+            <Spinner/>
+        );
+    }
+
     return(
         <>
             <div className="main-container">

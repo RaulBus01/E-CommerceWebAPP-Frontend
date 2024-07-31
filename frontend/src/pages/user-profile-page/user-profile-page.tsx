@@ -13,6 +13,7 @@ import useReview from "../../hooks/useReview";
 import useQuestion from "../../hooks/useQuestion";
 import { useParams } from "react-router-dom";
 import MyQuestionsMenu from "../../components/user-account-submenus/my-questions-menu/my-questions-menu";
+import Spinner from "../../components/spinner/spinner";
 
 const UserProfilePage = () => {
     const [selectedMenu, setSelectedMenu] = useState<string>("Personal information");
@@ -30,6 +31,9 @@ const UserProfilePage = () => {
         navigate('/404/');
     }
     const loadSelectedMenu = () => {
+        if (userLoading) {
+            return <Spinner />;
+        }
         if(user){
             switch (selectedMenu) {
                 case "Personal information":
@@ -52,9 +56,11 @@ const UserProfilePage = () => {
         toast.success('You have been logged out')
     };
 
+    const isLoading = userLoading || ordersLoading || reviewsLoading || questionLoading;
+
     return(
         <>
-        { userLoading && <div className="loader"></div>}
+        { isLoading && <div className="loader"></div>}
 
             <div className="user-profile-main-container">
                 <div className="top-container">
@@ -62,11 +68,9 @@ const UserProfilePage = () => {
                     <button className="signOut-btn" onClick={handleLogOut}>Sign out</button>
                 </div>
                 <div className="user-info-container">
-                    {userLoading ? <div className="loader"></div> :
                     <SideMenu setSelectedMenu={setSelectedMenu} name={`${user?.first_name} ${user?.last_name}`} 
                     sectionList={['Personal information','My orders','My reviews','My questions']}>
-                        </SideMenu>
-                    }   
+                        </SideMenu> 
                     <div className="user-info">{loadSelectedMenu()}</div>
                 </div>
             </div>
