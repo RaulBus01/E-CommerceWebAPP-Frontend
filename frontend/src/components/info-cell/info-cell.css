@@ -1,6 +1,6 @@
 .info-cell{
     width: 400px;
-    height: 30%;
+    height: 200px;
     padding: 10px 20px;
 
     display: flex;
@@ -12,9 +12,16 @@
     background-color: var(--primary-color);
 }
 
+.info-cell-content{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
 .info-cell-big{
     width: 600px;
-    height: 30%;
+    height: 90%;
     padding: 10px 20px;
 
     display: flex;
@@ -37,7 +44,7 @@
     border: none;
     border-radius: 15px;
 
-    margin-top: 20%;
+    margin-top: 5%;
 }
 
 .edit-info-button-big{

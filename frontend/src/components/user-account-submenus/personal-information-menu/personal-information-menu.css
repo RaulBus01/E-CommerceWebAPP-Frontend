@@ -1,9 +1,33 @@
 .personal-info-menu{
     width: 100%;
-    height: 100%;
+    height: auto;
     padding: 10px;
     display: flex;
     flex-direction: column;
+}
+
+.small-data-cells{
+    width: 100%;
+    height: 33%;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.medium-data-cells{
+    width: 100%;
+    height: 33%;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.big-data-cells{
+    width: 100%;
+    height: 33%;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
 }
 
 .info-wrapper{
@@ -43,15 +67,39 @@
     gap: 20px;
 }
 
-.user-info-text{
+.user-info-text {
     color: #5a6064;
     font-size: large;
     font-weight: 800;
 }
 
+.address-info-text p{
+    color: #5a6064;
+    font-size: large;
+    font-weight: 800;
+}
+
+.name-info-text{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.name-info-text p{
+    color: #5a6064;
+    font-size: large;
+    font-weight: 800;
+}
+
+.address-info-text{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
 .info-cell-small{
     width: 400px;
-    height: 20%;
+    height: 80%;
     padding: 10px 20px;
 
     display: flex;

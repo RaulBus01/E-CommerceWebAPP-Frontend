@@ -16,7 +16,9 @@ const InfoCell = ({title, content, displayEditButton = false, handleEdit, type})
     return(
         <div className="info-cell">
             <h2>{title}</h2>
-            <p>{content}</p>
+            <div className="info-cell-content">
+                <p>{content}</p>
+            </div>
             {displayEditButton && (
                 <button className="edit-info-button" onClick={handleEdit}>Edit</button>
             )}

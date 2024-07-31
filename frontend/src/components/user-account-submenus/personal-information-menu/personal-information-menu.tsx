@@ -78,183 +78,168 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
             <div className="personal-info-menu">
                 <h2>Personal Information</h2>
                 <div className="info-wrapper">
-                    <InfoCell
-                        title={userType === 'User' ? 'Full Name' : 'Distributor Name'}
-                        content={
-                            editingField === "full_name" ? (
-                                <div className="name-data-display">
-                                    <input
-                                        type="text"
-                                        placeholder="First Name"
-                                        value={firstName}
-                                        onChange={(e) => setFirstName(e.target.value)}
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Last Name"
-                                        value={lastName}
-                                        onChange={(e) => setLastName(e.target.value)}
-                                    />
-                                </div>
-                            ) : (
-                                <div className="user-info-text">
-                                    <p>{userType === 'User' ? `${user.first_name} ${user.last_name}` : user.name}</p>
-                                </div>
-                            )
-                        }
-                        displayEditButton={editingField !== "full_name"}
-                        handleEdit={() =>
-                            handleEdit(
-                                "full_name",
-                                userType === "User" ? user.first_name : user.name,
-                                userType === "User" ? user.last_name : "", "", "", "", "", "", "", "", ""
-                            )
-                        }
-                        type=""
-                    />
-                    {/* <InfoCell
-                        title="E-mail"
-                        content={
-                            editingField === "email" ? (
+                    <div className="small-data-cells">
+                        <div className="info-cell-small">
+                            <h2>Member since</h2>
+                            <div>
+                                <p className="user-info-text">{formattedDate} ({numberOfDays} days)</p>
+                            </div>     
+                        </div>
+                        <div className="info-cell-small">
+                            {userType === 'User' ?
+                            <>
+                                <h2>Account status</h2>
                                 <div>
-                                    <input 
-                                        type="email"
-                                        placeholder="E-mail"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                    />
+                                    <p className="user-info-text">{user.isVerified ? 'Verified' : 'Not verified'}</p>
+                                </div> 
+                            </>
+                            : userType === 'Distributor' ?
+                            <>
+                                <h2>Distributor status</h2>
+                                <div className="user-info-text">
+                                    <p>{user.isAuthorized ? 'Authorized' : 'Not Authorized'}</p>
                                 </div>
-                            ) : (
-                                user.email
-                            )
-                        }
-                        displayEditButton={editingField === "email"}
-                        handleEdit={() => 
-                            handleEdit("email", "", "", user.email, "", "")
-                        }
-                    /> */}
-                    <div className="info-cell-small">
-                        <h2>Email</h2>
-                        <div className="user-info-text">
-                            <p>{user.email}</p>
+                            </>
+                            : null}
+                        </div>
+                        <div className="info-cell-small">
+                            <h2>Email</h2>
+                            <div className="user-info-text">
+                                <p>{user.email}</p>
+                            </div>
                         </div>
                     </div>
-                    <InfoCell
-                        title="Your saved address"
-                        content={
-                            editingField === "address" ? (
-                                <div className="address-data-display">
-                                    <input
-                                        type="text"
-                                        placeholder="Country"
-                                        value={country}
-                                        onChange={(e) => setCountry(e.target.value)} 
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="County"
-                                        value={county}
-                                        onChange={(e) => setCounty(e.target.value)} 
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="City"
-                                        value={city}
-                                        onChange={(e) => setCity(e.target.value)} 
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Street"
-                                        value={street}
-                                        onChange={(e) => setStreet(e.target.value)} 
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Number"
-                                        value={number}
-                                        onChange={(e) => setNumber(e.target.value)} 
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Zip code"
-                                        value={zip}
-                                        onChange={(e) => setZip(e.target.value)} 
-                                    />
-                                </div>
-                            ) : (
-                                <div className="user-info-text">
-                                    <p>{user.address.country}</p>
-                                    <p>{user.address.county}</p>
-                                    <p>{user.address.city}</p>
-                                    <p>{user.address.street}</p>
-                                    <p>{user.address.number}</p>
-                                    <p>{user.address.zip}</p>
-                                </div>
-                            )
-                        }
-                        displayEditButton={editingField !== "address"}
-                        handleEdit={() => 
-                            handleEdit("address", "", "", "", user.address.country, user.address.county, user.address.city, user.address.street, user.address.number, user.address.zip, "")
-                        }
-                        type="big"
-                    />
-                    <InfoCell 
-                        title="Phone number"
-                        content={
-                            editingField === "phone" ? (
-                                <div>
-                                    <input
-                                        type="tel"
-                                        placeholder="Phone number"
-                                        value={phoneNumber}
-                                        onChange={(e) => setPhoneNumber(e.target.value)} 
-                                    />
-                                </div>
-                            ) : (
-                                <div>
-                                    <p className="user-info-text">{user.phoneNumber}</p>
-                                </div>
-                            )
-                        }
-                        displayEditButton={editingField !== "phone"}
-                        handleEdit={() =>
-                            handleEdit(
-                                "phone", "", "", "", "", "", "", "", "", "", user.phoneNumber
-                            )
-                        }
-                        type=""                   
-                    />
-                    <div className="info-cell-small">
-                        <h2>Member since</h2>
-                        <div>
-                            <p className="user-info-text">{formattedDate} ({numberOfDays} days)</p>
-                        </div>     
+                    <div className="medium-data-cells">
+                        <InfoCell
+                            title={userType === 'User' ? 'Full Name' : 'Distributor Name'}
+                            content={
+                                editingField === "full_name" ? (
+                                    <div className="name-data-display">
+                                        <input
+                                            type="text"
+                                            placeholder="First Name"
+                                            value={firstName}
+                                            onChange={(e) => setFirstName(e.target.value)}
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Last Name"
+                                            value={lastName}
+                                            onChange={(e) => setLastName(e.target.value)}
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className="name-info-text">
+                                        {userType === 'User' ? (<div className="name-info-text"><p>First name: {user.first_name}</p> <p>Last name: {user.last_name}</p></div>) : (user.name)}
+                                    </div>
+                                )
+                            }
+                            displayEditButton={editingField !== "full_name"}
+                            handleEdit={() =>
+                                handleEdit(
+                                    "full_name",
+                                    userType === "User" ? user.first_name : user.name,
+                                    userType === "User" ? user.last_name : "", "", "", "", "", "", "", "", ""
+                                )
+                            }
+                            type=""
+                        />
+                        <InfoCell 
+                            title="Phone number"
+                            content={
+                                editingField === "phone" ? (
+                                    <div>
+                                        <input
+                                            type="tel"
+                                            placeholder="Phone number"
+                                            value={phoneNumber}
+                                            onChange={(e) => setPhoneNumber(e.target.value)} 
+                                        />
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <p className="user-info-text">{user.phoneNumber}</p>
+                                    </div>
+                                )
+                            }
+                            displayEditButton={editingField !== "phone"}
+                            handleEdit={() =>
+                                handleEdit(
+                                    "phone", "", "", "", "", "", "", "", "", "", user.phoneNumber
+                                )
+                            }
+                            type=""                   
+                        />
                     </div>
-                    <div className="info-cell-small">
-                        {userType === 'User' ?
-                        <>
-                            <h2>Account status</h2>
-                            <div>
-                                <p className="user-info-text">{user.isVerified ? 'Verified' : 'Not verified'}</p>
-                            </div> 
-                        </>
-                        : userType === 'Distributor' ?
-                        <>
-                            <h2>Distributor status</h2>
-                            <div className="user-info-text">
-                                <p>{user.isAuthorized ? 'Authorized' : 'Not Authorized'}</p>
-                            </div>
-                        </>
-                        : null}
+                    <div className="big-data-cells">
+                        <InfoCell
+                            title="Your saved address"
+                            content={
+                                editingField === "address" ? (
+                                    <div className="address-data-display">
+                                        <input
+                                            type="text"
+                                            placeholder="Country"
+                                            value={country}
+                                            onChange={(e) => setCountry(e.target.value)} 
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="County"
+                                            value={county}
+                                            onChange={(e) => setCounty(e.target.value)} 
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="City"
+                                            value={city}
+                                            onChange={(e) => setCity(e.target.value)} 
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Street"
+                                            value={street}
+                                            onChange={(e) => setStreet(e.target.value)} 
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Number"
+                                            value={number}
+                                            onChange={(e) => setNumber(e.target.value)} 
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Zip code"
+                                            value={zip}
+                                            onChange={(e) => setZip(e.target.value)} 
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className="address-info-text">
+                                        <p>Country: {user.address.country}</p>
+                                        <p>County: {user.address.county}</p>
+                                        <p>City: {user.address.city}</p>
+                                        <p>Street: {user.address.street}</p>
+                                        <p>Number: {user.address.number}</p>
+                                        <p>Zip code: {user.address.zip}</p>
+                                    </div>
+                                )
+                            }
+                            displayEditButton={editingField !== "address"}
+                            handleEdit={() => 
+                                handleEdit("address", "", "", "", user.address.country, user.address.county, user.address.city, user.address.street, user.address.number, user.address.zip, "")
+                            }
+                            type="big"
+                        />
                     </div>
                 </div>
-                {editingField && (
+            {editingField && (
           <div className="edit-controls">
             <button onClick={handleSave}>Save</button>
             <button onClick={() => setEditingField(null)}>Cancel</button>
           </div>
         )}
-            </div>
+        </div>
         </>
     );
 }
