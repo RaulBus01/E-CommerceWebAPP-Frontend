@@ -1,57 +1,31 @@
+import { addressData } from "./AddressType";
 interface loginData {
     email: string;
     password: string;
   }
-  interface registerDataUser {
-    first_name: string;
-    last_name: string;
+  interface DataCustomer {
+    name: string;
     email: string;
     password: string;
     confirm_password: string;
-  
+    phoneNumber?: string;
+    address?: addressData;
+    isVerified?: boolean;
   }
-  interface userData {
-    address: string;
-    first_name: string;
-    last_name: string;
-    email: string;
-    isVerified: boolean;
-    createdAt: string;
-  }
-  interface distributorData {
-    address: string;
-    name: string;
-    email: string;
-    isVerified: boolean;
-    createdAt: string;
-    isDistributor: boolean;
-
-  }
-  interface questionData {
-    content: string;
-    createdAt: string;
-    replies: string;
-    
-  }
-
-
-  interface address {
-    country: string;
-    county: string;
-    city: string;
-    street: string;
-    number: string;
-    zip: string;
-  }
-  interface registerDataDistributor {
+interface DataDistributor {
     name: string;
     email: string;
     password: string;
     confirm_password: string;
     phoneNumber: string;
-    address: address;
+    address: addressData;
     CUI: string;
+    isAuthorized: boolean;
   }
 
 
-export type { loginData,questionData, registerDataUser, registerDataDistributor,userData,distributorData,address };
+
+
+
+
+export type { loginData, DataCustomer, DataDistributor};

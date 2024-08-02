@@ -1,9 +1,8 @@
 interface reviewData{
-    reviewId: string;
-    productId: string;
-    userId: string;
-    rating: number;
-    content: string;
-    createdAt: string;
+   product:string
+   user:string
+    rating:number;
+    content?:string;
+    createdAt:Date;
 }
 export type {reviewData};

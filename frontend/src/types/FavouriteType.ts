@@ -1,7 +1,9 @@
 import { productData } from "./ProductType";
 
 interface favouriteData{
-    product: productData;
-    id: string;
+    user:string;
+    products:productData[];
+    createdAt:Date;
+    updatedAt:Date;
 }
 export default favouriteData;
