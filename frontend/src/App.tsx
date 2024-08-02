@@ -11,6 +11,7 @@ import PrivateRoute from './pages/authentication-page/privateRoute';
 import PublicRoute from './pages/authentication-page/publicRoute';
 import CartPage from './pages/cart-page/CartPage';
 import PaymentCheckoutPage from './pages/payment-checkout-page/PaymentCheckoutPage';
+import SubCategoryPage from './pages/subcategory-page/SubcategoryPage';
 
 import { Toaster } from 'react-hot-toast';
 
@@ -30,6 +31,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/category" element={<CategoryPage />} />
+          <Route path="/category/:subcategory" element={<SubCategoryPage />} />
           <Route element={<PublicRoute />}>
             
             <Route path="/register" element={<RegisterPage userType='User' />} />
@@ -37,7 +39,8 @@ const App = () => {
             <Route path="/distributor/register" element={<RegisterPage userType='Distributor'/>} />
             <Route path="/distributor/login" element={<LoginPage userType='Distributor' />} />
             <Route path="/admin/login" element={<LoginPage userType='Admin' />} />
-          
+            
+       
           </Route>
           <Route element={<PrivateRoute  userType='User'/>}>
             <Route path="/user-dashboard/:id" element={<UserProfilePage />} />
