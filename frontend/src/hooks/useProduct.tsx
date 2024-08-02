@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback} from "react";
 import { productData } from "../types/ProductType";
-import { _get, getProducts, removeProduct } from "../lib/api";
+import { _get, getProducts, removeProduct } from "../utils/api";
 
 
 interface UseOrderResult{
