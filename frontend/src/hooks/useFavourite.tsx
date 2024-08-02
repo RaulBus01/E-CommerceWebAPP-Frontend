@@ -22,13 +22,7 @@ const useFavourite = (userId: string, token: string): UseFavouriteResult => {
         const fetchFavouritesByUser = async () => {
             setLoading(true);
             try{
-                const response = await fetch(`http://localhost:3001/api/favourites/find/${userId}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Token": `Bearer ${token}`,
-                    },
-                });
+                const response = await getFavourites(userId, token);
                 if(!response.ok){
                     throw new Error(`Error: ${response.status}`);
                 }
@@ -49,14 +43,7 @@ const useFavourite = (userId: string, token: string): UseFavouriteResult => {
 
     const addToFavourite = async (productId: string) => {
         try{
-            const response = await fetch("http://localhost:3001/api/favourites/add", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Token": `Bearer ${token}`,
-                },
-                body: JSON.stringify({ id:userId, productId }),
-            });
+            const response = await addFavourites(userId, productId, token);
             if (!response.ok) {
                 throw new Error(`Error: ${response.status}`);
             }
@@ -70,14 +57,7 @@ const useFavourite = (userId: string, token: string): UseFavouriteResult => {
 
     const removeFavourite = async (productId: string) => {
         try{
-            const response = await fetch("http://localhost:3001/api/favourites/deleteProduct", {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Token": `Bearer ${token}`,
-                },
-                body: JSON.stringify({id:userId, productId}),
-            });
+            const response = await removeFromFavourites(userId, productId, token);
             if(!response.ok){
                 throw new Error(`Error: ${response.status}`);
             }

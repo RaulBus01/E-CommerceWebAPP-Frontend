@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
-import { orderData } from "../types/OrderType";
+import { useEffect, useState, useCallback} from "react";
 import { productData } from "../types/ProductType";
+import { _get, getProducts, removeProduct } from "../utils/api";
+
 
 interface UseOrderResult{
     products: productData[] | null;
     loading: boolean;
-    deleteProduct: (productId: string) => Promise<boolean>;
+    deleteProduct: (productId: string, token: string) => Promise<boolean>;
+    //fetchProductsBySubcategory: (subcategory: string) => Promise<productData[] | null>;
 }
 
-const useProduct = (userId: string, token: string): UseOrderResult => {
+const useProduct = (): UseOrderResult => {
     const [products, setProducts] = useState<productData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -16,18 +18,8 @@ const useProduct = (userId: string, token: string): UseOrderResult => {
         const fetchProducts = async () => {
             setLoading(true);
             try{
-                const response = await fetch(`http://localhost:3001/api/products/findAll`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-                if(!response.ok){
-                    throw new Error(`Error: ${response.status}`);
-                }
-                const res: productData[] = await response.json();
-                setProducts(res);
-                console.log(res);
+                const response = await _get(`/products/findAll`);
+                setProducts(response);
             }catch(error:any){
                 console.error(error);
             }finally{
@@ -38,16 +30,9 @@ const useProduct = (userId: string, token: string): UseOrderResult => {
         fetchProducts();
     },[]);
 
-    const deleteProduct = async (productId: string) => {
+    const deleteProduct = async (productId: string, token: string) => {
       try {
-        const response = await fetch(`http://localhost:3001/api/products/delete`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-              "Token": `Bearer ${token}`,
-          },
-          body: JSON.stringify({id: productId}),
-          });
+        const response = await removeProduct(productId, token);
           if(!response.ok){
               throw new Error(`Error: ${response.status}`);
           }
@@ -57,6 +42,24 @@ const useProduct = (userId: string, token: string): UseOrderResult => {
           return false;
       }
    };
+
+//    const fetchProductsBySubcategory = useCallback(async (subcategory: string) => {
+//     setLoading(true);
+//     try {
+//         const response = await fetchProductsBySubcategories();
+//         if (!response.ok) {
+//             throw new Error(`Error: ${response.status}`);
+//         }
+//         const res: productData[] = await response.json();
+//         return res;
+//     } catch (error: any) {
+//         console.error(error);
+//         return null;
+//     } finally {
+//         setLoading(false);
+//     }
+// }, []);
+
     return {products, loading, deleteProduct};
 }
 

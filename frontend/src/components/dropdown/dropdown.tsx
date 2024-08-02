@@ -12,7 +12,7 @@ const Dropdown = () => {
     {
       name: "Fiction",
       key: "fiction",
-      options: ["Fiction Category 1", "Fiction Category 2"],
+      options: ["Blugi", "Fiction Category 2"],
     },
     {
       name: "Non-fiction",
