@@ -2,17 +2,17 @@ import { addressData } from "./AddressType";
 import { productDataForOrder } from "./ProductType";
 
 interface orderData{
-    address: addressData;
-    id: string;
-    userId: string;
-    products: productDataForOrder[];
-    status: string;
-    first_name: string;
-    last_name: string;
+    user:string;
+    products:productDataForOrder[];
+    status: 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
+    name: string;
     email: string;
     phoneNumber: string;
+    address: addressData;
     totalPrice: number;
-    distributorId: string;
-    createdAt: string;
+    paymentMethod: string;
+    distributor: string;
+    createdAt: Date;
+
 }
 export type {orderData};
