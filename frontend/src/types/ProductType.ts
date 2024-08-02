@@ -1,21 +1,25 @@
+import { questionData } from "./Question";
+import { reviewData } from "./ReviewType";
+
 interface productDataForOrder{
     productId: string;
     quantity: number;
 }
 interface productData {
-    _id: string;            
-    id: string;             
+    _id: string;                         
     name: string;
     price: number;
-    category: string[];
+    categories: string[];
     description: string;
     image: string;
     stock: number;
-    distributorId: string;
+    distributor: string;
     createdAt: string;
     updatedAt: string;
-    ratingProduct: number;
-    numberOfReviews: number;
+    ratingProduct?: number;
+    numberOfReviews?: number;
+    reviews?: reviewData[];
+    questions?: questionData[];
   }
   
 export type {productDataForOrder, productData} 
