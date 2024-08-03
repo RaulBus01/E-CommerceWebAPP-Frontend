@@ -3,6 +3,25 @@ interface loginData {
     email: string;
     password: string;
   }
+  interface registerDataCustomer {
+    name: string;
+    email: string;
+    password: string;
+    confirm_password: string;
+    phoneNumber?: string;
+    address?: addressData;
+    role: userRole;
+  }
+  interface registerDataDistributor {
+    name: string;
+    email: string;
+    password: string;
+    confirm_password: string;
+    phoneNumber: string;
+    address: addressData;
+    CUI: string;
+    role: userRole;
+  }
   interface DataCustomer {
     name: string;
     email: string;
@@ -22,10 +41,11 @@ interface DataDistributor {
     CUI: string;
     isAuthorized: boolean;
   }
+type userRole = 'customer' | 'distributor' | 'admin';
 
 
 
 
 
 
-export type { loginData, DataCustomer, DataDistributor};
+export type {userRole, loginData, DataCustomer, DataDistributor, registerDataCustomer, registerDataDistributor };

@@ -1,135 +1,133 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import { loginData, registerDataDistributor, registerDataUser } from '../types/UserType';
+import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
+import { loginData, registerDataCustomer, registerDataDistributor, userRole } from '../types/UserType';
+import Cookies from 'js-cookie';
+import { _post, _get } from '../utils/api';
+import * as jose from 'jose';
+
+interface UserData {
+  id: string;
+  email: string;
+  role: string;
+  name: string;
+}
 
 interface AuthContextType {
   token: string | null;
-  userId: string | null;
-  userRole: string | null;
-  loginUser: (data: loginData) => Promise<string | undefined>;
-  loginDistributor: (data: loginData) => Promise<string | undefined>;
-  loginAdmin: (data: loginData) => Promise<string | undefined>;
-  registerUser: (data: registerDataUser) => Promise<string | undefined>;
-  registerDistributor: (data: registerDataDistributor) => Promise<string | undefined>;
-  logout: () => void;
+  user: UserData | null;
+  isAuthenticated: boolean;
+  login: (data: loginData) => Promise<boolean>;
+  logout: () => Promise<void>;
+  register: (data: registerDataCustomer | registerDataDistributor) => Promise<boolean>;
+  refreshToken: () => Promise<boolean>;
+  updateUser: (userData: Partial<UserData>) => void;
 }
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-const AuthProvider = ({ children }) => {
-   
 
-    const getInitialState = () => {
-      const token = sessionStorage.getItem("token");
-      const userId = localStorage.getItem("userId");
-      const userRole = localStorage.getItem("userRole");
-      return { token, userId, userRole };
-    }
-    const [userId, setUserId] = useState<string | null>(getInitialState().userId);
-    const [token, setToken] = useState<string | null>(getInitialState().token);
-    const [userRole, setUserRole] = useState<string | null>(getInitialState().userRole);
+const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [token, setToken] = useState<string | null>(Cookies.get('accessToken') || null);
+  const [user, setUser] = useState<UserData | null>(null);
 
-    useEffect(() => {
-      localStorage.setItem("userId", userId as string);
-    }, [userId]);
-   
-    const loginUser = async (data:loginData) => {
-      return await loginHelper(data,'User',"http://localhost:3001/api/authUser/login");
+  const decodeToken = useCallback((token: string) => {
+    try {
+      return jose.decodeJwt(token) as UserData;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
     }
-    const loginDistributor = async (data:loginData) => {
-      return await loginHelper(data,'Distributor',"http://localhost:3001/api/authDistributor/login");
-    }
-    const loginAdmin = async (data:loginData) => {
-      return await loginHelper(data,'Admin',"http://localhost:3001/api/authAdmin/login");
-    }
-    const loginHelper = async (data:loginData,role:string,url:string) => {
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        const res = await response.json();
-        if (res.user) {
-          setUserId(res.user._id);
-          setToken(res.accessToken);
-          setUserRole(role);
-          
-          localStorage.setItem("userRole", role);
-          sessionStorage.setItem("token", res.accessToken);
-          localStorage.setItem("userId", res.user._id);
-          return "success";
-        }
-        throw new Error(res.message);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  }, []);
 
-
-    const registerUser = async (data:registerDataUser) => {
-      return await registerHelper(data,'User',"http://localhost:3001/api/authUser/register");
+  useEffect(() => {
+    if (token) {
+      const decodedUser :UserData = decodeToken(token) as UserData;
+      setUser(decodedUser);
+      localStorage.setItem('userRole', decodedUser?.role);
+      localStorage.setItem('userId', decodedUser?.id);
+    } else {
+      setUser(null);
     }
-    const registerDistributor = async (data:registerDataDistributor) => {
-      return await registerHelper(data,'Distributor',"http://localhost:3001/api/authDistributor/register");
-    }
+  }, [token, decodeToken]);
 
-    const registerHelper = async (data: registerDataUser | registerDataDistributor,role:string,url:string) => {
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        const res = await response.json();
-        
-        if (res.user) {
-          setUserId(res.user._id);
-          setToken(res.accessToken);
-          setUserRole(role);
-         
-          localStorage.setItem("userRole", role);
-          sessionStorage.setItem("token", res.accessToken);
-          localStorage.setItem("userId", res.user._id);
-          return "success";
-        }
-        if(res.hasOwnProperty('keyValue') && res.keyValue.hasOwnProperty('email'))
-        {
-          throw new Error('Email already exists');
-        }
-        else{
-          throw new Error('Something went wrong');
-        }
-      } catch (err) {
-        return err;
-      }
-    };
-  
-    const logout = () => {
-      
-      setToken("");
-      sessionStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      localStorage.removeItem("userRole");
-    
-    };
-  
-    return (
-      <AuthContext.Provider value={{ token, userId,userRole,loginUser,loginDistributor,loginAdmin, logout ,registerUser,registerDistributor }}>
-        {children}
-      </AuthContext.Provider>
-    );
-  
+  const login = async (data: loginData): Promise<boolean> => {
+    try {
+      await _post('/authUser/login', data, token, { credentials: 'include' });
+      const newToken = Cookies.get('accessToken');
+      if (!newToken) throw new Error('No token in response');
+      setToken(newToken);
+      return true;
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
   };
-  
-  export default AuthProvider;
-  
-  export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (context === undefined) {
-      throw new Error("useAuth must be used within an AuthProvider");
-    }
-    return context;
 
+  const register = async (data: registerDataDistributor | registerDataCustomer): Promise<boolean> => {
+    try {
+      await _post('/authUser/register', data,token, { credentials: 'include' });
+      const newToken = Cookies.get('accessToken');
+      if (!newToken) throw new Error('No token in response');
+      setToken(newToken);
+      return true;
+    } catch (error) {
+      console.error('Register error:', error);
+      throw error;
+    }
   };
+
+  const logout = async (): Promise<void> => {
+    try {
+      await _post('/authUser/logout', {},token, { credentials: 'include' });
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      Cookies.remove('accessToken');
+      setToken(null);
+      setUser(null);
+    }
+  };
+
+  const refreshToken = async (): Promise<boolean> => {
+    try {
+      await _get('/authUser/refresh', { credentials: 'include' });
+      const newToken = Cookies.get('accessToken');
+      if (!newToken) throw new Error('No token in response');
+      setToken(newToken);
+      return true;
+    } catch (error) {
+      console.error('Token refresh error:', error);
+      logout();
+      return false;
+    }
+  };
+
+  const updateUser = (userData: Partial<UserData>): void => {
+    setUser(prevUser => prevUser ? { ...prevUser, ...userData } : null);
+  };
+
+  const isAuthenticated = !!token && !!user;
+
+  return (
+    <AuthContext.Provider value={{ 
+      token, 
+      user, 
+      isAuthenticated, 
+      login, 
+      logout, 
+      register, 
+      refreshToken,
+      updateUser
+    }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export default AuthProvider;
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};

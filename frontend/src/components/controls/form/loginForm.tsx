@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Button from '../button/button';
 import FormField from './form-field';
 import { NavLink } from 'react-router-dom';
+import { validateLoginData } from '../../../utils/validate/validateLoginData';
+import toast from 'react-hot-toast';
 
 interface LoginFormProps {
     onSubmit: (data: any) => void;
@@ -9,13 +11,22 @@ interface LoginFormProps {
 
 const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const [errors, setErrors] = useState<any>({});
+
 
   const handleChange = (field: keyof typeof formData) => (value: string | boolean) => {
     setFormData((prevData) => ({ ...prevData, [field]: value }));
+    setErrors((prevErrors: any) => ({ ...prevErrors, [field]: undefined }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const validationErrors = validateLoginData(formData);
+    if (Object.keys(validationErrors).length > 0) {
+      toast.error(validationErrors[Object.keys(validationErrors)[0]]);
+      setErrors(validationErrors);
+      return;
+    }
     onSubmit(formData);
   };
 

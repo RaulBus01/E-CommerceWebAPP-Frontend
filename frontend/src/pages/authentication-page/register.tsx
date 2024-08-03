@@ -1,52 +1,40 @@
 import React from 'react'
 import './style.css'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth.tsx'
 import { useNavigate } from 'react-router-dom'
-import { registerDataDistributor, registerDataUser } from '../../types/UserType.ts'
-import handleDataErrors from './handleDataError.tsx'
+import {registerDataCustomer,registerDataDistributor,userRole} from '../../types/UserType.ts'
 import toast from 'react-hot-toast'
 import RegisterForm from '../../components/controls/form/registerForm.tsx'
 
 
-const RegisterPage: React.FC<{userType:string}> = ({userType}) => {
-  const { userId,registerUser,registerDistributor } = useAuth()
+const RegisterPage: React.FC = () => {
+  const { register } = useAuth()
+  const{userRole} = useParams()
+  console.log(userRole)
+
   const navigate = useNavigate()
-
-  const registerFunctions ={
-    User:registerUser,
-    Distributor:registerDistributor
-  }
-
-  const handleSubmit = async (data: registerDataUser & registerDataDistributor) => {
-    try { 
-     
-      
-      const error = handleDataErrors({ data, type: 'register', userType: userType as 'Distributor' | 'User' })
-      if (error) {
-        toast.error(error)
-        return
-      }
-      const registerFunction = registerFunctions[userType as keyof typeof registerFunctions];
-      if (!registerFunction) {
-        toast.error('Invalid user type');
-        return;
-      }
-      const result = await registerFunction(data)
-  
-  
-      if (result === "success") {
+  const handleSubmit = async (data: registerDataCustomer | registerDataDistributor) => {
+    try {
+      const result = await register({
+        ...data,
+        name: data.name ? data.name : data.first_name + ' ' + data.last_name,
+        role: userRole as userRole
+      })
+      if(result)
+      {
         toast.success('Registration successful')
-        if(userType === 'User'){
-          navigate('/')
+        switch(userRole){
+          case 'customer':
+            navigate('/')
+            break
+          case 'distributor':
+            navigate('/distributor-dashboard')
+            break
+          case 'admin':
+            navigate('/admin-dashboard')
+            break
         }
-        else if(userType === 'Distributor'){
-          navigate(`/distributor-dashboard/${userId}`)
-        }
-        else if(userType === 'Admin'){
-          navigate(`/admin-dashboard/${userId}`)
-        }
-        
       }
       else{
       toast.error('Registration failed')
@@ -55,6 +43,7 @@ const RegisterPage: React.FC<{userType:string}> = ({userType}) => {
   
     } catch (error) {
       console.error('Register failed:', error)
+      toast.error(`Register failed. ${error.message}`)
     }
   }
 
@@ -71,21 +60,20 @@ const RegisterPage: React.FC<{userType:string}> = ({userType}) => {
         </div>
        <div className='auth-content'>
         <div className="auth-box">
-          <h2>Sign Up as {userType}</h2>
-          <RegisterForm onSubmit={handleSubmit} userType={userType as 'Distributor' | 'User'} />
-         
+          <h2>Sign Up as {userRole }</h2>
+          <RegisterForm onSubmit={handleSubmit} userRole={userRole as userRole} />
         </div>
         <div className="auth-image">
           <img src="src" alt="Sign Up Illustration" />
           {
-            userType === 'User' ?
+            userRole === 'customer' ?
             <>
-            <p>Already have an account? <NavLink to="/login">Login</NavLink></p>
-            <p>You are a distributor? <NavLink to="/distributor/login">Login as Distributor</NavLink></p>
-            </> : userType === 'Distributor' ?
+            <p> <NavLink to="/login">Already have an account? Login</NavLink></p>
+            <p> <NavLink to="/register/distributor">Register as Distributor</NavLink></p>
+            </> : userRole=== 'distributor' ?
             <>
-            <p>Already have an account? <NavLink to="/distributor/login">Login</NavLink></p>
-            <p>You are a user? <NavLink to="/login">Login as User</NavLink></p>
+            <p><NavLink to="/login">Already have an account? Login</NavLink></p>
+            <p> <NavLink to="/register/customer">Register as Customer</NavLink></p>
             </> 
             : 
             null
