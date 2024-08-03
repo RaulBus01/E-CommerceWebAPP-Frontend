@@ -17,9 +17,10 @@ const useFavourite = (): UseFavouriteResult => {
     const [loading, setLoading] = useState<boolean>(true);
     const [favouriteSet, setFavouriteSet] = useState<Set<string>>(new Set());
 
-    const isProductFavourite = useCallback((productId: string) => {
-        return favouriteSet.has(productId);
-    }, [favouriteSet]);
+  const isProductFavourite = useCallback(
+    (productId: string) => favouriteSet.has(productId),
+    [favouriteSet]
+  );
 
     useEffect(() => {
         const fetchFavouritesByUser = async () => {

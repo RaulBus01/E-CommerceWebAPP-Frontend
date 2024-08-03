@@ -8,14 +8,16 @@ import useFavourite from "../../hooks/useFavourite";
 import { productData } from "../../types/ProductType";
 import  useCart  from "../../hooks/useCart";
 
+
 interface ProductCardProps {
   product: productData;
   loading: boolean;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
-  
+  const { token } = useAuth();
   const { addToFavourite, removeFavourite, isProductFavourite } = useFavourite();
+  const { addProductToCart } = useCart(token as string);
  
 
   const isFavorite = isProductFavourite(product._id);
@@ -26,8 +28,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
     } else {
       await addToFavourite(product._id);
     }
-    // window.location.reload();
+    
   }, [isFavorite, product._id, addToFavourite, removeFavourite]);
+
+  const handleAddToCart = useCallback(async () => {
+    await addProductToCart(product, token);
+ 
+  }
+  , [addProductToCart, product, token]);
+
 
  
 
@@ -51,7 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
         </p>
       </div>
       <div className="button-container">
-        <button  className="add-to-cart-button">
+        <button  onClick={handleAddToCart} className="add-to-cart-button">
           <AddShoppingCartIcon />
         </button>
         <button onClick={handleFavorite} className="favorite-button">
