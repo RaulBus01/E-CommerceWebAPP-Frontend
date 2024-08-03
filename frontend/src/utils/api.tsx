@@ -4,7 +4,6 @@ const fetchClient = async (url, options = {}) => {
     const defaultOptions = {
       headers: {
         'Content-Type': 'application/json',
-        // Add other headers like authorization token here if needed
         'Token': `Bearer ${sessionStorage.getItem('token')}`,
       },
       ...options,
@@ -12,7 +11,6 @@ const fetchClient = async (url, options = {}) => {
     const response = await fetch(`${API_URL}${url}`, defaultOptions);
 
     if (!response.ok) {
-    // Handle HTTP errors
     const errorData = await response.json();
     throw new Error(errorData.message || 'API request failed');
     }
@@ -58,110 +56,80 @@ export const _delete = (url, data, config = {}) => {
 
 
 
-//PRODUCTS
-export const getProducts = () => {
-    return fetch(`${API_URL}/products/findAll`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-}
+// //CART
+// export const getCart = (userId, token) => {
+//     return fetch(`${API_URL}/cart/find`, {
+//         method: "GET",
+//         headers: {
+//             "Content-Type": "application/json",
+//             "Token": `Bearer ${token}`,
+//         },
+//     });
+// }
 
-export const removeProduct = (id, token) => {
-    return fetch(`${API_URL}/products/delete`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-            "Token": `Bearer ${token}`,
-        },
-        body: JSON.stringify({ id }),
-    });
-}
+// export const editProductQuantities = (userId, product, token, quantity, stock) => {  
+//     return fetch(`${API_URL}/cart/edit`, {
+//         method: 'PUT',
+//         headers: {
+//           'Content-Type': 'application/json',
+//           'Token': `Bearer ${token}`,
+//         },
+//         body: JSON.stringify({ id: userId, productId: product.product._id, quantity, stock }),
+//       });
+// }
 
-export const fetchProductsBySubcategories = () => {
-    return fetch(`${API_URL}/products/findCategory/${subcategory}`, {
-    method: "GET",
-    headers: {
-        "Content-Type": "application/json",
-    },
-});
-}
+// export const addProductCart = (userId, product, token) => {
+//     return fetch(`${API_URL}/cart/add`, {
+//         method: 'PUT',
+//         headers: {
+//           'Content-Type': 'application/json',
+//           'Token': `Bearer ${token}`,
+//         },
+//         body: JSON.stringify({ id: userId, productId: product._id, quantity: 1 }),
+//       });
+// }
 
-//CART
-export const getCart = (userId, token) => {
-    return fetch(`${API_URL}/cart/find`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Token": `Bearer ${token}`,
-        },
-    });
-}
+// export const removeProductCart = (userId, product, token) => {
+//     return fetch(`${API_URL}/cart/deleteProduct`, {
+//         method: 'DELETE',
+//         headers: {
+//           'Content-Type': 'application/json',
+//           'Token': `Bearer ${token}`,
+//         },
+//         body: JSON.stringify({ id: userId, productId: product._id }),
+//       });
+// }
 
-export const editProductQuantities = (userId, product, token, quantity, stock) => {  
-    return fetch(`${API_URL}/cart/edit`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Token': `Bearer ${token}`,
-        },
-        body: JSON.stringify({ id: userId, productId: product.product._id, quantity, stock }),
-      });
-}
+// //FAVOURITES
+// export const getFavourites = (userId, token) => {
+//     return fetch(`${API_URL}/favourites/find/${userId}`, {
+//         method: "GET",
+//         headers: {
+//             "Content-Type": "application/json",
+//             "Token": `Bearer ${token}`,
+//         },
+//     });
+// }
 
-export const addProductCart = (userId, product, token) => {
-    return fetch(`${API_URL}/cart/add`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Token': `Bearer ${token}`,
-        },
-        body: JSON.stringify({ id: userId, productId: product._id, quantity: 1 }),
-      });
-}
+// export const addFavourites = (userId, productId, token) => {
+//     return fetch(`${API_URL}/favourites/add`, {
+//         method: "PUT",
+//         headers: {
+//             "Content-Type": "application/json",
+//             "Token": `Bearer ${token}`,
+//         },
+//         body: JSON.stringify({ id:userId, productId }),
+//     });
+// }
 
-export const removeProductCart = (userId, product, token) => {
-    return fetch(`${API_URL}/cart/deleteProduct`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'Token': `Bearer ${token}`,
-        },
-        body: JSON.stringify({ id: userId, productId: product._id }),
-      });
-}
-
-//FAVOURITES
-export const getFavourites = (userId, token) => {
-    return fetch(`${API_URL}/favourites/find/${userId}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Token": `Bearer ${token}`,
-        },
-    });
-}
-
-export const addFavourites = (userId, productId, token) => {
-    return fetch(`${API_URL}/favourites/add`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-            "Token": `Bearer ${token}`,
-        },
-        body: JSON.stringify({ id:userId, productId }),
-    });
-}
-
-export const removeFromFavourites = (userId, productId, token) => {
-    return fetch(`${API_URL}/favourites/deleteProduct`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-            "Token": `Bearer ${token}`,
-        },
-        body: JSON.stringify({id:userId, productId}),
-    });
-}
+// export const removeFromFavourites = (userId, productId, token) => {
+//     return fetch(`${API_URL}/favourites/deleteProduct`, {
+//         method: "DELETE",
+//         headers: {
+//             "Content-Type": "application/json",
+//             "Token": `Bearer ${token}`,
+//         },
+//         body: JSON.stringify({id:userId, productId}),
+//     });
+// }
 

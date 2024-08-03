@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback} from "react";
 import { productData } from "../types/ProductType";
-import { _get, getProducts, removeProduct } from "../utils/api";
+import { _delete, _get, getProducts, removeProduct } from "../utils/api";
 
 
 interface UseOrderResult{
@@ -32,7 +32,7 @@ const useProduct = (): UseOrderResult => {
 
     const deleteProduct = async (productId: string, token: string) => {
       try {
-        const response = await removeProduct(productId, token);
+        const response = await _delete(`/products/delete`, {productId, token});
           if(!response.ok){
               throw new Error(`Error: ${response.status}`);
           }
