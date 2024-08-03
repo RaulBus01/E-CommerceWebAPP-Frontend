@@ -5,6 +5,7 @@ import  {formatDateTime}  from "../../../utils/formatDataTime";
 
 const MyReviewsMenu = ({reviews, loading}) => {
     
+    console.log(reviews)
     if(loading){
         return(
             <div className="my-orders-menu">

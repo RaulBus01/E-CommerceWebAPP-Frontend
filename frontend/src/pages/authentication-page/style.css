@@ -13,9 +13,22 @@
     justify-content: center;
     align-items: center;
     background-color: var(--white-color);
-    height: 70vh; 
+    height: 70vh;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80vw;
+    max-width: 960px; 
+  }
+  .auth-header{
+    display: flex;
+    background-color: var(--dark-color);
+    
+    justify-content: center;
+    align-items: center;
+    height: 10vh; 
+    border-radius: 20px;
+
+    margin: 2rem;
     width: 80vw;
     max-width: 960px; 
   }
@@ -96,7 +109,9 @@
     }
   
     .auth-container, .auth-content {
-      height: auto; 
+
+      height: auto;
+      gap: 5rem; 
       padding: 20px; 
     }
   

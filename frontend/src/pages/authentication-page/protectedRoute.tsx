@@ -1,19 +1,19 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-
-interface PublicRouteProps {
+interface ProtectedRouteProps {
   redirectPath?: string;
 }
 
-const PublicRoute: React.FC<PublicRouteProps> = ({ redirectPath = '/' }) => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ redirectPath = '/login' }) => {
   const { isAuthenticated } = useAuth();
 
-  if (isAuthenticated) {
+  if (!isAuthenticated) {
     return <Navigate to={redirectPath} replace />;
   }
+  
 
   return <Outlet />;
 };
 
-export default PublicRoute;
+export default ProtectedRoute;

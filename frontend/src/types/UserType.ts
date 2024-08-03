@@ -3,32 +3,46 @@ interface loginData {
     email: string;
     password: string;
   }
-  interface DataCustomer {
+  interface registerDataCustomer {
     name: string;
     email: string;
     password: string;
     confirm_password: string;
-    role?: string;
     phoneNumber?: string;
     address?: addressData;
-    isVerified?: boolean;
+    role: userRole;
   }
-interface DataDistributor {
+  interface registerDataDistributor {
     name: string;
     email: string;
     password: string;
     confirm_password: string;
-    role?: string;
     phoneNumber: string;
+    address: addressData;
+    CUI: string;
+    role: userRole;
+  }
+  interface DataCustomer {
+    id: string;
+    address: addressData;
+    paymentMethod: string;
+    isVerified: boolean;
+  }
+interface DataDistributor {
+    id: string;
     address: addressData;
     CUI: string;
     isAuthorized: boolean;
   }
+type userRole = 'customer' | 'distributor' | 'admin';
 
 interface userData{
+    id: string;
     name: string;
     email: string;
     password: string;
+    customerInfo?: DataCustomer;
+    distributorInfo?: DataDistributor;
     confirm_password: string;
     role?: string;
     phoneNumber?: string;
@@ -38,4 +52,4 @@ interface userData{
     isAuthorized?: boolean;
 }
 
-export type { loginData, DataCustomer, DataDistributor, userData};
+export type {userRole, loginData, DataCustomer, DataDistributor, registerDataCustomer, registerDataDistributor , userData};

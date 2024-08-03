@@ -16,22 +16,21 @@ import MyQuestionsMenu from "../../components/user-account-submenus/my-questions
 
 const UserProfilePage = () => {
     const [selectedMenu, setSelectedMenu] = useState<string>("Personal information");
-    const {userId, token, logout} = useAuth();
-    const { userId: userIdPath } = useParams<{ userId: string }>();
+    const { token, logout} = useAuth();
+    const { id: userIdPath } = useParams<{ id: string }>();
 
-    const {user, loading: userLoading} = useUser(userId, token);
-    const {orders, loading: ordersLoading} = useOrder(userId, token);
-    const {reviews, loading: reviewsLoading} = useReview(userId, token);
-    const {questions, loading: questionLoading} = useQuestion(userId, token);
+    const {localUser, loading: userLoading} = useUser();
+    const {orders, loading: ordersLoading} = useOrder(token as string);
+    const {reviews, loading: reviewsLoading} = useReview(token as string);
+    const {questions, loading: questionLoading} = useQuestion(userIdPath as string, token as string);
+   console.log(orders)
     const navigate = useNavigate();
-    if(userIdPath && userIdPath !== userId){
-        navigate('/404/');
-    }
+  
     const loadSelectedMenu = () => {
-        if(user){
+        if(localUser){
             switch (selectedMenu) {
                 case "Personal information":
-                    return <PersonalInformationMenu user={user} loading={userLoading}/>;
+                    return <PersonalInformationMenu user={localUser} loading={userLoading}/>;
                 case "My orders":
                     return <MyOrdersMenu orders={orders} loading={ordersLoading} />;
                 case "My reviews":
@@ -39,7 +38,7 @@ const UserProfilePage = () => {
                 case "My questions":
                     return <MyQuestionsMenu questions={questions} loading={questionLoading} />;
                 default:
-                    return <PersonalInformationMenu user={user} loading={userLoading}/>;
+                    return <PersonalInformationMenu user={localUser} loading={userLoading}/>;
             }
         }
     };
@@ -61,7 +60,7 @@ const UserProfilePage = () => {
                 </div>
                 <div className="user-info-container">
                     {userLoading ? <div className="loader"></div> :
-                    <SideMenu setSelectedMenu={setSelectedMenu} name={`${user?.name}`} 
+                    <SideMenu setSelectedMenu={setSelectedMenu} name={`${localUser?.name}`} 
                     sectionList={['Personal information','My orders','My reviews','My questions']}>
                         </SideMenu>
                     }   

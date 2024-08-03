@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { favouriteItem } from "../types/FavouriteType";
+import { _delete, _get, _put } from "../utils/api";
+import { useAuth } from "./useAuth";
 
 interface UseFavouriteResult {
     favourites: favouriteItem[] | null;
@@ -9,7 +11,8 @@ interface UseFavouriteResult {
     isProductFavourite: (productId: string) => boolean;
 }
 
-const useFavourite = (userId: string, token: string): UseFavouriteResult => {
+const useFavourite = (): UseFavouriteResult => {
+    const {token} = useAuth();
     const [favourites, setFavourites] = useState<favouriteItem[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [favouriteSet, setFavouriteSet] = useState<Set<string>>(new Set());
@@ -22,27 +25,18 @@ const useFavourite = (userId: string, token: string): UseFavouriteResult => {
         const fetchFavouritesByUser = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`http://localhost:3001/api/favourites/find`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Token": `Bearer ${token}`,
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status}`);
-                }
-                const data = await response.json();
-
+                
+                const data = await _get(`/favourites/find`, token, {});
+           
                 if (!data || !Array.isArray(data.favourites.products)) {
                     throw new Error("Unexpected API response format.");
                 }
-                console.log(data);
+              
                 const res: favouriteItem[] = data.favourites.products;
                 setFavourites(res);
                 const productIds = res.map(fav => fav.product._id);
                 setFavouriteSet(new Set(productIds));
-                console.log(productIds);
+                
             } catch (error: any) {
                 console.log(error);
             } finally {
@@ -50,25 +44,15 @@ const useFavourite = (userId: string, token: string): UseFavouriteResult => {
             }
         };
 
-        if (userId) {
+        if (token) {
             fetchFavouritesByUser();
         }
-    }, [userId, token]);
+    }, [token]);
 
     const addToFavourite = async (productId: string) => {
         try {
-            const response = await fetch("http://localhost:3001/api/favourites/add", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Token": `Bearer ${token}`,
-                },
-                body: JSON.stringify({ productId }),
-            });
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-            const newFavourite = await response.json();
+            const response = await _put(`/favourites/add`,{ productId }, token, {});
+            const newFavourite = response;
             setFavourites((prevFavourites) => (prevFavourites ? [...prevFavourites, newFavourite] : [newFavourite]));
             setFavouriteSet((prevSet) => new Set(prevSet).add(productId));
         } catch (error: any) {
@@ -78,14 +62,7 @@ const useFavourite = (userId: string, token: string): UseFavouriteResult => {
 
     const removeFavourite = async (productId: string) => {
         try {
-            const response = await fetch("http://localhost:3001/api/favourites/deleteProduct", {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Token": `Bearer ${token}`,
-                },
-                body: JSON.stringify({ productId }),
-            });
+            const response = await _delete(`/favourites/deleteProduct/${productId}`,{}, token);
             if (!response.ok) {
                 throw new Error(`Error: ${response.status}`);
             }
@@ -104,3 +81,5 @@ const useFavourite = (userId: string, token: string): UseFavouriteResult => {
 };
 
 export default useFavourite;
+
+

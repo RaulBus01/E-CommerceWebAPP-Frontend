@@ -2,34 +2,48 @@ import React, { useState } from 'react';
 import Button from '../button/button';
 import FormField from './form-field';
 import { NavLink } from 'react-router-dom';
-
+import { userRole } from '../../../types/UserType';
+import { validateRegistrationData } from '../../../utils/validate/validateRegisterData';
+import { toast } from 'react-hot-toast';
 interface RegisterFormProps {
   onSubmit: (data: any) => void;
-  userType: 'Distributor' | 'User';
+  userRole: userRole;
 
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, userType }) => {
+const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, userRole }) => {
   const [formData, setFormData] = useState<any>({});
   const [terms, setTerms] = useState(false);
+  const [errors, setErrors] = useState<any>({});
 
-    const handleChange = (field: string) => (value: string | boolean) => {
-        setFormData((prevData: any) => ({ ...prevData, [field]: value }));
-    }
+  const handleChange = (field: string) => (value: string | boolean) => {
+    setFormData((prevData: any) => ({ ...prevData, [field]: value }));
+   
+    setErrors((prevErrors: any) => ({ ...prevErrors, [field]: undefined }));
+  }
 
   const handleAddressChange = (field: string) => (value: string | boolean) => {
     setFormData((prevData: any) => ({
       ...prevData,
       address: { ...prevData.address, [field]: value }
     }));
+    
+    setErrors((prevErrors: any) => ({ ...prevErrors, [`address.${field}`]: undefined }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    const validationErrors = validateRegistrationData(formData, userRole);
+    if (Object.keys(validationErrors).length > 0) {
+      toast.error(validationErrors[Object.keys(validationErrors)[0]]);
+      setErrors(validationErrors);
+    
+    } else {
+      onSubmit(formData);
+    }
   };
 
-  const isDistributor = userType === 'Distributor';
+  const isDistributor = userRole === 'distributor';
 
   return (
     <form onSubmit={handleSubmit}>

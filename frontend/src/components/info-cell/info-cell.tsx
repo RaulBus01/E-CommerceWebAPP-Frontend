@@ -6,7 +6,7 @@ const InfoCell = ({title, content, displayEditButton = false, handleEdit, type, 
         return(
             <div className="info-cell-big">
                 <h2>{title}</h2>
-                <p>{content}</p>
+                <div>{content}</div>
                 {displayEditButton && (
                     <button className="edit-info-button-big" onClick={handleEdit}>Edit</button>
                 )}
@@ -18,7 +18,7 @@ const InfoCell = ({title, content, displayEditButton = false, handleEdit, type, 
         <div className="info-cell">
             <h2>{title}</h2>
             <div className="info-cell-content">
-                <p>{content}</p>
+                <div>{content}</div>
             </div>
             {displayEditButton && (
                 <button className="edit-info-button" onClick={handleEdit}>Edit</button>

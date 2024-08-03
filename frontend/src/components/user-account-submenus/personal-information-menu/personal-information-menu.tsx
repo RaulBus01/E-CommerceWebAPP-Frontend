@@ -7,8 +7,9 @@ import useUser from "../../../hooks/useUser";
 import { useAuth } from "../../../hooks/useAuth";
 
 const PersonalInformationMenu = ({user, loading}) => {
-    const {userId, token} = useAuth();
-    const {editUser} = useUser(userId, token);
+  
+    const {token} = useAuth();
+    const {editUser} = useUser();
     const [editingField, setEditingField] = useState(null);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -32,6 +33,7 @@ const PersonalInformationMenu = ({user, loading}) => {
         setZip(currentZip);
         setPhoneNumber(currentPhone);
     };
+    console.log(user);
 
     const handleSave = async () => {
         if (!editingField) return;
@@ -108,7 +110,7 @@ const PersonalInformationMenu = ({user, loading}) => {
                     </div>
                     <div className="medium-data-cells">
                         <InfoCell
-                            title={user.role === 'customer' ? 'Your Name' : 'Distributor Name'}
+                            title={user.role === 'customer' ? 'Name' : 'Distributor Name'}
                             content={
                                 editingField === "full_name" ? (
                                     <div className="name-data-display">
@@ -121,7 +123,7 @@ const PersonalInformationMenu = ({user, loading}) => {
                                     </div>
                                 ) : (
                                     <div className="name-info-text">
-                                        {user.role === 'customer' ? (<div className="name-info-text"><p>Your name: {user.name}</p></div>) : (user.name)}
+                                        {user.role === 'customer' ? (<div className="name-info-text"><p>{user.name}</p></div>) : (user.name)}
                                     </div>
                                 )
                             }
@@ -178,7 +180,7 @@ const PersonalInformationMenu = ({user, loading}) => {
                     </div>
                     <div className="big-data-cells">
                         <InfoCell
-                            title="Your saved address"
+                            title="Saved address"
                             content={
                                 editingField === "address" ? (
                                     <div className="address-data-display">
@@ -221,12 +223,12 @@ const PersonalInformationMenu = ({user, loading}) => {
                                     </div>
                                 ) : (
                                     <div className="address-info-text">
-                                        <p>Country: {user.customerInfo.address.country}</p>
-                                        <p>County: {user.customerInfo.address.county}</p>
-                                        <p>City: {user.customerInfo.address.city}</p>
-                                        <p>Street: {user.customerInfo.address.street}</p>
-                                        <p>Number: {user.customerInfo.address.number}</p>
-                                        <p>Zip code: {user.customerInfo.address.zip}</p>
+                                        <p>Country: {user.customerInfo.address?.country}</p>
+                                        <p>County: {user.customerInfo.address?.county}</p>
+                                        <p>City: {user.customerInfo.address?.city}</p>
+                                        <p>Street: {user.customerInfo.address?.street}</p>
+                                        <p>Number: {user.customerInfo.address?.number}</p>
+                                        <p>Zip code: {user.customerInfo.address?.zip}</p>
                                     </div>
                                 )
                             }

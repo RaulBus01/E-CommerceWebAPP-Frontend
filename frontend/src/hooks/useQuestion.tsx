@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { questionData } from "../types/UserType";
+import { questionData } from "../types/Question";
+import { _get } from "../utils/api";
 
 interface useQuestionResult{
     questions: questionData[]| null;
@@ -8,7 +9,7 @@ interface useQuestionResult{
 }
 
 const useQuestion = (userId: string, token: string): useQuestionResult => {
-    const [questions, setQuestions] = useState<string[]| null>(null);
+    const [questions, setQuestions] = useState<questionData[]| null>(null);
     const [replies, setReplies] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -16,18 +17,11 @@ const useQuestion = (userId: string, token: string): useQuestionResult => {
         const fetchQuestions = async (userId: string, token: string) => {
             setLoading(true);
             try{
-                const response = await fetch(`http://localhost:3001/api/question//findUserQuestion/${userId}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Token": `Bearer ${token}`,
-                    },
-                });
-                if(!response.ok){
-                    throw new Error(`Error: ${response.status}`);
-                }
-                const res: questionData[] = await response.json();
+                const response = await _get(`/question/findUserQuestion/${userId}`, token);
+        
+                const res: questionData[] = response.questions;
                 setQuestions(res);
+                console.log(res);
                
             }catch(error:any){
                 console.log(error);
@@ -36,9 +30,7 @@ const useQuestion = (userId: string, token: string): useQuestionResult => {
             }
         };
 
-        if(userId){
-            fetchQuestions(userId, token);
-        }
+        fetchQuestions(userId, token);
     },[userId, token]);
     useEffect(() => {
         const fetchReplies = async () => {

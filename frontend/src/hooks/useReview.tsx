@@ -1,30 +1,22 @@
 import { useEffect, useState } from "react";
 import { reviewData } from "../types/ReviewType";
+import { _get } from "../utils/api";
 
 interface UseReviewResult{
     reviews: reviewData[] | null;
     loading: boolean;
 }
 
-const useReview = (userId: string, token: string): UseReviewResult => {
+const useReview = (token: string): UseReviewResult => {
     const [reviews, setReviews] = useState<reviewData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        const fetchReviewsByUser = async (userId: string, token: string) => {
+        const fetchReviewsByUser = async (token: string) => {
             setLoading(true);
             try{
-                const response = await fetch(`http://localhost:3001/api/reviews/getReviewsByUser/${userId}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Token": `Bearer ${token}`,
-                    },
-                });
-                if(!response.ok){
-                    throw new Error(`Error: ${response.status}`);
-                }
-                const res: reviewData[] = await response.json();
+                const response = await _get(`/reviews/getReviews`, token);
+                const res: reviewData[] = response;
                 setReviews(res);
             }catch(error:any){
                 console.log(error);
@@ -33,10 +25,8 @@ const useReview = (userId: string, token: string): UseReviewResult => {
             }
         };
 
-        if(userId){
-            fetchReviewsByUser(userId, token);
-        }
-    },[userId, token]);
+        fetchReviewsByUser(token);
+    },[token]);
     return {reviews, loading};
 }
 

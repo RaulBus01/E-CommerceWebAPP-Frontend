@@ -28,7 +28,10 @@ const DistributorProductsMenu = ({products,loading}) => {
 
 
   const handleDeleteProduct = (productId) => {
-    deleteProduct(productId);
+    if(token === null){
+        return;
+    }
+    deleteProduct(productId, token);
     window.location.reload();
   }
   

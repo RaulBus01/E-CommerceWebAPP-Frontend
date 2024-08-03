@@ -10,7 +10,7 @@ import Dropdown from "../components/dropdown/dropdown";
 
 
 const Navbar = () => {
-  const { userId } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
   return (
     <div className="navbar">
@@ -27,7 +27,7 @@ const Navbar = () => {
           <div className="icons">
           <li className="nav-icons">
             <NavLink
-              to={userId !== null ? `/user-dashboard/${userId}` : "/login"}
+              to={isAuthenticated ? `/user-dashboard/${user?.id}` : "/login"}
             >
               <AccountCircleIcon />
               <span className="nav-text">Account</span>
@@ -35,7 +35,7 @@ const Navbar = () => {
           </li>
           
           <li className="nav-icons">
-            <NavLink to="/favourites">
+            <NavLink to="/favorites">
               <FavoriteBorderIcon />
               <span className="nav-text">Favourites</span>
             </NavLink>
