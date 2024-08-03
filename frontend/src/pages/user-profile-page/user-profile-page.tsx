@@ -19,8 +19,6 @@ const UserProfilePage = () => {
     const {userId, token, logout} = useAuth();
     const { userId: userIdPath } = useParams<{ userId: string }>();
 
-   
-
     const {user, loading: userLoading} = useUser(userId, token);
     const {orders, loading: ordersLoading} = useOrder(userId, token);
     const {reviews, loading: reviewsLoading} = useReview(userId, token);
@@ -33,7 +31,7 @@ const UserProfilePage = () => {
         if(user){
             switch (selectedMenu) {
                 case "Personal information":
-                    return <PersonalInformationMenu user={user} loading={userLoading} userType={'User'}/>;
+                    return <PersonalInformationMenu user={user} loading={userLoading}/>;
                 case "My orders":
                     return <MyOrdersMenu orders={orders} loading={ordersLoading} />;
                 case "My reviews":
@@ -41,7 +39,7 @@ const UserProfilePage = () => {
                 case "My questions":
                     return <MyQuestionsMenu questions={questions} loading={questionLoading} />;
                 default:
-                    return <PersonalInformationMenu user={user} loading={userLoading}  userType={'User'}/>;
+                    return <PersonalInformationMenu user={user} loading={userLoading}/>;
             }
         }
     };
@@ -63,7 +61,7 @@ const UserProfilePage = () => {
                 </div>
                 <div className="user-info-container">
                     {userLoading ? <div className="loader"></div> :
-                    <SideMenu setSelectedMenu={setSelectedMenu} name={`${user?.first_name} ${user?.last_name}`} 
+                    <SideMenu setSelectedMenu={setSelectedMenu} name={`${user?.name}`} 
                     sectionList={['Personal information','My orders','My reviews','My questions']}>
                         </SideMenu>
                     }   

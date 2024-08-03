@@ -6,12 +6,11 @@ import InfoCell from "../../info-cell/info-cell";
 import useUser from "../../../hooks/useUser";
 import { useAuth } from "../../../hooks/useAuth";
 
-const PersonalInformationMenu = ({user, loading, userType}) => {
+const PersonalInformationMenu = ({user, loading}) => {
     const {userId, token} = useAuth();
     const {editUser} = useUser(userId, token);
     const [editingField, setEditingField] = useState(null);
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [country, setCountry] = useState("");
     const [county, setCounty] = useState("");
@@ -21,12 +20,9 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
     const [zip, setZip] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
 
-    console.log(user);
-
-    const handleEdit = (fieldName, currentFirstName, currentLastName, currentEmail, currentCountry, currentCounty, currentCity, currentStreet, currentNumber, currentZip, currentPhone) => {
+    const handleEdit = (fieldName, currentName, currentEmail, currentCountry, currentCounty, currentCity, currentStreet, currentNumber, currentZip, currentPhone) => {
         setEditingField(fieldName);
-        setFirstName(currentFirstName);
-        setLastName(currentLastName);
+        setName(currentName);
         setEmail(currentEmail);
         setCountry(currentCountry);
         setCounty(currentCounty);
@@ -40,7 +36,7 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
     const handleSave = async () => {
         if (!editingField) return;
         const updates = {
-            ...(editingField === "full_name" && { first_name: firstName, last_name: lastName }),
+            ...(editingField === "full_name" && { name: name }),
             ...(editingField === "email" && { email }),
             ...(editingField === "address" && { 
                 address: {
@@ -60,6 +56,7 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
             console.log("error at updating user", error);
         }finally{
             setEditingField(null);
+            await new Promise(f => setTimeout(f, 2000));
             window.location.reload();
         }   
     };
@@ -71,8 +68,8 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
             </div>
         );
     }
-    const formattedDate = formatDateTime(user.createdAt);
-    const numberOfDays = getNumberOfDays(user.createdAt);
+    const formattedDate = formatDateTime(user.customerInfo.createdAt);
+    const numberOfDays = getNumberOfDays(user.customerInfo.createdAt);
     return(
         <>
             <div className="personal-info-menu">
@@ -86,18 +83,18 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                             </div>     
                         </div>
                         <div className="info-cell-small">
-                            {userType === 'User' ?
+                            {user.role === 'customer' ?
                             <>
                                 <h2>Account status</h2>
                                 <div>
-                                    <p className="user-info-text">{user.isVerified ? 'Verified' : 'Not verified'}</p>
+                                    <p className="user-info-text">{user.customerInfo.isVerified ? 'Verified' : 'Not verified'}</p>
                                 </div> 
                             </>
-                            : userType === 'Distributor' ?
+                            : user.role === 'distributor' ?
                             <>
                                 <h2>Distributor status</h2>
                                 <div className="user-info-text">
-                                    <p>{user.isAuthorized ? 'Authorized' : 'Not Authorized'}</p>
+                                    <p>{user.distributorInfo.isAuthorized ? 'Authorized' : 'Not Authorized'}</p>
                                 </div>
                             </>
                             : null}
@@ -111,26 +108,20 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                     </div>
                     <div className="medium-data-cells">
                         <InfoCell
-                            title={userType === 'User' ? 'Full Name' : 'Distributor Name'}
+                            title={user.role === 'customer' ? 'Your Name' : 'Distributor Name'}
                             content={
                                 editingField === "full_name" ? (
                                     <div className="name-data-display">
                                         <input
                                             type="text"
-                                            placeholder="First Name"
-                                            value={firstName}
-                                            onChange={(e) => setFirstName(e.target.value)}
-                                        />
-                                        <input
-                                            type="text"
-                                            placeholder="Last Name"
-                                            value={lastName}
-                                            onChange={(e) => setLastName(e.target.value)}
+                                            placeholder="Your name"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
                                         />
                                     </div>
                                 ) : (
                                     <div className="name-info-text">
-                                        {userType === 'User' ? (<div className="name-info-text"><p>First name: {user.first_name}</p> <p>Last name: {user.last_name}</p></div>) : (user.name)}
+                                        {user.role === 'customer' ? (<div className="name-info-text"><p>Your name: {user.name}</p></div>) : (user.name)}
                                     </div>
                                 )
                             }
@@ -138,8 +129,8 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                             handleEdit={() =>
                                 handleEdit(
                                     "full_name",
-                                    userType === "User" ? user.first_name : user.name,
-                                    userType === "User" ? user.last_name : "", "", "", "", "", "", "", "", ""
+                                    user.role === "customer" ? user.name : user.name,
+                                    user.role === "distributor" ? user.name : "", "", "", "", "", "", "", ""
                                 )
                             }
                             type=""
@@ -172,7 +163,7 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                             displayEditButton={editingField !== "phone"}
                             handleEdit={() =>
                                 handleEdit(
-                                    "phone", "", "", "", "", "", "", "", "", "", user.phoneNumber
+                                    "phone", "", "", "", "", "", "", "", "", user.phoneNumber
                                 )
                             }
                             type=""
@@ -230,18 +221,18 @@ const PersonalInformationMenu = ({user, loading, userType}) => {
                                     </div>
                                 ) : (
                                     <div className="address-info-text">
-                                        <p>Country: {user.address.country}</p>
-                                        <p>County: {user.address.county}</p>
-                                        <p>City: {user.address.city}</p>
-                                        <p>Street: {user.address.street}</p>
-                                        <p>Number: {user.address.number}</p>
-                                        <p>Zip code: {user.address.zip}</p>
+                                        <p>Country: {user.customerInfo.address.country}</p>
+                                        <p>County: {user.customerInfo.address.county}</p>
+                                        <p>City: {user.customerInfo.address.city}</p>
+                                        <p>Street: {user.customerInfo.address.street}</p>
+                                        <p>Number: {user.customerInfo.address.number}</p>
+                                        <p>Zip code: {user.customerInfo.address.zip}</p>
                                     </div>
                                 )
                             }
                             displayEditButton={editingField !== "address"}
                             handleEdit={() => 
-                                handleEdit("address", "", "", "", user.address.country, user.address.county, user.address.city, user.address.street, user.address.number, user.address.zip, "")
+                                handleEdit("address", "", "", user.customerInfo.address.country, user.customerInfo.address.county, user.customerInfo.address.city, user.customerInfo.address.street, user.customerInfo.address.number, user.customerInfo.address.zip, "")
                             }
                             type="big"
                         >

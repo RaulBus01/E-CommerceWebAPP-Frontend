@@ -11,10 +11,10 @@ const useOrder = (userId: string, token: string): UseOrderResult => {
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        const fetchOrdersByUser = async (userId: string, token: string) => {
+        const fetchOrdersByUser = async (token: string) => {
             setLoading(true);
             try{
-                const response = await fetch(`http://localhost:3001/api/orders/yourOrders/${userId}`, {
+                const response = await fetch(`http://localhost:3001/api/orders/orders`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -34,7 +34,7 @@ const useOrder = (userId: string, token: string): UseOrderResult => {
         };
 
         if(userId){
-            fetchOrdersByUser(userId, token);
+            fetchOrdersByUser(token);
         }
     },[userId, token]);
     return {orders, loading};

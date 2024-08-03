@@ -5,20 +5,21 @@ import useFavourite from "../../hooks/useFavourite";
 import { useAuth } from "../../hooks/useAuth";
 
 const FavoritePage = () => {
-    const {userId, token} = useAuth();
+    const { userId, token } = useAuth();
+    const { favourites, loading } = useFavourite(userId, token);
 
-    const {favourites, loading} = useFavourite(userId, token);
-    return(
+    return (
         <>
             <div className="main-container">
                 <h1>Your favourite items</h1>
                 <div className="items-container">
                     {favourites?.map((favourite) => (
-                        <ProductCard key={favourite.id} product={favourite.product} loading={loading}/>
+                        <ProductCard key={favourite.product._id} product={favourite.product} loading={loading} />
                     ))}
                 </div>
             </div>
         </>
     );
-}
-export default FavoritePage
+};
+
+export default FavoritePage;

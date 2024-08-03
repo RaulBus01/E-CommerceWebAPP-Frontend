@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { userData } from "../types/UserType";
+import toast from 'react-hot-toast'
 
 interface UseUserResult{
     user: userData | null;
@@ -26,6 +27,7 @@ const useUser = (userId: string, token: string): UseUserResult => {
                     throw new Error(`Error: ${response.status}`);
                 }
                 const res: userData = await response.json();
+                console.log(res);
                 setUser(res);
             }catch(error: any){
                 console.error(error);
@@ -51,19 +53,18 @@ const useUser = (userId: string, token: string): UseUserResult => {
                         'Token': `Bearer ${token}`,
                     },
                     body: JSON.stringify({ 
-                        id: userId,
                         ...updates, 
                     }),
                 });
                 if(!response.ok){
                     throw new Error(`Error ${response.status}`);
                 }
-                const updatedUser: userData = await response.json();
+                const updatedUser = await response.json();
                 setUser((prevUser) => ({
                     ...prevUser,
                     ...updatedUser,
                 }));
-                alert("User information updated successfully!");
+                toast.success("Your information has been changed!");
                 console.log(updatedUser);
             }catch(error){
                 console.log("Failed to edit user", error);
@@ -71,7 +72,7 @@ const useUser = (userId: string, token: string): UseUserResult => {
                 setLoading(false);
             }
         },
-        [userId, token]
+        [token]
     );
 
     return {user, loading, editUser};

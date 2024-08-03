@@ -6,4 +6,8 @@ interface favouriteData{
     createdAt:Date;
     updatedAt:Date;
 }
-export default favouriteData;
+interface favouriteItem {
+    _id: string;
+    product: productData;
+}
+export type {favouriteData, favouriteItem};
