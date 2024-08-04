@@ -1,16 +1,16 @@
-.my-orders-menu{
+.products-menu{
     width: 100%;
     height: auto;
     padding: 10px;
     display: flex;
     flex-direction: column;
 }
-.orders-container{
+.products-container{
     width: 100%;
     height: auto;
     padding-bottom: 10px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 50px;
     overflow: hidden;
 }

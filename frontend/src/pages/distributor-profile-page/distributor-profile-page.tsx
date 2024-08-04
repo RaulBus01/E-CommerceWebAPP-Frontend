@@ -14,55 +14,50 @@ import MyQuestionsMenu from "../../components/user-account-submenus/my-questions
 
 const DistributorProfilePage = () => {
     const [selectedMenu, setSelectedMenu] = useState<string>("Personal information");
-    const {userId,userRole, token, logout} = useAuth();
+    const { token, user, logout } = useAuth();
+    const { products, loading } = useDistributor(token as string);
 
-    const {distributor, loading: userLoading,products,orders} = useDistributor(userId, token);
-
-
-
-  
     const navigate = useNavigate();
 
     const loadSelectedMenu = () => {
-        if(distributor){
+        if (user) {
             switch (selectedMenu) {
-                case "Personal information":
-                    return <PersonalInformationMenu user={distributor} loading={userLoading} userType={'Distributor'}/>;
-                case "My products":
-                    return <DistributorProductsMenu products={products} loading={userLoading} />;
-                case "My orders":
-                    return <MyOrdersMenu orders={orders} loading={userLoading} />;
+                case "Personal Information":
+                    return <PersonalInformationMenu user={user} />;
+                case "My Products":
+                    return <DistributorProductsMenu products={products} loading={loading} />;
+                case "My Orders":
+                    // return <MyOrdersMenu orders={orders} loading={userLoading} />;
 
                 default:
-                    return <PersonalInformationMenu user={distributor} loading={userLoading}  userType={'Distributor'}/>;
+                    // return <PersonalInformationMenu user={user} />;
             }
         }
     };
 
     const handleLogOut = () => {
         logout();
-        navigate('/')
-        toast.success('You have been logged out')
+        navigate('/');
+        toast.success('You have been logged out');
     };
 
-    return(
-        <>
-         { userLoading && <div className="loader"></div>}
-            <div className="user-profile-main-container">
-                <div className="top-container">
-                    <h2>Your account</h2>
-                    <button className="signOut-btn" onClick={handleLogOut}>Sign out</button>
-                </div>
-                <div className="user-info-container">
-                {userLoading ? <div className="loader"></div> :
-                    <SideMenu setSelectedMenu={setSelectedMenu} name={`${distributor?.name}`}
-                    sectionList={['Personal information','My products','My orders']}
-                    ></SideMenu>
-                }
-                    <div className="user-info">{loadSelectedMenu()}</div>
-                </div>
+   
+
+    return (
+        <div className="user-profile-main-container">
+            <div className="top-container">
+                <h2>Your account</h2>
+                <button className="signOut-btn" onClick={handleLogOut}>Sign out</button>
             </div>
-        </>
+            <div className="user-info-container">
+                <SideMenu 
+                    setSelectedMenu={setSelectedMenu} 
+                    name={user?.name || ""} 
+                    sectionList={['Personal information','My Products','My orders','My reviews','My questions']}
+                />
+                <div className="user-info">{loadSelectedMenu()}</div>
+            </div>
+        </div>
     );
 }
 export default DistributorProfilePage;

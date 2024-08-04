@@ -3,6 +3,8 @@ import "./product-card.css";
 import StarIcon from "@mui/icons-material/Star";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuth } from "../../hooks/useAuth";
 import useFavourite from "../../hooks/useFavourite";
 import { productData } from "../../types/ProductType";
@@ -15,7 +17,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
-  const { token } = useAuth();
+  const { token,user } = useAuth();
   const { addToFavourite, removeFavourite, isProductFavourite } = useFavourite();
   const { addProductToCart } = useCart(token as string);
  
@@ -60,12 +62,26 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
         </p>
       </div>
       <div className="button-container">
-        <button  onClick={handleAddToCart} className="add-to-cart-button">
-          <AddShoppingCartIcon />
-        </button>
-        <button onClick={handleFavorite} className="favorite-button">
-          <FavoriteIcon style={{ color: isFavorite ? "red" : "white" }} />
-        </button>
+        {user?.role === "customer" ? 
+         <>
+          <button  onClick={handleAddToCart} className="add-to-cart-button">
+            <AddShoppingCartIcon />
+          </button>
+          <button onClick={handleFavorite} className="favorite-button">
+            <FavoriteIcon style={{ color: isFavorite ? "red" : "white" }} />
+          </button>
+          </>
+          :
+          <>
+          <button className="edit-button">
+            <EditIcon /> Edit
+          </button>
+          <button className="delete-button">
+            <DeleteIcon /> Delete
+          </button>
+            
+          </> 
+        }
       </div>
     </div>
   );

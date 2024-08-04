@@ -60,9 +60,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   const register = async (data: registerDataDistributor | registerDataCustomer): Promise<boolean> => {
     try {
       await _post('/authUser/register', data,token, { credentials: 'include' });
-      const newToken = Cookies.get('accessToken');
-      if (!newToken) throw new Error('No token in response');
-      setToken(newToken);
+      
       return true;
     } catch (error) {
       console.error('Register error:', error);

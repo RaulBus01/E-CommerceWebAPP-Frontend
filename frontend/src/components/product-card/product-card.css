@@ -91,3 +91,19 @@
     cursor: pointer;
     box-shadow: 2px 2px 2px rgb(133, 180, 238);
 }
+.edit-button,
+.delete-button{
+    background-color: rgb(255, 255, 255);
+    color: rgb(64, 146, 222);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(64, 146, 222);
+}
+.edit-button:hover,
+.delete-button:hover{
+    cursor: pointer;
+    background-color: rgb(152, 189, 224);
+    color: rgb(255, 255, 255);
+}
