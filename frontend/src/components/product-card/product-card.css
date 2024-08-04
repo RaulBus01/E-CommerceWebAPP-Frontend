@@ -2,6 +2,7 @@
     border: 1px solid rgb(184, 184, 184);
     border-radius: 10px;
     box-shadow: 2px 2px 2px rgb(217, 217, 217);
+    background-color: var(--primary-color);
 
     padding: 5px;
     display: flex;
@@ -72,7 +73,7 @@
 }
 
 .button-container button{
-    background-color: rgb(64, 146, 222);
+    background-color: var(--dark-color);
     color: rgb(246, 246, 246);
     border: none;
     border-radius: 15px;
@@ -89,5 +90,5 @@
 
 .button-container button:hover{
     cursor: pointer;
-    box-shadow: 2px 2px 2px rgb(133, 180, 238);
+    box-shadow: 2px 2px 2px #af855b;
 }

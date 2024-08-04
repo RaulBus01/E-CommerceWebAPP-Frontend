@@ -1,21 +1,52 @@
 .home {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
   flex-direction: column;
-  height: 100vh;
-  width: 100%;
-  padding: 24px;
-  margin-bottom: 20px;
-  box-sizing: border-box;
+  align-items: center;
 
-  display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    justify-items: center;
+  height: auto;
+  width: 100%;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+
+  background-color: var(--light-gray-color);
+  border-bottom: 2px solid var(--primary-color);
 }
 
 .home-dropdown {
   margin-top: 20px;
   width: 200px;
+}
+
+.product-slider-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  align-items: center;
+  justify-content: center;
+
+  border-bottom: 2px solid var(--primary-color);
+  background-image: url("../../assets/book-shelf.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.product-slider-container h1{
+  color: var(--primary-color);
+}
+
+.all-products-container{
+  width: 60%;
+
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: 20px;
+  padding: 10px 10px;
+  row-gap: 20px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
 }

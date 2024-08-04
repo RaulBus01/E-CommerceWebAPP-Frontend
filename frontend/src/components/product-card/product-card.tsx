@@ -28,7 +28,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
     } else {
       await addToFavourite(product._id);
     }
-    
   }, [isFavorite, product._id, addToFavourite, removeFavourite]);
 
   const handleAddToCart = useCallback(async () => {

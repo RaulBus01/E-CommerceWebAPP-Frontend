@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import "./home.css";
 import useProduct from '../../hooks/useProduct';
 import ProductCard from '../../components/product-card/product-card';
+import ProductSlider from "../../components/product-slider/product-slider";
 
 const Home = () => {
 
@@ -10,9 +11,15 @@ const Home = () => {
 
   return (
     <div className="home">
-                    {products?.map((product) => (
-                        <ProductCard key={product._id} product={product} loading={loading} />
-                    ))}
+      <div className="product-slider-container">
+        <h1>Today's offers</h1>
+        <ProductSlider products={products}/>
+      </div>
+      <div className="all-products-container">
+        {products?.map((product) => (
+          <ProductCard key={product._id} product={product} loading={loading} />
+        ))}
+      </div>
     </div>
   );
 };

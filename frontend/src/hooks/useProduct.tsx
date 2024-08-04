@@ -4,14 +4,14 @@ import { _delete, _get, } from "../utils/api";
 
 
 interface UseOrderResult{
-    products: productData[] | null;
+    products: productData[];
     loading: boolean;
     deleteProduct: (productId: string, token: string) => Promise<boolean>;
     //fetchProductsBySubcategory: (subcategory: string) => Promise<productData[] | null>;
 }
 
 const useProduct = (): UseOrderResult => {
-    const [products, setProducts] = useState<productData[] | null>(null);
+    const [products, setProducts] = useState<productData[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
