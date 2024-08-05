@@ -6,7 +6,7 @@ import { useAuth } from "../../hooks/useAuth";
 
 const FavoritePage = () => {
     const { token } = useAuth();
-    const { favourites, loading } = useFavourite();
+    const { favourites, loading } = useFavourite(token as string);
 
     return (
         <>
