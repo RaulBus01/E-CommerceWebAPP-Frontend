@@ -2,7 +2,7 @@ import { questionData } from "./Question";
 import { reviewData } from "./ReviewType";
 
 interface productDataForOrder{
-    productId: string;
+    product: productData;
     quantity: number;
 }
 interface productData {
@@ -21,5 +21,15 @@ interface productData {
     reviews?: reviewData[];
     questions?: questionData[];
   }
+interface productFormData {
+    
+    name: string;
+    description: string;
+    price: string;
+    image: string;
+    category: string;
+    stock: string;
+}
+
   
-export type {productDataForOrder, productData} 
+export type {productDataForOrder, productData, productFormData}; 

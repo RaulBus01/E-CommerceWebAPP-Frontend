@@ -34,6 +34,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
     }
     
   }, [isFavorite, product._id, addToFavourite, removeFavourite]);
+  
+  const handleDeleteProduct = (productId) => {
+    deleteProduct(productId);
+  }
+  const handleNavigate = (path) => {
+    navigate(path);
+  }
 
   const handleAddToCart = useCallback(async () => {
     await addProductToCart(product, token);

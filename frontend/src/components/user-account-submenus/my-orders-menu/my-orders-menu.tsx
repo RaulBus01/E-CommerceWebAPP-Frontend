@@ -19,17 +19,13 @@ const MyOrdersMenu = ({token}) => {
 
     return (
         <>
+        
             <div className="my-orders-menu">
                 <h2>My Orders</h2>
                 {orders && orders.length > 0 ? (
                     <div className="orders-container">
                         {orders.map((order) => (
-                            <div key={order._id} className="order-item">
-                                <h3>Order number: {order._id}</h3>
-                                <p><strong>Status:</strong> {order.status}</p>
-                                <p><strong>Total:</strong> ${order.totalPrice.toFixed(2)}</p>
-                                <p><strong>Placed at:</strong> {formatDateTime(order.createdAt)}</p>
-                            </div>
+                            <OrderSummary key={order._id} id={order._id} date={formatDateTime(order.createdAt)} total={order.totalPrice} status={order.status} distributorId={order.distributorId}/>
                         ))}
                     </div>
                 ) : (

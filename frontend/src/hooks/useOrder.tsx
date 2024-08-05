@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { orderData } from "../types/OrderType";
 import { _get } from "../utils/api";
 
 interface UseOrderResult {
+interface UseOrderResult {
     orders: orderData[] | null;
     loading: boolean;
+    fetchOrderById: (orderId: string, token: string) => Promise<orderData | undefined>;
+    editOrderStatus: (orderId: string, token: string) => Promise<orderData | undefined>;
+    cancelOrder: (orderId: string, token: string) => Promise<boolean>;
 }
 
 const useOrder = (token: string): UseOrderResult => {

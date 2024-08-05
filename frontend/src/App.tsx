@@ -24,7 +24,11 @@ const App = () => {
   const location = useLocation();
   const disableNavPaths = ['/login', '/register/customer', '/register/distributor', '/admin/login'];
   const showNav = !disableNavPaths.includes(location.pathname);
-
+  // const showNav = !disableNavPaths.some(path => {
+  //   const regexPath = path.replace(/:\w+/g, '[^/]+');
+  //   const regex = new RegExp(`^${regexPath}$`);
+  //   return regex.test(location.pathname);
+  // });
   return (
     <>
          <AuthProvider>
