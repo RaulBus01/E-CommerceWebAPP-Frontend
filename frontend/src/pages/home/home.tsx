@@ -3,17 +3,22 @@ import "./home.css";
 import useProduct from '../../hooks/useProduct';
 import ProductCard from '../../components/product-card/product-card';
 import ProductSlider from "../../components/product-slider/product-slider";
+import { productData } from "../../types/ProductType";
 
 const Home = () => {
-
-  const { products, loading } = useProduct();
-
+  console.log("Home");
+  const { products,loading } = useProduct();
+  console.log(products);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
+
     <div className="home">
       <div className="product-slider-container">
         <h1>Today's offers</h1>
-        <ProductSlider products={products}/>
+        <ProductSlider products={products as productData[]}/>
       </div>
       <div className="all-products-container">
         {products?.map((product) => (

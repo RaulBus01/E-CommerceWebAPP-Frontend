@@ -1,7 +1,7 @@
 import { replyData } from "./Reply";
 
 interface questionData{
-    _id: string;
+    id: string;
     user: string;
     productId: string;
     content: string;

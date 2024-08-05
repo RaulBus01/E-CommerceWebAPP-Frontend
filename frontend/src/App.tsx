@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route, useLocation} from 'react-router-dom';
-import Home from './pages/home-page/home';
+import Home from './pages/home/home';
 import CategoryPage from './pages/category-page/category-page';
 import RegisterPage from './pages/authentication-page/register';
 import LoginPage from './pages/authentication-page/login';
@@ -24,7 +24,11 @@ const App = () => {
   const location = useLocation();
   const disableNavPaths = ['/login', '/register/customer', '/register/distributor', '/admin/login'];
   const showNav = !disableNavPaths.includes(location.pathname);
-
+  // const showNav = !disableNavPaths.some(path => {
+  //   const regexPath = path.replace(/:\w+/g, '[^/]+');
+  //   const regex = new RegExp(`^${regexPath}$`);
+  //   return regex.test(location.pathname);
+  // });
   return (
     <>
          <AuthProvider>
@@ -37,16 +41,15 @@ const App = () => {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register/:userRole" element={<RegisterPage />} />
             </Route>
-            
-            {/* Protected Routes */}
             <Route element={<ProtectedRoute />}>
               
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<PaymentCheckoutPage />} />
               <Route path="/profile" element={<UserProfilePage />} />
               <Route path="/favorites" element={<FavoritePage />} />
-              <Route path="/distributor/profile" element={<DistributorProfilePage />} />
+              <Route path="/distributor-dashboard/:id" element={<DistributorProfilePage />} />
               <Route path='/user-dashboard/:id' element={<UserProfilePage />} />
+          
             </Route>
           </Routes>
           {showNav && <Footer />}

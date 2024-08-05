@@ -10,6 +10,7 @@ interface ProductSliderProps{
 }
 
 const ProductSlider: React.FC<ProductSliderProps> = ({products}) => {
+    console.log(products);
     const [currentSlide, setCurrentSlide] = useState(0);
     const productsPerSlide = 4;
     const totalSlides = Math.ceil(products.length / productsPerSlide);

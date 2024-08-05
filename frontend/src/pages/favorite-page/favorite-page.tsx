@@ -7,7 +7,7 @@ import Spinner from "../../components/spinner/spinner";
 
 const FavoritePage = () => {
     const { token } = useAuth();
-    const { favourites, loading } = useFavourite();
+    const { favourites, loading } = useFavourite(token as string);
 
     return (
         <>

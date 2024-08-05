@@ -3,11 +3,14 @@ import "./product-card.css";
 import StarIcon from "@mui/icons-material/Star";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuth } from "../../hooks/useAuth";
 import useFavourite from "../../hooks/useFavourite";
 import { productData } from "../../types/ProductType";
 import  useCart  from "../../hooks/useCart";
-import { useNavigate } from "react-router";
+import useProduct from "../../hooks/useProduct";
+import { useNavigate } from "react-router-dom";
 
 
 interface ProductCardProps {
@@ -16,13 +19,14 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
-  const { token } = useAuth();
-  const { addToFavourite, removeFavourite, isProductFavourite } = useFavourite();
-  const { addProductToCart } = useCart(token as string);
- 
-
-  const isFavorite = isProductFavourite(product._id);
+  const { token,user } = useAuth();
   const navigate = useNavigate();
+
+  const isCustomer = user?.role === "customer";
+  const { addToFavourite, removeFavourite, isProductFavourite } = isCustomer ? useFavourite(token as string) : { addToFavourite: () => {}, removeFavourite: () => {}, isProductFavourite: () => false };
+  const { addProductToCart } = isCustomer ? useCart(token as string) : { addProductToCart: () => {} };
+  
+ const isFavorite = user?.role === "customer" ? isProductFavourite(product._id) : false;
 
   const handleFavorite = useCallback(async () => {
     if (isFavorite) {
@@ -32,25 +36,41 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
     }
     window.location.reload();
   }, [isFavorite, product._id, addToFavourite, removeFavourite]);
+  
+ 
+  const handleNavigate = (path) => {
+    navigate(path);
+  }
 
   const handleAddToCart = useCallback(async () => {
     await addProductToCart(product, token);
  
   }
   , [addProductToCart, product, token]);
+  const { products, setProducts,deleteProduct } = useProduct();
+  const handleDeleteProduct = async () => {
+    if (token && user?.role === "distributor") {
+        const response = await deleteProduct(product._id, token);
+        if (response) {
+            setProducts(products.filter((p) => p._id !== product._id));
+        }
+      
 
-
+    }
+  }
  
 
-  const handleProductPage = () =>{
-    navigate(`/product/${product._id}`)
+  if (loading) {
+    return <div>Loading
+    </div>;
   }
+
 
   return (
     <div className="card-container">
-      <img onClick={handleProductPage} src={product.image} alt="product" />
+      {/* <img onClick={handleProductPage} src={product.image} alt="product" /> */}
       <div className="information-container">
-        <p onClick={handleProductPage} className="product-name">{product.name}</p>
+        {/* <p onClick={handleProductPage} className="product-name">{product.name}</p> */}
         <h2>{product.price} lei</h2>
       </div>
       <div className="rating-container">
@@ -60,12 +80,26 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
         </p>
       </div>
       <div className="button-container">
-        <button  onClick={handleAddToCart} className="add-to-cart-button">
-          <AddShoppingCartIcon />
-        </button>
-        <button onClick={handleFavorite} className="favorite-button">
-          <FavoriteIcon style={{ color: isFavorite ? "red" : "white" }} />
-        </button>
+        {user?.role === "customer" ? 
+         <>
+          <button  onClick={handleAddToCart} className="add-to-cart-button">
+            <AddShoppingCartIcon />
+          </button>
+          <button onClick={handleFavorite} className="favorite-button">
+            <FavoriteIcon style={{ color: isFavorite ? "red" : "white" }} />
+          </button>
+          </>
+          :
+          <>
+          <button className="edit-button">
+            <EditIcon /> Edit
+          </button>
+          <button className="delete-button" onClick={handleDeleteProduct}>
+            <DeleteIcon /> Delete
+          </button>
+            
+          </> 
+        }
       </div>
     </div>
   );

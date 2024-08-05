@@ -1,7 +1,17 @@
 import React from "react";
 import './info-cell.css';
 
-const InfoCell = ({title, content, displayEditButton = false, handleEdit, type, children}) => {
+interface InfoCellProps {
+    title: string;
+    content: any;
+    displayEditButton?: boolean;
+    handleEdit?: () => void;
+    editControls?: React.ReactNode;
+    type?: string;
+    children?: React.ReactNode;
+}
+
+const InfoCell: React.FC<InfoCellProps> = ({title, content, displayEditButton = false, handleEdit, editControls, type, children}) => {
     if(type === "big"){
         return(
             <div className="info-cell-big">
@@ -10,6 +20,7 @@ const InfoCell = ({title, content, displayEditButton = false, handleEdit, type, 
                 {displayEditButton && (
                     <button className="edit-info-button-big" onClick={handleEdit}>Edit</button>
                 )}
+                {editControls}
                 {children}
             </div>
         );
@@ -23,6 +34,7 @@ const InfoCell = ({title, content, displayEditButton = false, handleEdit, type, 
             {displayEditButton && (
                 <button className="edit-info-button" onClick={handleEdit}>Edit</button>
             )}
+            {editControls}
             {children}
         </div>
     );

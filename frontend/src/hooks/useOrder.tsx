@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { orderData } from "../types/OrderType";
 import { _get } from "../utils/api";
 
 interface UseOrderResult {
     orders: orderData[] | null;
     loading: boolean;
+   
 }
 
 const useOrder = (token: string): UseOrderResult => {
@@ -15,7 +16,7 @@ const useOrder = (token: string): UseOrderResult => {
         const fetchOrdersByUser = async (token: string) => {
             setLoading(true);
             try {
-                const response = await _get(`/orders/orders`, token);
+                const response = await _get(`/orders/find`, token);
                 const res: orderData[] = response.orders;
                 setOrders(res);
             } catch (error: any) {

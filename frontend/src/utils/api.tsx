@@ -39,6 +39,7 @@ export const _post = (url, data,token, config = {}) => {
 
 //GET
 export const _get = (url,token, config = {}) => {
+    
     return fetchClient(url, token,{
       method: 'GET',
       ...config,

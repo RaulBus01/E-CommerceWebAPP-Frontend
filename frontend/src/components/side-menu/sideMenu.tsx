@@ -4,7 +4,7 @@ import { useAuth } from "../../hooks/useAuth";
 import './sideMenu.css'
 
 const SideMenu = ({setSelectedMenu,name,sectionList}) => {
-    const [selected, setSelected] = useState<string>('Personal information');
+    const [selected, setSelected] = useState<string>('Personal Information');
 
 
     const handleSelectedButton = (buttonName: string) => {

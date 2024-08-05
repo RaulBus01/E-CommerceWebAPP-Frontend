@@ -24,17 +24,7 @@ const RegisterPage: React.FC = () => {
       if(result)
       {
         toast.success('Registration successful')
-        switch(userRole){
-          case 'customer':
-            navigate('/')
-            break
-          case 'distributor':
-            navigate('/distributor-dashboard')
-            break
-          case 'admin':
-            navigate('/admin-dashboard')
-            break
-        }
+        navigate('/login')
       }
       else{
       toast.error('Registration failed')

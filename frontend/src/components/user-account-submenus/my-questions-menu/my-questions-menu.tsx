@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import '../my-orders-menu/my-orders-menu.css'
 import Spinner from "../../spinner/spinner";
 import {formatDateTime} from "../../../utils/formatDataTime";
+import useQuestion from "../../../hooks/useQuestion";
 
-const MyQuestionsMenu = ({questions, loading}) => {
+const MyQuestionsMenu = ({userId,token}) => {
     
     const [visibleReplies, setVisibleReplies] = useState({});
+    const { questions, loading: questionLoading } =  useQuestion(userId as string, token as string);
 
-    if(loading){
+    if(questionLoading){
         return(
             <div className="my-orders-menu">
                 <Spinner/>
@@ -23,7 +25,7 @@ const MyQuestionsMenu = ({questions, loading}) => {
             [questionId]: !prev[questionId]
         }));
     };
-
+    console.log(questions)
     return (
         <div className="my-orders-menu">
             <h2>My Questions</h2>
@@ -37,13 +39,13 @@ const MyQuestionsMenu = ({questions, loading}) => {
                                 onClick={() => handleRepliesVisibility(question.id)} 
                                 className="btn btn-primary"
                             >
-                                {question.replies.length} Answers
+                                {question.replies?.length} Answers
                             </button>
                             {visibleReplies[question.id] && (
                                 <div className="replies-container">
-                                    {question.replies.map((answer) => (
+                                    {question.replies?.map((answer) => (
                                         console.log(answer),
-                                        <div key={answer.id} className="reply-item">
+                                        <div key={answer._id} className="reply-item">
                                             <p><strong>Answer:</strong> {answer.content}</p>
                                             <p><strong>Placed at:</strong> {formatDateTime(answer.createdAt)}</p>
                                         </div>

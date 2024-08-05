@@ -1,94 +1,68 @@
-import { useEffect, useState, useCallback} from "react";
+import { useEffect, useState, useCallback } from "react";
 import { productData } from "../types/ProductType";
-import { _delete, _get, } from "../utils/api";
+import { _delete, _get } from "../utils/api";
+import { useAuth } from "./useAuth";
 
-
-interface UseOrderResult{
-    products: productData[];
-    loading: boolean;
-    deleteProduct: (productId: string, token: string) => Promise<boolean>;
-    //fetchProductsBySubcategory: (subcategory: string) => Promise<productData[] | null>;
+interface UseOrderResult {
+  products: productData[] | null;
+  setProducts: (products: productData[] | null) => void;
+  loading: boolean;
+  deleteProduct: (productId: string, token: string) => Promise<boolean>;
+  distributorProducts: productData[] | null;    
 }
 
 const useProduct = (): UseOrderResult => {
-    const [products, setProducts] = useState<productData[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+//   const { token, user } = useAuth();
+  
+  const [products, setProducts] = useState<productData[] | null>(null);
+  const [distributorProducts, setDistributorProducts] = useState<productData[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            setLoading(true);
-            try{
-                const response = await _get(`/products/findAll`,{},{});
-                setProducts(response);
-            }catch(error:any){
-                console.error(error);
-            }finally{
-                setLoading(false);
-            }
-        };
+  const fetchProducts = useCallback(async () => {
+    setLoading(true);
+    try {
+      console.log("fetching all products");
+      const response = await _get(`/products/findAll`, {}, {});
+      setProducts(response);
+      console.log(response);
+    } catch (error: any) {
+      console.error("Error fetching all products:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-        fetchProducts();
-    },[]);
-
-    useEffect(() => {
-        const fetchProductById = async (productId: string) => {
-            if(!productId) return;
-
-            setLoading(true);
-            try{
-                const response = await fetch(`http://localhost:3001/api/products/find/${productId}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-                if(!response.ok){
-                    throw new Error(`Error: ${response.status}`);
-                }
-                const res: productData = await response.json();
-                setProduct(res);
-            }catch(error:any){
-                console.log(error);
-            }finally{
-                setLoading(false);
-            }
-        };
-        if(productId){
-            fetchProductById(productId);
-        }
-    }, [productId]);
-
-    const deleteProduct = async (productId: string, token: string) => {
-      try {
-        const response = await _delete(`/products/${productId}`,{}, token);
-          if(!response.ok){
-              throw new Error(`Error: ${response.status}`);
-          }
-          return true;
-      } catch (error: any) {
-          console.error(error);
-          return false;
-      }
-   };
-
-//    const fetchProductsBySubcategory = useCallback(async (subcategory: string) => {
+//   const fetchProductsDistributor = useCallback(async () => {
+//     if (!user?.role || user.role !== "distributor" || !user.id) {
+//       return;
+//     }
 //     setLoading(true);
 //     try {
-//         const response = await fetchProductsBySubcategories();
-//         if (!response.ok) {
-//             throw new Error(`Error: ${response.status}`);
-//         }
-//         const res: productData[] = await response.json();
-//         return res;
+//       const response = await _get(`/products/findDistributor/${user.id}`, token);
+//       setDistributorProducts(response);
 //     } catch (error: any) {
-//         console.error(error);
-//         return null;
+//       console.error("Error fetching distributor products:", error);
 //     } finally {
-//         setLoading(false);
+//       setLoading(false);
 //     }
-// }, []);
+//   }, [user, token]);
 
-    return {products, loading, deleteProduct};
-}
+  useEffect(() => {
+    fetchProducts();
+    // fetchProductsDistributor();
+  }, []);
+
+  const deleteProduct = async (productId: string, token: string) => {
+    try {
+      await _delete(`/products/delete/${productId}`, {}, token);
+      return true;
+    } catch (error: any) {
+      console.error("Error deleting product:", error);
+      return false;
+    }
+  };
+
+  return { products, setProducts, loading, deleteProduct, distributorProducts };
+};
 
 export default useProduct;
