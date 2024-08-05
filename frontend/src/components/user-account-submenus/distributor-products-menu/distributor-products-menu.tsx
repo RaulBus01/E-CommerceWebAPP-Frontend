@@ -1,66 +1,77 @@
-import React from 'react'
-import './distributor-products-menu.css'
-import Spinner from '../../spinner/spinner'
-import useProduct from '../../../hooks/useProduct';
-import { useAuth } from '../../../hooks/useAuth';
-import ProductForm from './distributor-product-form';
-import { Modal } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import './distributor-products-menu.css';
+import Spinner from '../../spinner/spinner';
 import ProductCard from '../../product-card/product-card';
-
-const DistributorProductsMenu = ({products,loading}) => {
-   
+import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
+import SearchIcon from '@mui/icons-material/Search';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../hooks/useAuth';
+import  useProduct  from '../../../hooks/useProduct';
+const DistributorProductsMenu = ({ products, loading }) => {
+ 
     const { token } = useAuth();
-    const { deleteProduct } = useProduct();
+    const { deleteProduct,setProducts } = useProduct();
     console.log(products);
-    
+    const navigate = useNavigate();
+    const [filteredProducts, setFilteredProducts] = useState([]);
 
-  if(loading){
-      return(
-          <div className="my-orders-menu">
-              <Spinner/>
-          </div>
-      );
-  }
+  useEffect(() => {
+    setFilteredProducts(products);
+  }, [products]);
 
-  const handleOpenProductForm = () => {
-    console.log('open product form')
-    return <ProductForm/>
-    }
+  const handleNavigate = (path) => {
+    navigate(path);
+  };
 
+  const searchProducts = (e) => {
+    const searchValue = e.target.value.toLowerCase();
+    const filtered = products.filter(product =>
+      product.name.toLowerCase().includes(searchValue)
+    );
+    setFilteredProducts(filtered);
+  };
 
-
-  const handleDeleteProduct = (productId) => {
-    if(token === null){
-        return;
-    }
-    deleteProduct(productId, token);
-
-  }
-  
   return (
+    <div className="distributor-products-menu">
+      <div className="top-container">
+        <h2>Search your product list</h2>
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search products"
+            onChange={searchProducts}
+            className="search-input"
+          />
+          <SearchIcon className="icon" />
+        </div>
+      </div>
+
+      <div className="add-product-container">
+        <h3>Add New Product</h3>
+        <AddCircleOutline className="icon" onClick={() => handleNavigate('add-product')} />
+      </div>
+
+      {loading ? (
+        <Spinner />
+      ) : (
         <>
-            <div className="products-menu">
-                <h2>My Products
-                </h2>
-                <button className="btn btn-primary" onClick={handleOpenProductForm}>
-                    Add Product
-                </button>
-                <div className="products-container">
-                    {products.map((product) => (
-                        <ProductCard key={product._id} product={product} loading={loading}/>
-                        
-
-                    ))}
-                </div>
-
-
-
-                
-                    
+          {filteredProducts && filteredProducts.length > 0 ? (
+            <div className="products-container">
+              {filteredProducts.map((product) => (
+                <ProductCard
+                  key={product._id}
+                  product={product}
+                  loading={loading}
+                />
+              ))}
             </div>
+          ) : (
+            <p>No products found.</p>
+          )}
         </>
-        );
-}
+      )}
+    </div>
+  );
+};
 
-
-export default DistributorProductsMenu
+export default DistributorProductsMenu;

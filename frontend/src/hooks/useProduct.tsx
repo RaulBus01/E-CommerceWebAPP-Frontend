@@ -5,7 +5,9 @@ import { _delete, _get, } from "../utils/api";
 
 interface UseOrderResult{
     products: productData[] | null;
+    setProducts: (products: productData[] | null) => void
     loading: boolean;
+
     deleteProduct: (productId: string, token: string) => Promise<boolean>;
     //fetchProductsBySubcategory: (subcategory: string) => Promise<productData[] | null>;
 }
@@ -32,10 +34,8 @@ const useProduct = (): UseOrderResult => {
 
     const deleteProduct = async (productId: string, token: string) => {
       try {
-        const response = await _delete(`/products/${productId}`,{}, token);
-          if(!response.ok){
-              throw new Error(`Error: ${response.status}`);
-          }
+        const response = await _delete(`/products/delete/${productId}`,{}, token);
+        
           return true;
       } catch (error: any) {
           console.error(error);
@@ -60,7 +60,7 @@ const useProduct = (): UseOrderResult => {
 //     }
 // }, []);
 
-    return {products, loading, deleteProduct};
+    return {products,setProducts, loading, deleteProduct};
 }
 
 export default useProduct;

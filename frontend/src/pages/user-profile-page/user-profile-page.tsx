@@ -38,7 +38,9 @@ const UserProfilePage: React.FC = () => {
             }
         }
     }, [user, navigate]);
+  
     const isCustomer = user?.role === "customer";
+    
     const { orders, loading: ordersLoading } =  isCustomer ? useOrder(token as string) : { orders:[], loading: false };
     const { reviews, loading: reviewsLoading } = isCustomer ? useReview(token as string) : { reviews:[], loading: false };
     const { questions, loading: questionLoading } = isCustomer ? useQuestion(userIdPath as string, token as string) : { questions:[], loading: false };

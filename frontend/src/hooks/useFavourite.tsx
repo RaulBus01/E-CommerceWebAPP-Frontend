@@ -11,8 +11,8 @@ interface UseFavouriteResult {
     isProductFavourite: (productId: string) => boolean;
 }
 
-const useFavourite = (): UseFavouriteResult => {
-    const {token} = useAuth();
+const useFavourite = (token:string): UseFavouriteResult => {
+    
     const [favourites, setFavourites] = useState<favouriteItem[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [favouriteSet, setFavouriteSet] = useState<Set<string>>(new Set());
