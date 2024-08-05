@@ -1,7 +1,7 @@
 .card-container{
     border: 1px solid rgb(184, 184, 184);
     border-radius: 10px;
-    box-shadow: 2px 2px 2px rgb(217, 217, 217);
+    box-shadow: 2px 2px 2px rgb#98ac55;
     background-color: var(--primary-color);
 
     padding: 5px;
@@ -14,7 +14,7 @@
 }
 
 .card-container:hover{
-    box-shadow: 3px 3px 3px rgb(168, 168, 168);
+    box-shadow: 3px 3px 3px #aabb71;
 }
 
 .card-container img{

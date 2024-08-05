@@ -14,7 +14,7 @@ import MyQuestionsMenu from "../../components/user-account-submenus/my-questions
 
 const DistributorProfilePage = () => {
     const [selectedMenu, setSelectedMenu] = useState<string>("Personal information");
-    const {userId,userRole, token, logout} = useAuth();
+    const {userId, token, logout} = useAuth();
 
     const {distributor, loading: userLoading,products,orders} = useDistributor(userId, token);
 
@@ -27,14 +27,14 @@ const DistributorProfilePage = () => {
         if(distributor){
             switch (selectedMenu) {
                 case "Personal information":
-                    return <PersonalInformationMenu user={distributor} loading={userLoading} userType={'Distributor'}/>;
+                    return <PersonalInformationMenu user={distributor} loading={userLoading} />;
                 case "My products":
                     return <DistributorProductsMenu products={products} loading={userLoading} />;
                 case "My orders":
                     return <MyOrdersMenu orders={orders} loading={userLoading} />;
 
                 default:
-                    return <PersonalInformationMenu user={distributor} loading={userLoading}  userType={'Distributor'}/>;
+                    return <PersonalInformationMenu user={distributor} loading={userLoading} />;
             }
         }
     };
