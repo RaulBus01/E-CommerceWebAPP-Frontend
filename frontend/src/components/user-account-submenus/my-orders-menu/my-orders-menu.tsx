@@ -3,10 +3,11 @@ import './my-orders-menu.css';
 import Spinner from "../../spinner/spinner";
 import  {formatDateTime}  from "../../../utils/formatDataTime";
 import useOrder from "../../../hooks/useOrder";
+import OrderSummary from "../../order/orderSummary";
 
 const MyOrdersMenu = ({token}) => {
 
-    console.log(token);
+ 
     const { orders, loading: userLoading } = useOrder(token as string);
 
     if(userLoading){
@@ -16,6 +17,7 @@ const MyOrdersMenu = ({token}) => {
             </div>
         );
     }
+  
 
     return (
         <>
@@ -25,7 +27,7 @@ const MyOrdersMenu = ({token}) => {
                 {orders && orders.length > 0 ? (
                     <div className="orders-container">
                         {orders.map((order) => (
-                            <OrderSummary key={order._id} id={order._id} date={formatDateTime(order.createdAt)} total={order.totalPrice} status={order.status} distributorId={order.distributorId}/>
+                            <OrderSummary order={order}/>
                         ))}
                     </div>
                 ) : (

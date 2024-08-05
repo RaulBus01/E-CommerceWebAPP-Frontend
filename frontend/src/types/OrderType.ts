@@ -1,5 +1,6 @@
 import { addressData } from "./AddressType";
 import { productDataForOrder } from "./ProductType";
+import { DataDistributor, userData } from "./UserType";
 
 interface orderData{
     _id: string;
@@ -12,7 +13,7 @@ interface orderData{
     address: addressData;
     totalPrice: number;
     paymentMethod: string;
-    distributor: string;
+    distributor: userData;
     createdAt: string;
 
 

@@ -1,35 +1,20 @@
 import React, { useEffect,useState } from 'react';
 import './order.css';
-import { useAuth } from '../../hooks/useAuth';
-import useDistributor from '../../hooks/useDistributor';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+import useProduct from '../../hooks/useProduct';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
-interface OrderSummaryProps {
-    key: string;
-    id: string;
-    date: string;
-    total: number;
-    status: string;
-    distributorId: string;
+import { orderData } from '../../types/OrderType';
+import { formatDateTime } from '../../utils/formatDataTime';
 
- }
+
+
+
+const OrderSummary = ({order}:{order:orderData}) => {
+  
+
+  
  
-
-
-
-const OrderSummary = (data:OrderSummaryProps) => {
-    const {userId, token,userRole} = useAuth();
-    const {distributor, loading: userLoading} = useDistributor(userId, token);
-    const [productDistributor,setProductDistributor] = useState('');
-    const navigate = useNavigate();
-
-
-    useEffect(() => {
-        if(distributor ){
-            setProductDistributor(distributor);
-        }
-    },[distributor]);
-
+  const navigate = useNavigate();
 
 
 
@@ -42,23 +27,23 @@ const OrderSummary = (data:OrderSummaryProps) => {
 
 
   return (
-     userLoading ? <div className="loader"></div> : 
-
-    <div className="orderSummary" key={data.id}>
+  
+    <div className="orderSummary" key={order._id}>
       <div className="orderHeader">
-        <span>Order : {data.id}</span>  
+        <span>Order : {order._id}</span>  
 
-        <span className="orderDate">Placed on: {data.date}</span>
-        <span className="orderTotal">Total: {Math.round(data.total)} Lei</span>
-        {userRole === 'User'  ? <button className="reorderButton">Reorder</button> : null}
+        <span className="orderDate">Placed on: {formatDateTime(order.createdAt)}</span>
+        <span className="orderTotal">Total: {Math.round(order.totalPrice)} Lei</span>
+     
         
       </div>
       
       <div className="orderItem">
-        <span>Products from: {distributor?.name}</span>
         <div className="sellerRating">
+        <span className="productTitle">Distributor: {order.distributor.name}</span>
         </div>
-        <span className="productStatus">Status: {data.status}</span>
+      
+        <span className="productStatus">Status: {order.status}</span>
         {/* <img src="path-to-product-image.jpg" alt="Product" className="productImage" /> */}
       </div>
 
@@ -66,7 +51,7 @@ const OrderSummary = (data:OrderSummaryProps) => {
       
       <div className="orderFooter">
         
-        <button className="orderDetailsButton" onClick={() => navigate(`/distributor-dashboard/${data.distributorId}/order/${data.id}`)}>
+        <button className="orderDetailsButton" onClick={() => navigate(`/distributor-dashboard/${order.distributor._id}/order/${order._id}`)}>
         <KeyboardDoubleArrowDownIcon className="orderDetailsIcon"/>
           Order Details</button>
       </div>

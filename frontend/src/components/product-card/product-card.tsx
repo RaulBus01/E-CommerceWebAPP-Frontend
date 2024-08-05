@@ -10,6 +10,7 @@ import useFavourite from "../../hooks/useFavourite";
 import { productData } from "../../types/ProductType";
 import  useCart  from "../../hooks/useCart";
 import useProduct from "../../hooks/useProduct";
+import { useNavigate } from "react-router-dom";
 
 
 interface ProductCardProps {
@@ -19,6 +20,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
   const { token,user } = useAuth();
+  const navigate = useNavigate();
 
   const isCustomer = user?.role === "customer";
   const { addToFavourite, removeFavourite, isProductFavourite } = isCustomer ? useFavourite(token as string) : { addToFavourite: () => {}, removeFavourite: () => {}, isProductFavourite: () => false };
@@ -35,9 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
     
   }, [isFavorite, product._id, addToFavourite, removeFavourite]);
   
-  const handleDeleteProduct = (productId) => {
-    deleteProduct(productId);
-  }
+ 
   const handleNavigate = (path) => {
     navigate(path);
   }

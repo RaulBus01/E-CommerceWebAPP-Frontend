@@ -25,23 +25,23 @@ const MyQuestionsMenu = ({userId,token}) => {
             [questionId]: !prev[questionId]
         }));
     };
-
+    console.log(questions)
     return (
         <div className="my-orders-menu">
             <h2>My Questions</h2>
             {questions && questions.length > 0 ? (
                 <div className="orders-container">
                     {questions.map((question) => (
-                        <div key={question._id} className="order-item">
+                        <div key={question.id} className="order-item">
                             <p><strong>Content:</strong> {question.content}</p>
                             <p><strong>Placed at:</strong> {formatDateTime(question.createdAt)}</p>
                             <button 
-                                onClick={() => handleRepliesVisibility(question._id)} 
+                                onClick={() => handleRepliesVisibility(question.id)} 
                                 className="btn btn-primary"
                             >
                                 {question.replies?.length} Answers
                             </button>
-                            {visibleReplies[question._id] && (
+                            {visibleReplies[question.id] && (
                                 <div className="replies-container">
                                     {question.replies?.map((answer) => (
                                         console.log(answer),
