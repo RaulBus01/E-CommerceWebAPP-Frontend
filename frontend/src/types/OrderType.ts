@@ -2,6 +2,7 @@ import { addressData } from "./AddressType";
 import { productDataForOrder } from "./ProductType";
 
 interface orderData{
+    _id: string;
     user:string;
     products:productDataForOrder[];
     status: 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
@@ -12,7 +13,8 @@ interface orderData{
     totalPrice: number;
     paymentMethod: string;
     distributor: string;
-    createdAt: Date;
+    createdAt: string;
+
 
 }
 export type {orderData};

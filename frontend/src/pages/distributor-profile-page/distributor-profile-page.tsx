@@ -3,21 +3,22 @@ import "./distributor-profile-page.css"
 import SideMenu from "../../components/side-menu/sideMenu";
 import PersonalInformationMenu from "../../components/user-account-submenus/personal-information-menu/personal-information-menu";
 import MyOrdersMenu from "../../components/user-account-submenus/my-orders-menu/my-orders-menu";
-import MyReviewsMenu from "../../components/user-account-submenus/my-reviews-menu/my-reviews-menu";
+
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import useDistributor from "../../hooks/useDistributor";
+
 import DistributorProductsMenu from "../../components/user-account-submenus/distributor-products-menu/distributor-products-menu";
-import MyQuestionsMenu from "../../components/user-account-submenus/my-questions-menu/my-questions-menu";
+
 
 
 const DistributorProfilePage = () => {
-    const [selectedMenu, setSelectedMenu] = useState<string>("Personal information");
+    const [selectedMenu, setSelectedMenu] = useState<string>("Personal Information");
     const { token, user, logout } = useAuth();
-    const { products, loading } = useDistributor(token as string);
+    
 
     const navigate = useNavigate();
+
 
     const loadSelectedMenu = () => {
         if (user) {
@@ -25,12 +26,12 @@ const DistributorProfilePage = () => {
                 case "Personal Information":
                     return <PersonalInformationMenu user={user} />;
                 case "My Products":
-                    return <DistributorProductsMenu products={products} loading={loading} />;
+                    return <DistributorProductsMenu />;
                 case "My Orders":
-                    // return <MyOrdersMenu orders={orders} loading={userLoading} />;
+                    return <MyOrdersMenu  token={token as string}/>;
 
                 default:
-                    // return <PersonalInformationMenu user={user} />;
+                    return <PersonalInformationMenu user={user} />;
             }
         }
     };
@@ -53,7 +54,7 @@ const DistributorProfilePage = () => {
                 <SideMenu 
                     setSelectedMenu={setSelectedMenu} 
                     name={user?.name || ""} 
-                    sectionList={['Personal information','My Products','My orders','My reviews','My questions']}
+                    sectionList={['Personal Information','My Products','My Orders']}
                 />
                 <div className="user-info">{loadSelectedMenu()}</div>
             </div>

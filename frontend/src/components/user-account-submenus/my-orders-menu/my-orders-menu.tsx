@@ -2,12 +2,14 @@ import React from "react";
 import './my-orders-menu.css';
 import Spinner from "../../spinner/spinner";
 import  {formatDateTime}  from "../../../utils/formatDataTime";
+import useOrder from "../../../hooks/useOrder";
 
-const MyOrdersMenu = ({orders, loading}) => {
+const MyOrdersMenu = ({token}) => {
 
-   
+    console.log(token);
+    const { orders, loading: userLoading } = useOrder(token as string);
 
-    if(loading){
+    if(userLoading){
         return(
             <div className="my-orders-menu">
                 <Spinner/>

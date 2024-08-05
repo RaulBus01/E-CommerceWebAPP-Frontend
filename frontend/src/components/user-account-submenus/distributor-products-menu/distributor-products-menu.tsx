@@ -5,18 +5,17 @@ import ProductCard from '../../product-card/product-card';
 import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../hooks/useAuth';
-import  useProduct  from '../../../hooks/useProduct';
-const DistributorProductsMenu = ({ products, loading }) => {
- 
+import useProduct from '../../../hooks/useProduct';
+import { productData } from '../../../types/ProductType';
 
-  
-    const navigate = useNavigate();
-    const [filteredProducts, setFilteredProducts] = useState([]);
+const DistributorProductsMenu = () => {
+  const { distributorProducts,loading } = useProduct();
+  const [filteredProducts, setFilteredProducts] = useState<productData[] | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setFilteredProducts(products);
-  }, [products]);
+    setFilteredProducts(distributorProducts);
+  }, [distributorProducts]);
 
   const handleNavigate = (path) => {
     navigate(path);
@@ -24,11 +23,15 @@ const DistributorProductsMenu = ({ products, loading }) => {
 
   const searchProducts = (e) => {
     const searchValue = e.target.value.toLowerCase();
-    const filtered = products.filter(product =>
+    const filtered = distributorProducts?.filter(product =>
       product.name.toLowerCase().includes(searchValue)
     );
     setFilteredProducts(filtered);
   };
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="distributor-products-menu">
@@ -50,25 +53,19 @@ const DistributorProductsMenu = ({ products, loading }) => {
         <AddCircleOutline className="icon" onClick={() => handleNavigate('add-product')} />
       </div>
 
-      {loading ? (
-        <Spinner />
-      ) : (
-        <>
-          {filteredProducts && filteredProducts.length > 0 ? (
-            <div className="products-container">
-              {filteredProducts.map((product) => (
-                <ProductCard
-                  key={product._id}
-                  product={product}
-                  loading={loading}
-                />
-              ))}
-            </div>
-          ) : (
-            <p>No products found.</p>
-          )}
-        </>
-      )}
+      <div className="products-container">
+        {filteredProducts && filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+            <ProductCard
+              key={product._id}
+              product={product}
+              loading={false}
+            />
+          ))
+        ) : (
+          <p>No products found.</p>
+        )}
+      </div>
     </div>
   );
 };

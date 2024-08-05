@@ -15,7 +15,7 @@ const useOrder = (token: string): UseOrderResult => {
         const fetchOrdersByUser = async (token: string) => {
             setLoading(true);
             try {
-                const response = await _get(`/orders/orders`, token);
+                const response = await _get(`/orders/find`, token);
                 const res: orderData[] = response.orders;
                 setOrders(res);
             } catch (error: any) {
