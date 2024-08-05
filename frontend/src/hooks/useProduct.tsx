@@ -30,6 +30,34 @@ const useProduct = (): UseOrderResult => {
         fetchProducts();
     },[]);
 
+    useEffect(() => {
+        const fetchProductById = async (productId: string) => {
+            if(!productId) return;
+
+            setLoading(true);
+            try{
+                const response = await fetch(`http://localhost:3001/api/products/find/${productId}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                if(!response.ok){
+                    throw new Error(`Error: ${response.status}`);
+                }
+                const res: productData = await response.json();
+                setProduct(res);
+            }catch(error:any){
+                console.log(error);
+            }finally{
+                setLoading(false);
+            }
+        };
+        if(productId){
+            fetchProductById(productId);
+        }
+    }, [productId]);
+
     const deleteProduct = async (productId: string, token: string) => {
       try {
         const response = await _delete(`/products/${productId}`,{}, token);

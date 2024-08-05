@@ -7,6 +7,7 @@ import { useAuth } from "../../hooks/useAuth";
 import useFavourite from "../../hooks/useFavourite";
 import { productData } from "../../types/ProductType";
 import  useCart  from "../../hooks/useCart";
+import { useNavigate } from "react-router";
 
 
 interface ProductCardProps {
@@ -21,6 +22,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
  
 
   const isFavorite = isProductFavourite(product._id);
+  const navigate = useNavigate();
 
   const handleFavorite = useCallback(async () => {
     if (isFavorite) {
@@ -28,6 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
     } else {
       await addToFavourite(product._id);
     }
+    window.location.reload();
   }, [isFavorite, product._id, addToFavourite, removeFavourite]);
 
   const handleAddToCart = useCallback(async () => {
@@ -39,17 +42,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
 
  
 
-  if (loading) {
-    return <div>Loading
-    </div>;
+  const handleProductPage = () =>{
+    navigate(`/product/${product._id}`)
   }
-
 
   return (
     <div className="card-container">
-      <img src={product.image} alt="product" />
+      <img onClick={handleProductPage} src={product.image} alt="product" />
       <div className="information-container">
-        <p className="product-name">{product.name}</p>
+        <p onClick={handleProductPage} className="product-name">{product.name}</p>
         <h2>{product.price} lei</h2>
       </div>
       <div className="rating-container">
