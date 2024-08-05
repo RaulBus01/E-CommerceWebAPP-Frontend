@@ -8,6 +8,7 @@ interface UseOrderResult {
 }
 
 const useOrder = (token: string): UseOrderResult => {
+    console.log(token);
     const [orders, setOrders] = useState<orderData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 

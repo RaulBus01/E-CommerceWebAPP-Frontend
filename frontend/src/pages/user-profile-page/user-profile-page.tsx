@@ -39,23 +39,17 @@ const UserProfilePage: React.FC = () => {
         }
     }, [user, navigate]);
   
-    const isCustomer = user?.role === "customer";
-    
-    const { orders, loading: ordersLoading } =  isCustomer ? useOrder(token as string) : { orders:[], loading: false };
-    const { reviews, loading: reviewsLoading } = isCustomer ? useReview(token as string) : { reviews:[], loading: false };
-    const { questions, loading: questionLoading } = isCustomer ? useQuestion(userIdPath as string, token as string) : { questions:[], loading: false };
-    
 
     const loadSelectedMenu = () => {
         switch (selectedMenu) {
             case "Personal information":
                 return <PersonalInformationMenu user={user}/>;
             case "My orders":
-                return <MyOrdersMenu orders={orders} loading={ordersLoading} />;
+                return <MyOrdersMenu token={token}/>;
             case "My reviews":
-                return <MyReviewsMenu reviews={reviews} loading={reviewsLoading} />;
+                return <MyReviewsMenu token={token} />;
             case "My questions":
-                return <MyQuestionsMenu questions={questions} loading={questionLoading} />;
+                return <MyQuestionsMenu userId={userIdPath} token={token}/>;
             default:
                 return <PersonalInformationMenu user={user} />;
         }

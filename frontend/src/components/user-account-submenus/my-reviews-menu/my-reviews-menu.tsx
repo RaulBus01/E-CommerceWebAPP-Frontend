@@ -2,11 +2,12 @@ import React from "react";
 import '../my-orders-menu/my-orders-menu.css'
 import Spinner from "../../spinner/spinner";
 import  {formatDateTime}  from "../../../utils/formatDataTime";
+import useReview from "../../../hooks/useReview";
 
-const MyReviewsMenu = ({reviews, loading}) => {
-    
-    console.log(reviews)
-    if(loading){
+const MyReviewsMenu = ({token}) => {
+    const { reviews, loading: reviewsLoading } =  useReview(token as string);
+   
+    if(reviewsLoading){
         return(
             <div className="my-orders-menu">
                 <Spinner/>
