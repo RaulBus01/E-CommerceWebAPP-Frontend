@@ -70,7 +70,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
     <div className="card-container">
       {/* <img onClick={handleProductPage} src={product.image} alt="product" /> */}
       <div className="information-container">
-        {/* <p onClick={handleProductPage} className="product-name">{product.name}</p> */}
+        <p className="product-name">{product.name}</p>
         <h2>{product.price} lei</h2>
       </div>
       <div className="rating-container">

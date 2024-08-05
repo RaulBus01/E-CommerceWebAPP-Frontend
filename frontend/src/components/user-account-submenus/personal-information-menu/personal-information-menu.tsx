@@ -32,7 +32,7 @@ const PersonalInformationMenu: React.FC<{ user: any; loading?: boolean; title?: 
   const [formData, setFormData] = useState({
     name: user.name || "",
     email: user.email || "",
-    address: { ...defaultAddress, ...user.customerInfo?.address ? user.customerInfo.address : user.distributorInfo.address },
+    address: { ...defaultAddress, ...user.customerInfo?.address ? user.customerInfo.address : user.distributorInfo?.address },
     phoneNumber: user.phoneNumber || ""
   });
   

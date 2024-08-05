@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import EmailIcon from '@mui/icons-material/Email';
 import KeyIcon from '@mui/icons-material/Key';
 import PersonIcon from '@mui/icons-material/Person';
@@ -19,19 +19,21 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import TitleIcon from '@mui/icons-material/Title';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import './form.css';
 import { Remove } from '@mui/icons-material';
+import './form.css';
+import { Category } from '../../../types/CategoryType';
+import MultiSelect from './multiSelect';
 
 interface FormFieldProps {
-  type: 'text' | 'email' | 'password' | 'checkbox' | 'tel' | 'number' | 'textarea' | 'select' | 'file';
+  type: 'text' | 'email' | 'password' | 'checkbox' | 'tel' | 'number' | 'textarea' | 'select' | 'file' | 'category';
   label?: string;
   placeholder?: string;
   value: string | boolean;
-  onChange: (value: string | boolean) => void;
+  onChange: (value: string | boolean | Category[]) => void;
   onFileChange?: (value: File | null) => void;
   icon?: string;
-  select?: boolean;
   showVisibilityIcon?: boolean;
+  categories?: Category[];
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -42,9 +44,16 @@ const FormField: React.FC<FormFieldProps> = ({
   onChange,
   onFileChange,
   icon,
-  select,
-  showVisibilityIcon
+  showVisibilityIcon,
+  categories,
 }) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
+
+
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
   const renderIcon = () => {
     switch (icon) {
       case 'email': return <EmailIcon className='icon' />;
@@ -68,12 +77,9 @@ const FormField: React.FC<FormFieldProps> = ({
     }
   };
 
-  const [showPassword, setShowPassword] = React.useState(false);
   const handleVisibility = () => {
     setShowPassword(!showPassword);
   };
-  const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
@@ -86,6 +92,18 @@ const FormField: React.FC<FormFieldProps> = ({
   const handleAddButtonClick = () => {
     fileInputRef.current?.click();
   };
+  const handleCategoryChange = (selectedCategories: Category[]) => {
+    setSelectedCategories(selectedCategories);
+  
+    onChange(selectedCategories);
+    
+  }
+
+ 
+  
+  
+
+
 
   return (
     <div className="form-group-container">
@@ -101,12 +119,6 @@ const FormField: React.FC<FormFieldProps> = ({
             />
             <label htmlFor={label}>{label}</label>
           </>
-        ) : type === 'select' ? (
-          <select value={value as string} onChange={(e) => onChange(e.target.value)}>
-            <option value="">Select {label}</option>
-            <option value="Electronics">Electronics</option>
-            
-          </select>
         ) : type === 'textarea' ? (
           <textarea
             placeholder={placeholder}
@@ -138,6 +150,10 @@ const FormField: React.FC<FormFieldProps> = ({
                 <AddCircleOutlineIcon />
               </div>
             )}
+          </div>
+        ) : type === 'category' ? (
+          <div className="category-selects">
+              <MultiSelect categories={categories} onCategoriesSelected={handleCategoryChange} />
           </div>
         ) : (
           <input

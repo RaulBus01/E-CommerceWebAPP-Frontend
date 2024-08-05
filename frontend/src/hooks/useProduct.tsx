@@ -72,6 +72,7 @@ const useProduct = (): UseOrderResult => {
     }
   }
 
+
   return { products, setProducts, loading, deleteProduct, distributorProducts, addProduct };
 };
 

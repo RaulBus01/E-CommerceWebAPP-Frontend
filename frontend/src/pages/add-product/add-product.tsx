@@ -4,18 +4,21 @@ import useProduct  from '../../hooks/useProduct';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
+
 const AddProductPage = () => {
  
   const {user} = useAuth();
   const {addProduct} = useProduct();
+
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     price: '',
     image: '',
     stock: '',
-    category: '',
+    categories: '',
     distributor: user?.distributorInfo._id
   });
  
@@ -30,8 +33,8 @@ const AddProductPage = () => {
         price: '',
         image: '',
         stock: '',
-        category: '',
-        distributorId: user?.distributorInfo._id
+        categories: '',
+        distributor: user?.distributorInfo._id
       });
       navigate(`/distributor-dashboard/${user?.id}`);
 
@@ -46,12 +49,12 @@ const AddProductPage = () => {
         fieldList={[
           { id: 'name', label: 'Product Name', type: 'text', placeholder: 'Enter product name',icon: 'product' },
           { id: 'description', label: 'Description', type: 'textarea', placeholder: 'Enter product description',icon:'description' },
-          { id:'category', label: 'Category', type: 'select', placeholder: 'Enter category',icon:'category' },
-          { id:'subcategory', label: 'Subcategory', type: 'select', placeholder: 'Enter subcategory',icon:'category' },
+          { id:'categories', label: 'Category', type: 'category', placeholder: 'Enter category',icon:'category' },
           { id: 'price', label: 'Price', type: 'number', placeholder: 'Enter price',icon:'price' },
           { id: 'image', label: 'Image URL', type: 'file', placeholder: 'Enter image URL',icon:'image' },
           { id: 'stock', label: 'Stock', type: 'number', placeholder: 'Enter stock',icon:'stock' }
         ]}
+    
         formData={formData}
         setFormData={setFormData}
         onSubmit={handleSubmit}
