@@ -1,6 +1,10 @@
 /* src/Navbar.css */
 .navbar {
   background-color: var(--primary-color);
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
 }
 
 nav {

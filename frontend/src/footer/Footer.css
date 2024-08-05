@@ -1,6 +1,6 @@
 footer {
   
-  background-color: #fff;
+  background-color: var(--primary-color);
   color: #3f3f3f;
   padding:10px 10px;
 }
@@ -71,6 +71,7 @@ footer {
 
   border: 1px solid #ccc;
   border-radius: 25px 0 0 25px;
+  background-color: var(--secondary-color);
 }
 
 .footer-subscribe button {
