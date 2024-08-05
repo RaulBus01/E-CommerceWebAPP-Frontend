@@ -50,7 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
   const { products, setProducts,deleteProduct } = useProduct();
   const handleDeleteProduct = async () => {
     if (token && user?.role === "distributor") {
-        const response = await deleteProduct(product._id, token);
+        const response = await deleteProduct(product._id);
         if (response) {
             setProducts(products.filter((p) => p._id !== product._id));
         }

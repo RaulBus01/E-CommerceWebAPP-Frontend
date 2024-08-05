@@ -17,8 +17,9 @@ import { Toaster } from 'react-hot-toast';
 import UserProfilePage from './pages/user-profile-page/user-profile-page'
 import FavoritePage from './pages/favorite-page/favorite-page'
 import DistributorProfilePage from './pages/distributor-profile-page/distributor-profile-page';
-import { Switch } from '@mui/material';
+
 import PublicRoute from './pages/authentication-page/publicRoute';
+import AddProductPage from './pages/add-product/add-product';
 
 const App = () => {
   const location = useLocation();
@@ -49,6 +50,7 @@ const App = () => {
               <Route path="/favorites" element={<FavoritePage />} />
               <Route path="/distributor-dashboard/:id" element={<DistributorProfilePage />} />
               <Route path='/user-dashboard/:id' element={<UserProfilePage />} />
+              <Route path="/distributor-dashboard/:id/add-product" element={<AddProductPage />} />
           
             </Route>
           </Routes>

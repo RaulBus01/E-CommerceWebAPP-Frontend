@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 
 
 const UserProfilePage: React.FC = () => {
-    const [selectedMenu, setSelectedMenu] = useState<string>("Personal information");
+    const [selectedMenu, setSelectedMenu] = useState<string>("Personal Information");
     const { token,user, logout } = useAuth();
     const { id: userIdPath } = useParams<{ id: string }>();
 
@@ -37,7 +37,7 @@ const UserProfilePage: React.FC = () => {
 
     const loadSelectedMenu = () => {
         switch (selectedMenu) {
-            case "Personal information":
+            case "Personal Information":
                 return <PersonalInformationMenu user={user}/>;
             case "My orders":
                 return <MyOrdersMenu token={token}/>;
@@ -70,7 +70,7 @@ const UserProfilePage: React.FC = () => {
                 <SideMenu 
                     setSelectedMenu={setSelectedMenu} 
                     name={user?.name || ""} 
-                    sectionList={['Personal information','My orders','My reviews','My questions']}
+                    sectionList={['Personal Information','My orders','My reviews','My questions']}
                 />
                 <div className="user-info">{loadSelectedMenu()}</div>
             </div>

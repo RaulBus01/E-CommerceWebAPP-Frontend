@@ -5,8 +5,9 @@ import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
 const AddProductPage = () => {
-  const { userId, token } = useAuth();
-  const {addProduct} = useProduct(token);
+ 
+  const {user} = useAuth();
+  const {addProduct} = useProduct();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
@@ -15,7 +16,7 @@ const AddProductPage = () => {
     image: '',
     stock: '',
     category: '',
-    distributorId: userId
+    distributor: user?.distributorInfo._id
   });
  
 
@@ -30,9 +31,9 @@ const AddProductPage = () => {
         image: '',
         stock: '',
         category: '',
-        distributorId: userId
+        distributorId: user?.distributorInfo._id
       });
-      navigate(`/distributor-dashboard/${userId}`);
+      navigate(`/distributor-dashboard/${user?.id}`);
 
     }
 
@@ -54,6 +55,8 @@ const AddProductPage = () => {
         formData={formData}
         setFormData={setFormData}
         onSubmit={handleSubmit}
+        
+      
       />
     </div>
   );

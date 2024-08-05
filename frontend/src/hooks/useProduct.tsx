@@ -1,18 +1,19 @@
 import { useEffect, useState, useCallback } from "react";
 import { productData } from "../types/ProductType";
-import { _delete, _get } from "../utils/api";
+import { _delete, _get,_post } from "../utils/api";
 import { useAuth } from "./useAuth";
 
 interface UseOrderResult {
   products: productData[] | null;
   setProducts: (products: productData[] | null) => void;
   loading: boolean;
-  deleteProduct: (productId: string, token: string) => Promise<boolean>;
+  deleteProduct: (productId: string) => Promise<boolean>;
   distributorProducts: productData[] | null;    
+    addProduct: (product: productData) => Promise<boolean>;
 }
 
 const useProduct = (): UseOrderResult => {
-//   const { token, user } = useAuth();
+  const { token, user } = useAuth();
   
   const [products, setProducts] = useState<productData[] | null>(null);
   const [distributorProducts, setDistributorProducts] = useState<productData[] | null>(null);
@@ -21,10 +22,10 @@ const useProduct = (): UseOrderResult => {
   const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {
-      console.log("fetching all products");
+     
       const response = await _get(`/products/findAll`, {}, {});
       setProducts(response);
-      console.log(response);
+    
     } catch (error: any) {
       console.error("Error fetching all products:", error);
     } finally {
@@ -32,27 +33,27 @@ const useProduct = (): UseOrderResult => {
     }
   }, []);
 
-//   const fetchProductsDistributor = useCallback(async () => {
-//     if (!user?.role || user.role !== "distributor" || !user.id) {
-//       return;
-//     }
-//     setLoading(true);
-//     try {
-//       const response = await _get(`/products/findDistributor/${user.id}`, token);
-//       setDistributorProducts(response);
-//     } catch (error: any) {
-//       console.error("Error fetching distributor products:", error);
-//     } finally {
-//       setLoading(false);
-//     }
-//   }, [user, token]);
+  const fetchProductsDistributor = useCallback(async () => {
+    if (!user?.role || user.role !== "distributor" || !user.id) {
+      return;
+    }
+    setLoading(true);
+    try {
+      const response = await _get(`/products/findDistributor/${user.id}`, token);
+      setDistributorProducts(response);
+    } catch (error: any) {
+      console.error("Error fetching distributor products:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [user, token]);
 
   useEffect(() => {
     fetchProducts();
-    // fetchProductsDistributor();
+    fetchProductsDistributor();
   }, []);
 
-  const deleteProduct = async (productId: string, token: string) => {
+  const deleteProduct = async (productId: string) => {
     try {
       await _delete(`/products/delete/${productId}`, {}, token);
       return true;
@@ -61,8 +62,17 @@ const useProduct = (): UseOrderResult => {
       return false;
     }
   };
+  const addProduct = async (product: productData) => {
+    try {
+      await _post(`/products/add`, product, token);
+      return true;
+    } catch (error: any) {
+      console.error("Error adding product:", error);
+      return false;
+    }
+  }
 
-  return { products, setProducts, loading, deleteProduct, distributorProducts };
+  return { products, setProducts, loading, deleteProduct, distributorProducts, addProduct };
 };
 
 export default useProduct;

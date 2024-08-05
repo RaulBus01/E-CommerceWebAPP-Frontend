@@ -17,9 +17,7 @@ const DistributorProductsMenu = () => {
     setFilteredProducts(distributorProducts);
   }, [distributorProducts]);
 
-  const handleNavigate = (path) => {
-    navigate(path);
-  };
+
 
   const searchProducts = (e) => {
     const searchValue = e.target.value.toLowerCase();
@@ -50,7 +48,7 @@ const DistributorProductsMenu = () => {
 
       <div className="add-product-container">
         <h3>Add New Product</h3>
-        <AddCircleOutline className="icon" onClick={() => handleNavigate('add-product')} />
+        <AddCircleOutline className="icon" onClick={() => navigate('add-product')} />
       </div>
 
       <div className="products-container">
