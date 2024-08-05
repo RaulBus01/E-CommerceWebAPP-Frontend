@@ -9,9 +9,8 @@ import { useAuth } from '../../../hooks/useAuth';
 import  useProduct  from '../../../hooks/useProduct';
 const DistributorProductsMenu = ({ products, loading }) => {
  
-    const { token } = useAuth();
-    const { deleteProduct,setProducts } = useProduct();
-    console.log(products);
+
+  
     const navigate = useNavigate();
     const [filteredProducts, setFilteredProducts] = useState([]);
 
