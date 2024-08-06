@@ -20,6 +20,7 @@ import DistributorProfilePage from './pages/distributor-profile-page/distributor
 
 import PublicRoute from './pages/authentication-page/publicRoute';
 import AddProductPage from './pages/add-product/add-product';
+import ProductPage from './pages/product-page/product-page';
 
 const App = () => {
   const location = useLocation();
@@ -36,6 +37,7 @@ const App = () => {
           {showNav && <Navbar />}
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path='/product/:productId' element={<ProductPage />} />
             <Route path="/category" element={<CategoryPage />} />
             <Route path="/category/:subcategory" element={<SubCategoryPage />} />
             <Route element={<PublicRoute/>}>

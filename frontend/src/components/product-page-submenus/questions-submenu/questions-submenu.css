@@ -1,0 +1,37 @@
+.question-cells-container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    align-items: center;
+}
+
+.question-cell{
+    width: 90%;
+    height: auto;
+
+    border: solid 1px var(--primary-color);
+    border-radius: 10px;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.question-container{
+    width: 100%;
+    height: auto;
+}
+
+.replies-container{
+    width: 70%;
+    height: auto;
+    align-self: center;
+}
+
+.reply-cell{
+    width: 100%;
+}

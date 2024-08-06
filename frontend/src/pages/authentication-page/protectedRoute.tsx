@@ -6,10 +6,10 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ redirectPath = '/login' }) => {
-  const { isAuthenticated } = useAuth();
+  const { token } = useAuth();
 
 
-  if (!isAuthenticated) {
+  if (!token) {
     return <Navigate to={redirectPath} replace />;
   }
   

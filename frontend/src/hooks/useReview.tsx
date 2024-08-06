@@ -7,7 +7,7 @@ interface UseReviewResult{
     loading: boolean;
 }
 
-const useReview = (token: string): UseReviewResult => {
+const useReview = (token: string, productId: string): UseReviewResult => {
     const [reviews, setReviews] = useState<reviewData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -27,6 +27,25 @@ const useReview = (token: string): UseReviewResult => {
 
         fetchReviewsByUser(token);
     },[token]);
+
+    useEffect(() => {
+        const fetchReviewsByProduct = async (productId: string) => {
+            setLoading(true);
+            try{
+                const response = await _get(`/reviews/getReviews/${productId}`, {}, {});
+                const res: reviewData[] = response;
+                setReviews(res);
+            }catch(error:any){
+                console.log(error);
+            }finally{
+                setLoading(false);
+            }
+        };
+        if(productId){
+            fetchReviewsByProduct(productId);
+        }
+    }, [productId]);
+
     return {reviews, loading};
 }
 
