@@ -4,11 +4,13 @@ import useProduct from '../../hooks/useProduct';
 import ProductCard from '../../components/product-card/product-card';
 import ProductSlider from "../../components/product-slider/product-slider";
 import { productData } from "../../types/ProductType";
+import { useAuth } from "../../hooks/useAuth";
+
 
 const Home = () => {
-  console.log("Home");
   const { products,loading } = useProduct();
-  console.log(products);
+  
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -22,7 +24,9 @@ const Home = () => {
       </div>
       <div className="all-products-container">
         {products?.map((product) => (
-          <ProductCard key={product._id} product={product} loading={loading} />
+          <ProductCard 
+         
+          key={product._id} product={product} loading={loading} />
         ))}
       </div>
     </div>

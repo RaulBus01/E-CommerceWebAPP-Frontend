@@ -27,11 +27,12 @@ const DistributorProductsMenu = () => {
     setFilteredProducts(filtered);
   };
 
-  if (loading) {
-    return <Spinner />;
-  }
+ 
 
   return (
+    loading ? (
+      <Spinner />
+    ) : (
     <div className="distributor-products-menu">
       <div className="top-container">
         <h2>Search your product list</h2>
@@ -47,8 +48,10 @@ const DistributorProductsMenu = () => {
       </div>
 
       <div className="add-product-container">
-        <h3>Add New Product</h3>
+        <span>  
+         <h2>Add new product </h2>
         <AddCircleOutline className="icon" onClick={() => navigate('add-product')} />
+        </span>
       </div>
 
       <div className="products-container">
@@ -65,6 +68,7 @@ const DistributorProductsMenu = () => {
         )}
       </div>
     </div>
+    )
   );
 };
 

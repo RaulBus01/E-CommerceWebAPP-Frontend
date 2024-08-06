@@ -16,53 +16,46 @@ import { useNavigate } from "react-router-dom";
 interface ProductCardProps {
   product: productData;
   loading: boolean;
+  onRemoveFavorite?: (productId: string) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, loading }) => {
-  const { token,user } = useAuth();
-  const navigate = useNavigate();
+const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavorite }) => {
+ 
+  const { token, user } = useAuth();
 
   const isCustomer = user?.role === "customer";
   const { addToFavourite, removeFavourite, isProductFavourite } = isCustomer ? useFavourite(token as string) : { addToFavourite: () => {}, removeFavourite: () => {}, isProductFavourite: () => false };
   const { addProductToCart } = isCustomer ? useCart(token as string) : { addProductToCart: () => {} };
   
- const isFavorite = user?.role === "customer" ? isProductFavourite(product._id) : false;
+  const isFavorite = user?.role === "customer" ? isProductFavourite(product._id) : false;
 
   const handleFavorite = useCallback(async () => {
     if (isFavorite) {
       await removeFavourite(product._id);
+      if (onRemoveFavorite) {
+        onRemoveFavorite(product._id);
+      }
     } else {
       await addToFavourite(product._id);
     }
-    window.location.reload();
-  }, [isFavorite, product._id, addToFavourite, removeFavourite]);
-  
- 
-  const handleNavigate = (path) => {
-    navigate(path);
-  }
+  }, [isFavorite, product._id, addToFavourite, removeFavourite, onRemoveFavorite]);
 
   const handleAddToCart = useCallback(async () => {
     await addProductToCart(product, token);
- 
-  }
-  , [addProductToCart, product, token]);
-  const { products, setProducts,deleteProduct } = useProduct();
+  }, [addProductToCart, product, token]);
+
+  const { products, setProducts, deleteProduct } = useProduct();
   const handleDeleteProduct = async () => {
     if (token && user?.role === "distributor") {
-        const response = await deleteProduct(product._id);
-        if (response) {
-            setProducts(products.filter((p) => p._id !== product._id));
-        }
-      
-
+      const response = await deleteProduct(product._id);
+      if (response) {
+        setProducts(products.filter((p) => p._id !== product._id));
+      }
     }
   }
- 
 
   if (loading) {
-    return <div>Loading
-    </div>;
+    return <div>Loading</div>;
   }
 
 

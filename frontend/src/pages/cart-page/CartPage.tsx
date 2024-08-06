@@ -4,11 +4,12 @@ import { Favorite, DeleteOutline } from "@mui/icons-material";
 import useCart from "../../hooks/useCart";
 import useFavourite from "../../hooks/useFavourite";
 import "./CartPage.css";
+import toast from "react-hot-toast";
 
 const CartPage = () => {
   const { token} = useAuth();
   const { cart, setCart, editProductQuantity, removeProduct } = useCart(token as string);
-  const { addToFavourite, removeFavourite } = useFavourite();
+  const { addToFavourite, removeFavourite } = useFavourite(token as string);
 
   const handleEditProductQuantity = async (product, type) => {
     let quantity = product.quantity;
@@ -39,7 +40,13 @@ const CartPage = () => {
 
   const handleFavourites = async (product) => {
     if (addToFavourite) {
-      await addToFavourite(product._id);
+      const result =  await addToFavourite(product._id);
+      if(!result) 
+      {
+        toast.error("Product already in favourites");
+        return;
+      }
+
       await removeProduct(product, token);
     } else {
       await removeFavourite(product._id);

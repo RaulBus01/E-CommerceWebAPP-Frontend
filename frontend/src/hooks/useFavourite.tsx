@@ -6,9 +6,10 @@ import { useAuth } from "./useAuth";
 interface UseFavouriteResult {
     favourites: favouriteItem[] | null;
     loading: boolean;
-    addToFavourite: (productId: string) => Promise<void>;
-    removeFavourite: (productId: string) => Promise<void>;
+    addToFavourite: (productId: string) => Promise<string>;
+    removeFavourite: (productId: string) => Promise<true | undefined>;
     isProductFavourite: (productId: string) => boolean;
+    setFavourites:React.Dispatch<React.SetStateAction<favouriteItem[] | null>>;
 }
 
 const useFavourite = (token:string): UseFavouriteResult => {
@@ -52,10 +53,15 @@ const useFavourite = (token:string): UseFavouriteResult => {
 
     const addToFavourite = async (productId: string) => {
         try {
+            
             const response = await _put(`/favourites/add`,{ productId }, token, {});
-            const newFavourite = response;
-            setFavourites((prevFavourites) => (prevFavourites ? [...prevFavourites, newFavourite] : [newFavourite]));
+            const newFavourite = response.result;
             setFavouriteSet((prevSet) => new Set(prevSet).add(productId));
+
+            return newFavourite;
+         
+            
+           
         } catch (error: any) {
             console.log("Error adding to favorites:", error);
         }
@@ -64,21 +70,25 @@ const useFavourite = (token:string): UseFavouriteResult => {
     const removeFavourite = async (productId: string) => {
         try {
             const response = await _delete(`/favourites/deleteProduct/${productId}`,{}, token);
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
+            if (!response) {
+                throw new Error("Unexpected API response format.");
             }
-            setFavourites((prevFavourites) => prevFavourites?.filter((fav) => fav.product._id !== productId) || []);
+
+          
+          
+           
             setFavouriteSet((prevSet) => {
                 const newSet = new Set(prevSet);
                 newSet.delete(productId);
                 return newSet;
             });
+            return true;
         } catch (error: any) {
             console.log("Error removing from favourites:", error);
         }
     };
 
-    return { favourites, loading, addToFavourite, removeFavourite, isProductFavourite };
+    return { favourites, loading, addToFavourite, removeFavourite, isProductFavourite,setFavourites };
 };
 
 export default useFavourite;

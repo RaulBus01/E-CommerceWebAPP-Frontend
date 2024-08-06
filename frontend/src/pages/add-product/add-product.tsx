@@ -3,6 +3,7 @@ import Form from '../../components/controls/form/form';
 import useProduct  from '../../hooks/useProduct';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import './add-product.css';
 
 
 const AddProductPage = () => {
@@ -43,8 +44,8 @@ const AddProductPage = () => {
   };
 
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-      <h1>Add New Product</h1>
+    <div className="add-product-container">
+   
       <Form
         fieldList={[
           { id: 'name', label: 'Product Name', type: 'text', placeholder: 'Enter product name',icon: 'product' },

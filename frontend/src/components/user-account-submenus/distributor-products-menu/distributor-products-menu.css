@@ -43,8 +43,13 @@
 .add-product-container {
   display: flex;
   flex-direction: row;
-  align-items: center;
   margin-top: 20px;
+}
+.add-product-container span{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .icon {
