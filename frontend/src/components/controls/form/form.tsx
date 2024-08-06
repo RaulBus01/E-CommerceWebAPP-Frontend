@@ -16,12 +16,7 @@ const Form = ({ fieldList, formData, setFormData, onSubmit, }) => {
     return <p>Loading...</p>
   }
 
-  const handleFileChange = (id) => (file) => {
-    if (file) {
-      const fileURL = URL.createObjectURL(file);
-      setFormData({ ...formData, [id]: fileURL });
-    }
-  };
+
 
   return (
     <form onSubmit={onSubmit}>
@@ -33,7 +28,7 @@ const Form = ({ fieldList, formData, setFormData, onSubmit, }) => {
           placeholder={field.placeholder}
           value={formData[field.id] || ''}
           onChange={handleChange(field.id)}
-          onFileChange={field.type === 'file' ? handleFileChange(field.id) : undefined}
+        
       
           icon={field.icon}
           categories = {field.type === 'category' ? categories as Category[] : undefined}

@@ -58,10 +58,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
     return <div>Loading</div>;
   }
 
+ 
 
   return (
     <div className="card-container">
-      {/* <img onClick={handleProductPage} src={product.image} alt="product" /> */}
+      <img  src={product.image[0]} alt="product" />
       <div className="information-container">
         <p className="product-name">{product.name}</p>
         <h2>{product.price} lei</h2>

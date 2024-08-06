@@ -9,7 +9,7 @@ interface UseOrderResult {
   loading: boolean;
   deleteProduct: (productId: string) => Promise<boolean>;
   distributorProducts: productData[] | null;    
-    addProduct: (product: productData) => Promise<boolean>;
+    addProduct: (product: FormData) => Promise<boolean>;
 }
 
 const useProduct = (): UseOrderResult => {

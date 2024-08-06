@@ -10,7 +10,7 @@ import Dropdown from "../components/dropdown/dropdown";
 
 
 const Navbar = () => {
-  const { isAuthenticated, user } = useAuth();
+  const { token, user } = useAuth();
 
   return (
     <div className="navbar">
@@ -27,7 +27,7 @@ const Navbar = () => {
           <div className="icons">
           <li className="nav-icons">
             <NavLink
-              to={isAuthenticated ? `/user-dashboard/${user?.id}` : "/login"}
+              to={token ? `/user-dashboard/${user?.id}` : "/login"}
             >
               <AccountCircleIcon />
               <span className="nav-text">Account</span>

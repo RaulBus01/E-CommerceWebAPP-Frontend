@@ -10,7 +10,6 @@ import { userData } from '../types/UserType';
 interface AuthContextType {
   token: string | null;
   user: userData | null;
-  isAuthenticated: boolean;
   login: (data: loginData) => Promise<boolean>;
   logout: () => Promise<void>;
   register: (data: registerDataCustomer | registerDataDistributor) => Promise<boolean>;
@@ -98,13 +97,12 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     setUser(prevUser => prevUser ? { ...prevUser, ...userData } : null);
   };
 
-  const isAuthenticated = !!token && !!user;
+
 
   return (
     <AuthContext.Provider value={{ 
       token,
       user, 
-      isAuthenticated, 
       login, 
       logout, 
       register, 

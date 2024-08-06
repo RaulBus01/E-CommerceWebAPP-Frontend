@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import EmailIcon from '@mui/icons-material/Email';
 import KeyIcon from '@mui/icons-material/Key';
 import PersonIcon from '@mui/icons-material/Person';
@@ -28,9 +28,8 @@ interface FormFieldProps {
   type: 'text' | 'email' | 'password' | 'checkbox' | 'tel' | 'number' | 'textarea' | 'select' | 'file' | 'category';
   label?: string;
   placeholder?: string;
-  value: string | boolean;
-  onChange: (value: string | boolean | Category[]) => void;
-  onFileChange?: (value: File | null) => void;
+  value: string | boolean | File[];
+  onChange: (value: string | boolean | Category[] | File[]) => void;
   icon?: string;
   showVisibilityIcon?: boolean;
   categories?: Category[];
@@ -42,17 +41,14 @@ const FormField: React.FC<FormFieldProps> = ({
   placeholder,
   value,
   onChange,
-  onFileChange,
   icon,
   showVisibilityIcon,
   categories,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const fileInputRef = React.createRef<HTMLInputElement>();
 
   const renderIcon = () => {
     switch (icon) {
@@ -82,28 +78,27 @@ const FormField: React.FC<FormFieldProps> = ({
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    setSelectedFile(file);
-    if (onFileChange) {
-      onFileChange(file);
-    }
+    const files = e.target.files;
+    if (!files) return;
+    const newFiles = Array.from(files);
+    const updatedFiles = [...selectedFiles, ...newFiles];
+    setSelectedFiles(updatedFiles);
+    onChange(updatedFiles);
   };
 
   const handleAddButtonClick = () => {
     fileInputRef.current?.click();
   };
+
+  const handleRemoveFile = (index: number) => {
+    const updatedFiles = selectedFiles.filter((_, i) => i !== index);
+    setSelectedFiles(updatedFiles);
+    onChange(updatedFiles);
+  };
+
   const handleCategoryChange = (selectedCategories: Category[]) => {
-    setSelectedCategories(selectedCategories);
-  
     onChange(selectedCategories);
-    
-  }
-
- 
-  
-  
-
-
+  };
 
   return (
     <div className="form-group-container">
@@ -133,27 +128,27 @@ const FormField: React.FC<FormFieldProps> = ({
               style={{ display: 'none' }}
               onChange={handleFileChange}
               accept="image/*"
+             
             />
-            {selectedFile ? (
-              <div className="image-preview">
+            {selectedFiles.map((file, index) => (
+              <div key={index} className="image-preview">
                 <img
-                  src={URL.createObjectURL(selectedFile)}
+                  src={URL.createObjectURL(file)}
                   alt="Uploaded"
-                  onLoad={() => URL.revokeObjectURL(URL.createObjectURL(selectedFile))}
+                  onLoad={() => URL.revokeObjectURL(file)}
                 />
-                <div className="overlay" onClick={() => setSelectedFile(null)}>
+                <div className="overlay" onClick={() => handleRemoveFile(index)}>
                   <Remove />
                 </div>
               </div>
-            ) : (
-              <div className="add-image-button" onClick={handleAddButtonClick}>
-                <AddCircleOutlineIcon />
-              </div>
-            )}
+            ))}
+            <div className="add-image-button" onClick={handleAddButtonClick}>
+              <AddCircleOutlineIcon />
+            </div>
           </div>
         ) : type === 'category' ? (
           <div className="category-selects">
-              <MultiSelect categories={categories} onCategoriesSelected={handleCategoryChange} />
+            <MultiSelect categories={categories} onCategoriesSelected={handleCategoryChange} />
           </div>
         ) : (
           <input

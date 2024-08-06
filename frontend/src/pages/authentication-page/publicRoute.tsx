@@ -7,10 +7,10 @@ interface PublicRouteProps {
 }
 
 const PublicRoute: React.FC<PublicRouteProps> = ({ redirectPath = '/' }) => {
-  const { isAuthenticated } = useAuth();
-  console.log(isAuthenticated);
+  const { token } = useAuth();
 
-  if (isAuthenticated) {
+
+  if (token) {
     return <Navigate to={redirectPath} replace />;
   }
 

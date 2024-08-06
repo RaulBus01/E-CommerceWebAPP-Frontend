@@ -23,8 +23,10 @@ const MyReviewsMenu = ({token}) => {
                 {reviews && reviews.length > 0 ? (
                     <div className="orders-container">
                         {reviews.map((review) => (
+                           
+
                             <div key={review._id} className="order-item">
-                                <h3>Review ID: {review._id}</h3>
+                                 <h1 key={review._id}>{review.product.name}</h1> 
                                 <p><strong>Rating:</strong> {review.rating}</p>
                                 <p><strong>Content:</strong> {review.content}</p>
                                 <p><strong>Placed at:</strong> {formatDateTime(review.createdAt)}</p>
