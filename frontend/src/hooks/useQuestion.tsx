@@ -64,8 +64,6 @@ const useQuestion = (userId: string, token: string, productId: string): useQuest
     }
     ,[questions, token])
 
-
-
     return {questions, loading, replies, fetchQuestionsByProduct};
 }
 

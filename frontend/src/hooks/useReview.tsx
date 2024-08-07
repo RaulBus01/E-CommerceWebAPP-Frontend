@@ -1,52 +1,58 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { reviewData } from "../types/ReviewType";
 import { _get } from "../utils/api";
 
 interface UseReviewResult{
     reviews: reviewData[] | null;
     loading: boolean;
+    fetchReviewsByProduct: (productId: string) => Promise<void>;
 }
 
 const useReview = (token: string, productId: string): UseReviewResult => {
     const [reviews, setReviews] = useState<reviewData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-        const fetchReviewsByUser = async (token: string) => {
-            setLoading(true);
-            try{
-                const response = await _get(`/reviews/getReviews`, token);
-                const res: reviewData[] = response;
-                setReviews(res);
-            }catch(error:any){
-                console.log(error);
-            }finally{
-                setLoading(false);
-            }
-        };
+    const fetchReviewsByProduct = useCallback(async (productId: string) => {
+        setLoading(true);
+        try{
+            const response = await _get(`/reviews/getReviewsForProduct/${productId}`, {}, {});
+            const res: reviewData[] = response;
+            console.log("Product Reviews:", res);
+            setReviews(res);
+        }catch(error:any){
+            console.log(error);
+        }finally{
+            setLoading(false);
+        }
+    }, []);
 
-        fetchReviewsByUser(token);
-    },[token]);
+    const fetchReviewsByUser = useCallback(async (token: string) => {
+        setLoading(true);
+        try{
+            const response = await _get(`/reviews/getReviews`, token);
+            const res: reviewData[] = response;
+            console.log("User Reviews:", res);
+            setReviews(res);
+        }catch(error:any){
+            console.log(error);
+        }finally{
+            setLoading(false);
+        }
+    }, [token]);
 
     useEffect(() => {
-        const fetchReviewsByProduct = async (productId: string) => {
-            setLoading(true);
-            try{
-                const response = await _get(`/reviews/getReviews/${productId}`, {}, {});
-                const res: reviewData[] = response;
-                setReviews(res);
-            }catch(error:any){
-                console.log(error);
-            }finally{
-                setLoading(false);
-            }
-        };
         if(productId){
             fetchReviewsByProduct(productId);
         }
-    }, [productId]);
+    },[productId, fetchReviewsByProduct]);
 
-    return {reviews, loading};
+    useEffect(() => { 
+        if(token){
+            fetchReviewsByUser(token);
+        }
+    }, [token, fetchReviewsByUser]);
+
+    return {reviews, loading, fetchReviewsByProduct};
 }
 
 export default useReview;

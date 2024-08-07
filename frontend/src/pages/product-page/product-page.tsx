@@ -17,9 +17,10 @@ const ProductPage = () => {
   const { loading, product, fetchProductById } = useProduct();
   const { user, token } = useAuth();
   const { addToFavourite, removeFavourite, isProductFavourite } = useFavourite(token);
-  const { reviews, loading: reviewLoading } = useReview(token, productId);
+  const { reviews, loading: reviewLoading, fetchReviewsByProduct } = useReview(token, productId);
   const { questions, loading: questionLoading, fetchQuestionsByProduct  } = useQuestion(user?.id, token, productId);
   console.log("questions", questions);
+  console.log("reviews", reviews);
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [selectedMenu, setSelectedMenu] = useState<string>("Reviews");
 
@@ -39,8 +40,9 @@ const ProductPage = () => {
     if (productId) {
       fetchProductById(productId);
       fetchQuestionsByProduct(productId);
+      fetchReviewsByProduct(productId);
     }
-  }, [productId, fetchProductById, fetchQuestionsByProduct]);
+  }, [productId, fetchProductById, fetchQuestionsByProduct, fetchReviewsByProduct]);
 
   useEffect(() => {
     if (product && productId) {
