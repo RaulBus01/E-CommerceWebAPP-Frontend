@@ -1,124 +1,126 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import useCategory from "../../hooks/useCategory";
 import "./dropdown.css";
 
 const Dropdown = () => {
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [clickedDropdown, setClickedDropdown] = useState<string | null>(null);
+  const [openDropdowns, setOpenDropdowns] = useState<string[]>([]);
+  const [clickedDropdowns, setClickedDropdowns] = useState<string[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-
-  const categories = [
-    {
-      name: "Fiction",
-      key: "fiction",
-      options: ["Blugi", "Fiction Category 2"],
-    },
-    {
-      name: "Non-fiction",
-      key: "nonFiction",
-      options: ["Non-fiction Category 1", "Non-fiction Category 2"],
-    },
-    {
-      name: "Academic & Textbooks",
-      key: "academic",
-      options: ["Academic Category 1", "Textbook Category 2"],
-    },
-    {
-      name: "Audiobooks",
-      key: "audiobooks",
-      options: ["Audiobook Category 1", "Audiobook Category 2"],
-    },
-    {
-      name: "eBooks",
-      key: "ebooks",
-      options: ["eBook Category 1", "eBook Category 2"],
-    },
-    {
-      name: "Kids & YA",
-      key: "kids",
-      options: ["Kids Category 1", "YA Category 2"],
-    },
-    {
-      name: "Book Accessories & Gifts",
-      key: "accessories",
-      options: ["Accessory Category 1", "Gift Category 2"],
-    },
-  ];
-
-  const handleOptionClick = (option: string) => {
-    navigate(`/category/${option.replace(/ /g, "-")}`);
-  };
-
-  const handleDropdownToggle = (key: string) => {
-    if (clickedDropdown === key) {
-      setClickedDropdown(null);
-    } else {
-      setClickedDropdown(key);
-      setOpenDropdown(key);
-    }
-  };
-
-  const handleMouseEnter = (key: string) => {
-    if (!clickedDropdown) {
-      setOpenDropdown(key);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (!clickedDropdown) {
-      setOpenDropdown(null);
-    }
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setOpenDropdown(null);
-      setClickedDropdown(null);
-    }
-  };
+  
+  const { categories, loading } = useCategory();
 
   useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setOpenDropdowns([]);
+        setClickedDropdowns([]);
+      }
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
+  const handleOptionClick = (option: string) => {
+    navigate(`/category/${option.replace(/ /g, "-")}`);
+  };
+
+  const handleDropdownToggle = (key: string, event: React.MouseEvent) => {
+    event.stopPropagation();
+    setClickedDropdowns(prev => 
+      prev.includes(key) ? prev.filter(id => id !== key) : [...prev, key]
+    );
+    setOpenDropdowns(prev => 
+      prev.includes(key) ? prev.filter(id => id !== key) : [...prev, key]
+    );
+  };
+
+  const handleMouseEnter = (key: string) => {
+    if (!clickedDropdowns.includes(key)) {
+      setOpenDropdowns(prev => [...prev, key]);
+    }
+  };
+
+  const handleMouseLeave = (key: string) => {
+    if (!clickedDropdowns.includes(key)) {
+      setOpenDropdowns(prev => prev.filter(id => id !== key));
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  const renderSubcategories = (subcategories: any[], parentId: string) => {
+    return subcategories.map((subCategory) => (
+      <div 
+        key={subCategory._id}
+        className="dropdown-subcategory"
+        onMouseEnter={() => handleMouseEnter(subCategory._id)}
+        onMouseLeave={() => handleMouseLeave(subCategory._id)}
+      >
+        <div
+          className="dropdown-item"
+          onClick={(e) => {
+            e.stopPropagation();
+            if (subCategory.children && subCategory.children.length > 0) {
+              handleDropdownToggle(subCategory._id, e);
+            } else {
+              handleOptionClick(subCategory.name);
+            }
+          }}
+          role="button"
+          tabIndex={0}
+        >
+          {subCategory.name}
+        </div>
+        {subCategory.children && subCategory.children.length > 0 && (
+          <div 
+            className={`nested-dropdown ${
+              openDropdowns.includes(subCategory._id) || clickedDropdowns.includes(subCategory._id) ? 'show' : ''
+            }`}
+          >
+            {renderSubcategories(subCategory.children, subCategory._id)}
+          </div>
+        )}
+      </div>
+    ));
+  };
+
   return (
     <div className="book-categories" ref={dropdownRef}>
       <div className="categories-container">
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <div
-            key={category.key}
+            key={category._id}
             className="dropdown-category"
-            onMouseEnter={() => handleMouseEnter(category.key)}
-            onMouseLeave={handleMouseLeave}
-            onClick={() => handleDropdownToggle(category.key)}
+            onMouseEnter={() => handleMouseEnter(category._id)}
+            onMouseLeave={() => handleMouseLeave(category._id)}
           >
-            <div className="dropdown-toggle" role="button" tabIndex={0}>
+            <div 
+              className="dropdown-toggle" 
+              role="button" 
+              tabIndex={0}
+              onClick={(e) => handleDropdownToggle(category._id, e)}
+            >
               {category.name}
             </div>
-            <div
-              className={`dropdown-menu ${
-                openDropdown === category.key ? "show" : ""
-              }`}
-            >
-              {category.options.map((option, index) => (
-                <div
-                  key={index}
-                  className="dropdown-item"
-                  onClick={() => handleOptionClick(option)}
-                  role="button"
-                  tabIndex={0}
-                >
-                  {option}
-                </div>
-              ))}
-            </div>
+            {category.children && (
+              <div
+                className={`dropdown-menu ${
+                  openDropdowns.includes(category._id) || clickedDropdowns.includes(category._id) ? "show" : ""
+                }`}
+              >
+                {renderSubcategories(category.children, category._id)}
+              </div>
+            )}
           </div>
         ))}
       </div>
