@@ -1,8 +1,9 @@
 footer {
   
   background-color: var(--primary-color);
-  color: #3f3f3f;
+  color:var(--third-color);
   padding: 20px 0;
+  bottom : 0;
 }
 
 .footer-container {
@@ -44,7 +45,7 @@ footer {
 }
 
 .footer-section ul li a {
-  color: #3f3f3f;
+  color: var(--third-color - 10%);
   text-decoration: none;
 }
 
@@ -71,12 +72,12 @@ footer {
 
   border: 1px solid #ccc;
   border-radius: 25px 0 0 25px;
-  background-color: var(--secondary-color);
+  background-color: var(--info-color);
 }
 
 .footer-subscribe button {
   padding: 10px 20px;
-  background-color: #f1c40f;
+  background-color: var(--success-color);
   border: none;
   border-radius: 0 25px 25px 0;
   cursor: pointer;

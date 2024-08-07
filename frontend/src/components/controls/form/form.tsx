@@ -4,22 +4,21 @@ import './form.css';
 import useCategory from '../../../hooks/useCategory';
 import { Category } from '../../../types/CategoryType';
 
-const Form = ({ fieldList, formData, setFormData, onSubmit, }) => {
-  const{categories,loading } = useCategory();
+const Form = ({ fieldList, formData, setFormData, onSubmit, type }) => {
+  const { categories, loading } = useCategory();
  
   const handleChange = (id) => (value) => {
     console.log(id, value);
     setFormData({ ...formData, [id]: value });
     console.log(formData);
   };
-  if(loading){
+
+  if (loading) {
     return <p>Loading...</p>
   }
 
-
-
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className="form-container">
       {fieldList.map((field) => (
         <FormField
           key={field.id}
@@ -28,13 +27,13 @@ const Form = ({ fieldList, formData, setFormData, onSubmit, }) => {
           placeholder={field.placeholder}
           value={formData[field.id] || ''}
           onChange={handleChange(field.id)}
-        
-      
           icon={field.icon}
-          categories = {field.type === 'category' ? categories as Category[] : undefined}
+          categories={field.type === 'category' ? categories as Category[] : undefined}
         />
       ))}
-      <button className="btn" type="submit">Submit</button>
+      <button className="btn" type="submit">
+        {type === 'edit' ? 'Update Product' : 'Submit'}
+      </button>
     </form>
   );
 };

@@ -6,7 +6,7 @@
 .user-profile-main-container{
     height: 100vh;
     width: 100%;
-    background-color: var(--light-color);
+    background-color: var(--secondary-color);
     
     display: flex;
     flex-direction: column;
@@ -15,7 +15,7 @@
 .top-container{
     height: 10%;
     width: 100%;
-    background-color: var(--light-color);
+    background-color: var(--secondary-color);
     border-bottom: solid 1px var(--gray-color);
 
     margin-top: 10px;

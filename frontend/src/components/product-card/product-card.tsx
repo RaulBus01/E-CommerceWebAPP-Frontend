@@ -22,6 +22,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavorite }) => {
  
   const { token, user } = useAuth();
+  const navigate = useNavigate();
 
   const isCustomer = user?.role === "customer";
   const { addToFavourite, removeFavourite, isProductFavourite } = isCustomer ? useFavourite(token as string) : { addToFavourite: () => {}, removeFavourite: () => {}, isProductFavourite: () => false };
@@ -85,7 +86,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
           </>
           :
           <>
-          <button className="edit-button">
+          <button className="edit-button" onClick={() => navigate(`/edit-product/${product._id}`)}>
             <EditIcon /> Edit
           </button>
           <button className="delete-button" onClick={handleDeleteProduct}>

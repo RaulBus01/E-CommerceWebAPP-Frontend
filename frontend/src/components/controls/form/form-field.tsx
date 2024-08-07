@@ -19,10 +19,12 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import TitleIcon from '@mui/icons-material/Title';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Remove } from '@mui/icons-material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Delete, Remove } from '@mui/icons-material';
 import './form.css';
 import { Category } from '../../../types/CategoryType';
 import MultiSelect from './multiSelect';
+
 
 interface FormFieldProps {
   type: 'text' | 'email' | 'password' | 'checkbox' | 'tel' | 'number' | 'textarea' | 'select' | 'file' | 'category';
@@ -48,7 +50,7 @@ const FormField: React.FC<FormFieldProps> = ({
   const [showPassword, setShowPassword] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-  const fileInputRef = React.createRef<HTMLInputElement>();
+
 
   const renderIcon = () => {
     switch (icon) {
@@ -76,32 +78,62 @@ const FormField: React.FC<FormFieldProps> = ({
   const handleVisibility = () => {
     setShowPassword(!showPassword);
   };
+  const handleCategoryChange = (selectedCategories: Category[]) => {
+    onChange(selectedCategories);
+  }
+  const handleFileChange = (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
-    const newFiles = Array.from(files);
-    const updatedFiles = [...selectedFiles, ...newFiles];
-    setSelectedFiles(updatedFiles);
-    onChange(updatedFiles);
-  };
-
-  const handleAddButtonClick = () => {
-    fileInputRef.current?.click();
+    const newFiles = [...selectedFiles];
+    newFiles[index] = file;
+    setSelectedFiles(newFiles);
+    onChange(newFiles);
   };
 
   const handleRemoveFile = (index: number) => {
-    const updatedFiles = selectedFiles.filter((_, i) => i !== index);
-    setSelectedFiles(updatedFiles);
-    onChange(updatedFiles);
+    const newFiles = [...selectedFiles];
+    newFiles[index] = null;
+    setSelectedFiles(newFiles);
+    onChange(newFiles.filter(Boolean));
   };
 
-  const handleCategoryChange = (selectedCategories: Category[]) => {
-    onChange(selectedCategories);
+  const renderImageInput = (index: number) => {
+    const file = selectedFiles[index];
+    return (
+      <div key={index} className="image-input-container">
+        <input
+          type="file"
+          id={`image-input-${index}`}
+          style={{ display: 'none' }}
+          onChange={handleFileChange(index)}
+          accept="image/*"
+        />
+        {file ? (
+          <>
+          <div className="image-preview">
+            <img
+              src={URL.createObjectURL(file)}
+              alt={`Uploaded ${index + 1}`}
+              onLoad={() => URL.revokeObjectURL(URL.createObjectURL(file))}
+            />
+           
+          </div>
+           <div className="overlay" onClick={() => handleRemoveFile(index)}>
+           <DeleteIcon />
+         </div>
+          </>
+        ) : (
+          <label htmlFor={`image-input-${index}`} className="add-image-button">
+            <AddCircleOutlineIcon />
+            <span>Image {index + 1}</span>
+          </label>
+        )}
+      </div>
+    );
   };
-
   return (
-    <div className="form-group-container">
+    <div className={`form-group-container-${type}`}>
       <div className="form-group">
         {renderIcon()}
         {type === 'checkbox' ? (
@@ -122,31 +154,9 @@ const FormField: React.FC<FormFieldProps> = ({
           />
         ) : type === 'file' ? (
           <div className="file-upload-container">
-            <input
-              type="file"
-              ref={fileInputRef}
-              style={{ display: 'none' }}
-              onChange={handleFileChange}
-              accept="image/*"
-             
-            />
-            {selectedFiles.map((file, index) => (
-              <div key={index} className="image-preview">
-                <img
-                  src={URL.createObjectURL(file)}
-                  alt="Uploaded"
-                  onLoad={() => URL.revokeObjectURL(file)}
-                />
-                <div className="overlay" onClick={() => handleRemoveFile(index)}>
-                  <Remove />
-                </div>
-              </div>
-            ))}
-            <div className="add-image-button" onClick={handleAddButtonClick}>
-              <AddCircleOutlineIcon />
-            </div>
+            {[0, 1, 2, 3, 4].map(renderImageInput)}
           </div>
-        ) : type === 'category' ? (
+        )  : type === 'category' ? (
           <div className="category-selects">
             <MultiSelect categories={categories} onCategoriesSelected={handleCategoryChange} />
           </div>
@@ -156,6 +166,8 @@ const FormField: React.FC<FormFieldProps> = ({
             placeholder={placeholder}
             value={value as string}
             onChange={(e) => onChange(e.target.value)}
+            min = {type === 'number' ? 0 : undefined}
+            
           />
         )}
       </div>

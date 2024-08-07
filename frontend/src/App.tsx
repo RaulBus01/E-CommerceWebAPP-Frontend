@@ -20,6 +20,7 @@ import DistributorProfilePage from './pages/distributor-profile-page/distributor
 
 import PublicRoute from './pages/authentication-page/publicRoute';
 import AddProductPage from './pages/add-product/add-product';
+import EditProductPage from './pages/edit-product/edit-product';
 
 const App = () => {
   const location = useLocation();
@@ -51,6 +52,7 @@ const App = () => {
               <Route path="/distributor-dashboard/:id" element={<DistributorProfilePage />} />
               <Route path='/user-dashboard/:id' element={<UserProfilePage />} />
               <Route path="/distributor-dashboard/:id/add-product" element={<AddProductPage />} />
+              <Route path="edit-product/:productId" element={<EditProductPage />} />
           
             </Route>
           </Routes>

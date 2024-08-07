@@ -2,41 +2,41 @@ import React, { useState, useEffect } from 'react';
 import Form from '../../components/controls/form/form';
 import useProduct from '../../hooks/useProduct';
 import { useAuth } from '../../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-
-
+import { useNavigate, useParams } from 'react-router-dom';
 
 const EditProductPage: React.FC = () => {
-  const { userId, token } = useAuth();
+  const { user, token } = useAuth();
   const { productId } = useParams();
-  const { editProduct, fetchProduct } = useProduct(token);
+  const { fetchProduct, updateProduct } = useProduct();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    id: '',
     name: '',
     description: '',
-    price: '',
+    price: 0,
     image: '',
-    stock: '',
+    stock: 0,
     category: '',
-    subcategory: '',
-    distributorId: userId
+
+    distributorId: user?.id
   });
 
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
-    fetchProduct(productId as string).then((productData) => {
-      if (productData) {
+    fetchProduct(productId as string).then((product) => {
+      if (product) {
         setFormData({
-          id: productId,
-          name: productData.name,
-          description: productData.description,
-          price: productData.price,
-          image: productData.image,
-          stock: productData.stock,
-          category: productData.category,
-          subcategory: productData.subcategory || '',
-          distributorId: productData.distributor
+          id: product._id,
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          image: product.image[0],
+          stock: product.stock,
+          category: product.categories[0].name,
+       
+          distributorId: product.distributor
         });
       }
     });
@@ -44,16 +44,20 @@ const EditProductPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form data being submitted:", formData);
-    const result = await editProduct(formData); 
-    if (result) {
-      navigate(`/distributor-dashboard/${userId}`);
+    setError(null);
+    try {
+      await updateProduct(formData);
+      navigate('/products'); // Redirect to products page after successful update
+    } catch (err) {
+      setError('Failed to update product. Please try again.');
+      console.error('Error updating product:', err);
     }
   };
 
   return (
     <div style={{ maxWidth: '600px', margin: '0 auto' }}>
       <h1>Edit Product</h1>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <Form
         fieldList={[
           { id: 'name', label: 'Product Name', type: 'text', placeholder: 'Enter product name', icon: 'product' },
@@ -67,10 +71,10 @@ const EditProductPage: React.FC = () => {
         formData={formData}
         setFormData={setFormData}
         onSubmit={handleSubmit}
+        type='edit'
       />
     </div>
   );
 };
-
 
 export default EditProductPage;

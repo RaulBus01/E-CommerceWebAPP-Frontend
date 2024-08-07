@@ -47,7 +47,7 @@ const DistributorProductsMenu = () => {
         </div>
       </div>
 
-      <div className="add-product-container">
+      <div className="add-container">
         <span>  
          <h2>Add new product </h2>
         <AddCircleOutline className="icon" onClick={() => navigate('add-product')} />

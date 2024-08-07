@@ -5,14 +5,14 @@
     align-items: center;
     height: 100vh;
     width: 100%;
-    background-color: var(--dark-color);
+    background-color: var(--primary-color);
 
   }
   .auth-content {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--white-color);
+    background-color: var(--secondary-color);
     height: 70vh;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -21,7 +21,7 @@
   }
   .auth-header{
     display: flex;
-    background-color: var(--dark-color);
+    background-color: var(--primary-color);
     
     justify-content: center;
     align-items: center;
@@ -33,6 +33,7 @@
     max-width: 960px; 
   }
   
+  
 .auth-box {
     display: flex;
     flex-direction: column;
@@ -41,6 +42,10 @@
     max-width: 55vw;
     width: 55vw;
     padding-left: 3rem;
+  }
+  .auth-box h2 {
+    margin-bottom: 2rem;
+    color: var(--third-color);
   }
   
   .auth-image {

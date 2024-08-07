@@ -37,8 +37,8 @@
     width: 100px;
     height: 30px;
 
-    background-color: var(--warning-color);
-    color: var(--gray-color);
+    background-color: var(--info-color);
+    color: var(--primary-color);
     font-weight: 700;
     font-size: medium;
     border: none;
@@ -51,8 +51,8 @@
     width: 100px;
     height: 30px;
 
-    background-color: var(--warning-color);
-    color: var(--gray-color);
+    background-color: var(--info-color);
+    color: var(--primary-color);
     font-weight: 700;
     font-size: medium;
     border: none;

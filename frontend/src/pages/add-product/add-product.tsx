@@ -15,7 +15,7 @@ const AddProductPage = () => {
     name: '',
     description: '',
     price: '',
-    images: [], // Change this to an array
+    images: [], 
     stock: '',
     categories: '',
     distributor: user?.id
@@ -58,25 +58,31 @@ const AddProductPage = () => {
       }
     } catch (error) {
       console.error('Error adding product:', error);
-      // Handle error (e.g., show error message to user)
+
     }
   };
 
   return (
     <div className="add-product-container">
+      <header>
+        <h1>Add Product</h1>
+      </header>
+      <main>
       <Form
         fieldList={[
           { id: 'name', label: 'Product Name', type: 'text', placeholder: 'Enter product name', icon: 'product' },
           { id: 'description', label: 'Description', type: 'textarea', placeholder: 'Enter product description', icon: 'description' },
           { id: 'categories', label: 'Category', type: 'category', placeholder: 'Enter category', icon: 'category' },
           { id: 'price', label: 'Price', type: 'number', placeholder: 'Enter price', icon: 'price' },
-          { id: 'images', label: 'Images', type: 'file', placeholder: 'Select images', icon: 'image', multiple: true }, // Allow multiple file selection
+          { id: 'images', label: 'Images', type: 'file', placeholder: 'Select images', icon: 'image' }, 
           { id: 'stock', label: 'Stock', type: 'number', placeholder: 'Enter stock', icon: 'stock' }
         ]}
         formData={formData}
         setFormData={setFormData}
         onSubmit={handleSubmit}
+        type="add-product"
       />
+      </main>
     </div>
   );
 };

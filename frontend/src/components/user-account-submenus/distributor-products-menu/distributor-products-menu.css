@@ -1,9 +1,11 @@
-.my-orders-menu{
+.distributor-products-menu{
   width: 100%;
   height: auto;
   padding: 10px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .top-container {
   display: flex;
@@ -40,12 +42,13 @@
   border: none;
   outline: none;
 }
-.add-product-container {
+.add-container {
   display: flex;
   flex-direction: row;
   margin-top: 20px;
+  background-color: var(--secondary-color);
 }
-.add-product-container span{
+.add-container span{
   display: flex;
   align-items: center;
   justify-content: center;
