@@ -4,11 +4,13 @@ import StarIcon from "@mui/icons-material/Star";
 import {formatDateTime} from "../../../utils/formatDataTime.ts";
 import ReviewModal from "../../modals/review-modal/review-modal.tsx";
 import useReview from "../../../hooks/useReview.tsx";
-import { postReviewData, reviewData } from "../../../types/ReviewType.ts";
+import { postReviewData } from "../../../types/ReviewType.ts";
+import { useAuth } from "../../../hooks/useAuth.tsx";
 
 const ReviewsSubmenu = ({productId, token, reviewRef, user}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const {reviews, loading, fetchReviewsByProduct, createReview} = useReview(token, productId);
+    const {user: authenticatedUser} = useAuth();
 
     useEffect(() => {
       fetchReviewsByProduct(productId);
@@ -42,7 +44,7 @@ const ReviewsSubmenu = ({productId, token, reviewRef, user}) => {
                     <StarIcon style={{ color: "yellow" }} />
                   </div>
                   <p>Posted on: <strong>{formatDateTime(review.createdAt)}</strong></p>
-                  <p>Posted by: <strong>{review.user.name || "Loading..."}</strong></p>
+                  <p>Posted by: <strong>{review.user.name || authenticatedUser?.name}</strong></p>
                 </div>
               </div>
             ))}
