@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
-import { reviewData } from "../types/ReviewType";
-import { _get } from "../utils/api";
+import { postReviewData, reviewData } from "../types/ReviewType";
+import { _get, _post } from "../utils/api";
 
 interface UseReviewResult{
     reviews: reviewData[] | null;
     loading: boolean;
     fetchReviewsByProduct: (productId: string) => Promise<void>;
+    createReview: (review: postReviewData) => Promise<reviewData | null>;
 }
 
 const useReview = (token: string, productId: string): UseReviewResult => {
@@ -40,6 +41,21 @@ const useReview = (token: string, productId: string): UseReviewResult => {
         }
     }, [token]);
 
+    const createReview = useCallback(async (review: postReviewData) => {
+        setLoading(true);
+        try{
+            const response = await _post(`/reviews/addReview`, review, token);
+            const res: reviewData = response;
+            console.log("Created Review:", res);
+            setReviews((prevReviews) => (prevReviews ? [res, ...prevReviews] : [res]));
+            return res;
+        }catch(error:any){
+            console.log(error);
+        }finally{
+            setLoading(false);
+        }
+    }, [token]);
+
     useEffect(() => {
         if(productId){
             fetchReviewsByProduct(productId);
@@ -52,7 +68,7 @@ const useReview = (token: string, productId: string): UseReviewResult => {
         }
     }, [token, fetchReviewsByUser]);
 
-    return {reviews, loading, fetchReviewsByProduct};
+    return {reviews, loading, fetchReviewsByProduct, createReview};
 }
 
 export default useReview;

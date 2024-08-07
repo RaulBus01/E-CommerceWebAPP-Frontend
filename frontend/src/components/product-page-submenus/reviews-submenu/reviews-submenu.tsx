@@ -1,14 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./reviews-submenu.css";
 import StarIcon from "@mui/icons-material/Star";
 import {formatDateTime} from "../../../utils/formatDataTime.ts";
+import ReviewModal from "../../modals/review-modal/review-modal.tsx";
+import useReview from "../../../hooks/useReview.tsx";
+import { postReviewData, reviewData } from "../../../types/ReviewType.ts";
 
-const ReviewsSubmenu = ({reviews, reviewRef}) => {
+const ReviewsSubmenu = ({productId, token, reviewRef, user}) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const {reviews, loading, fetchReviewsByProduct, createReview} = useReview(token, productId);
+
+    useEffect(() => {
+      fetchReviewsByProduct(productId);
+    }, [fetchReviewsByProduct, productId]);
+
+    const handleAddReview = async (review: {title: string; content: string; rating: number}) => {
+      const newReview: postReviewData = {
+        ...review,
+        productId: productId,
+        userId: user.id
+      };
+      await createReview(newReview);
+    }
+
     return(
         <div className="product-reviews-container">
           <div className="product-reviews-header" ref={reviewRef}>
             <h1>Buyer's reviews</h1>
-            <button>Add a review</button>
+            <button onClick={() => setIsModalOpen(true)}>Add a review</button>
           </div>
           <div className="review-cells-container"> 
             {reviews && reviews.map((review) => (
@@ -23,11 +42,12 @@ const ReviewsSubmenu = ({reviews, reviewRef}) => {
                     <StarIcon style={{ color: "yellow" }} />
                   </div>
                   <p>Posted on: <strong>{formatDateTime(review.createdAt)}</strong></p>
-                  <p>Posted by: <strong>{review.user.name}</strong></p>
+                  <p>Posted by: <strong>{review.user.name || "Loading..."}</strong></p>
                 </div>
               </div>
             ))}
           </div>
+          <ReviewModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onsubmit={handleAddReview}></ReviewModal>
         </div>
     );
 }

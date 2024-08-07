@@ -17,10 +17,7 @@ const ProductPage = () => {
   const { loading, product, fetchProductById } = useProduct();
   const { user, token } = useAuth();
   const { addToFavourite, removeFavourite, isProductFavourite } = useFavourite(token);
-  const { reviews, loading: reviewLoading, fetchReviewsByProduct } = useReview(token, productId);
   const { questions, loading: questionLoading, fetchQuestionsByProduct  } = useQuestion(user?.id, token, productId);
-  console.log("questions", questions);
-  console.log("reviews", reviews);
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [selectedMenu, setSelectedMenu] = useState<string>("Reviews");
 
@@ -29,28 +26,24 @@ const ProductPage = () => {
   const loadSelectedMenu = () => {
     switch (selectedMenu){
       case "Reviews":
-        return <ReviewsSubmenu reviews={reviews} reviewRef={reviewRef} />;
+        return <ReviewsSubmenu user={user} reviewRef={reviewRef} productId={productId} token={token} />;
       case "Questions":
         return <QuestionsSubmenu questions={questions} />;
       default:
-        return <ReviewsSubmenu reviews={reviews} reviewRef={reviewRef} />;
+        return <ReviewsSubmenu user={user} reviewRef={reviewRef} productId={productId} token={token} />;
     }
   }
   useEffect(() => {
     if (productId) {
       fetchProductById(productId);
       fetchQuestionsByProduct(productId);
-      fetchReviewsByProduct(productId);
     }
-  }, [productId, fetchProductById, fetchQuestionsByProduct, fetchReviewsByProduct]);
+  }, [productId, fetchProductById, fetchQuestionsByProduct]);
 
   useEffect(() => {
     if (product && productId) {
       const isFav = isProductFavourite(productId);
       setIsFavourite(isFav);
-      console.log("Product ID:", productId);
-      console.log("Fetched Product:", product);
-      console.log("Is Favorite:", isFav);
     }
   }, [productId, product, isProductFavourite]);
 

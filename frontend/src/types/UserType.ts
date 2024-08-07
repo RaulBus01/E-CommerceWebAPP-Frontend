@@ -52,4 +52,10 @@ interface userData{
     isAuthorized?: boolean;
 }
 
-export type {userRole, loginData, DataCustomer, DataDistributor, registerDataCustomer, registerDataDistributor , userData};
+interface reviewUserData{
+  name: string;
+  role: string;
+  _id: string;
+}
+
+export type {reviewUserData, userRole, loginData, DataCustomer, DataDistributor, registerDataCustomer, registerDataDistributor , userData};
