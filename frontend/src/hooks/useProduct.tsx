@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { productData } from "../types/ProductType";
-import { _delete, _get,_post } from "../utils/api";
+import { _delete, _get,_post,_put } from "../utils/api";
 import { useAuth } from "./useAuth";
 
 interface UseOrderResult {
@@ -11,6 +11,7 @@ interface UseOrderResult {
   distributorProducts: productData[] | null;    
     addProduct: (product: FormData) => Promise<boolean>;
     fetchProduct: (productId: string) => Promise<productData | null>;
+    editProduct: (productId: string,product: FormData) => Promise<boolean>;
 }
 
 const useProduct = (): UseOrderResult => {
@@ -82,9 +83,18 @@ const useProduct = (): UseOrderResult => {
       return false;
     }
   }
+  const editProduct = async (productId:string,product: FormData) => {
+    try {
+      await _put(`/products/edit/${productId}`, product, token);
+      return true;
+    } catch (error: any) {
+      console.error("Error editing product:", error);
+      return false;
+    }
+  }
 
 
-  return { products, setProducts, loading, deleteProduct, distributorProducts, addProduct ,fetchProduct};
+  return { products, setProducts, loading, deleteProduct, distributorProducts, addProduct ,fetchProduct, editProduct};
 };
 
 export default useProduct;

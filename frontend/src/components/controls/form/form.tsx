@@ -6,7 +6,7 @@ import { Category } from '../../../types/CategoryType';
 
 const Form = ({ fieldList, formData, setFormData, onSubmit, type }) => {
   const { categories, loading } = useCategory();
- 
+
   const handleChange = (id) => (value) => {
     console.log(id, value);
     setFormData({ ...formData, [id]: value });
@@ -16,6 +16,7 @@ const Form = ({ fieldList, formData, setFormData, onSubmit, type }) => {
   if (loading) {
     return <p>Loading...</p>
   }
+  console.log(formData);
 
   return (
     <form onSubmit={onSubmit} className="form-container">
@@ -25,7 +26,7 @@ const Form = ({ fieldList, formData, setFormData, onSubmit, type }) => {
           type={field.type}
           label={field.label}
           placeholder={field.placeholder}
-          value={formData[field.id] || ''}
+          value={formData[field.id]}
           onChange={handleChange(field.id)}
           icon={field.icon}
           categories={field.type === 'category' ? categories as Category[] : undefined}

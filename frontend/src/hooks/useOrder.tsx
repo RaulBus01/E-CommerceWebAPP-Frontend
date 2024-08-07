@@ -1,10 +1,13 @@
 import { useEffect, useState, useCallback } from "react";
 import { orderData } from "../types/OrderType";
-import { _get } from "../utils/api";
+import { _get,_put } from "../utils/api";
 
 interface UseOrderResult {
     orders: orderData[] | null;
     loading: boolean;
+    fetchOrderById: (orderId: string) => Promise<any>;
+    cancelOrder: (orderId: string) => Promise<any>;
+    editOrderStatus: (orderId: string, status: string) => Promise<any>;
    
 }
 
@@ -28,8 +31,46 @@ const useOrder = (token: string): UseOrderResult => {
 
         fetchOrdersByUser(token);
     }, [token]);
+    const fetchOrderById = async (orderId: string) => {
+        setLoading(true);
+        try {
+            const response = await _get(`/orders/order/${orderId}`, token);
+            setLoading(false);
+            return response;
+            
+        } catch (error: any) {
+            console.error(error);
+            return null;
+        }
+    }
+    const cancelOrder = async (orderId: string) => {
+        setLoading(true);
+        try {
+            const response = await _put(`/orders/cancel/${orderId}`, {}, token);
+            setLoading(false);
+            return true;
+        } catch (error: any) {
+            console.error(error);
+            return null;
+        }
+    }
+    const editOrderStatus = async (orderId: string, status: string) => {
+        setLoading(true);
+        try {
+            const response = await _get(`/orders/edit/${orderId}/${status}`, token);
+            setLoading(false);
+            return response;
+        } catch (error: any) {
+            console.error(error);
+            return null;
+        }
+    }
 
-    return { orders, loading };
+
+
+
+
+    return { orders, loading, fetchOrderById, cancelOrder ,editOrderStatus};
 }
 
 export default useOrder;

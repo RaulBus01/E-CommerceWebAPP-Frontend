@@ -10,7 +10,7 @@ const fetchClient = async (url, token, options = {}) => {
     ...options,
   };
 
-  // Remove 'Content-Type' header if it's FormData
+  
   if (options.body instanceof FormData) {
     delete defaultOptions.headers['Content-Type'];
   } else {
@@ -60,9 +60,16 @@ export const _get = (url,token, config = {}) => {
 
 //PUT
 export const _put = (url, data,token, config = {}) => {
+  let body;
+  
+  if (data instanceof FormData) {
+    body = data;
+  } else {
+    body = JSON.stringify(data);
+  }
     return fetchClient(url,token, {
       method: 'PUT',
-      body: JSON.stringify(data),
+      body: body,
       ...config,
     });
   };

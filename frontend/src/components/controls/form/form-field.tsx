@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import EmailIcon from '@mui/icons-material/Email';
 import KeyIcon from '@mui/icons-material/Key';
 import PersonIcon from '@mui/icons-material/Person';
@@ -48,7 +48,10 @@ const FormField: React.FC<FormFieldProps> = ({
   categories,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  console.log(type, value);
+  const [selectedFiles, setSelectedFiles] = useState<(File | string)[]>(
+    Array.isArray(value) ? value : [],
+  );
 
 
 
@@ -74,7 +77,13 @@ const FormField: React.FC<FormFieldProps> = ({
       default: return null;
     }
   };
-
+  useEffect(() => {
+    if (Array.isArray(value)) {
+      setSelectedFiles(value);
+     
+    }
+  }, [value]);
+  console.log(selectedFiles);
   const handleVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -100,6 +109,9 @@ const FormField: React.FC<FormFieldProps> = ({
 
   const renderImageInput = (index: number) => {
     const file = selectedFiles[index];
+
+    
+    
     return (
       <div key={index} className="image-input-container">
         <input
@@ -113,9 +125,9 @@ const FormField: React.FC<FormFieldProps> = ({
           <>
           <div className="image-preview">
             <img
-              src={URL.createObjectURL(file)}
+              src={file instanceof File ? URL.createObjectURL(file) : file}
               alt={`Uploaded ${index + 1}`}
-              onLoad={() => URL.revokeObjectURL(URL.createObjectURL(file))}
+              onLoad={() => URL.revokeObjectURL(file instanceof File ? URL.createObjectURL(file) : file)}
             />
            
           </div>
@@ -167,6 +179,7 @@ const FormField: React.FC<FormFieldProps> = ({
             value={value as string}
             onChange={(e) => onChange(e.target.value)}
             min = {type === 'number' ? 0 : undefined}
+            step={type === 'number' ? 0.01 : undefined}
             
           />
         )}

@@ -16,6 +16,10 @@ const OrderSummary = ({order}:{order:orderData}) => {
  
   const navigate = useNavigate();
 
+  const handleNavigate = () => {
+    navigate(`order/${order._id}`);
+  }
+
 
 
     
@@ -51,7 +55,7 @@ const OrderSummary = ({order}:{order:orderData}) => {
       
       <div className="orderFooter">
         
-        <button className="orderDetailsButton" onClick={() => navigate(`/distributor-dashboard/${order.distributor._id}/order/${order._id}`)}>
+        <button className="orderDetailsButton" onClick={handleNavigate}>
         <KeyboardDoubleArrowDownIcon className="orderDetailsIcon"/>
           Order Details</button>
       </div>

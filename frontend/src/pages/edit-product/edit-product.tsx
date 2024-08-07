@@ -7,19 +7,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 const EditProductPage: React.FC = () => {
   const { user, token } = useAuth();
   const { productId } = useParams();
-  const { fetchProduct, updateProduct } = useProduct();
+  const { fetchProduct, editProduct } = useProduct();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    id: '',
+    _id: '',
     name: '',
     description: '',
     price: 0,
-    image: '',
+    images: '',
     stock: 0,
     category: '',
-
-    distributorId: user?.id
   });
 
   const [error, setError] = useState<string | null>(null);
@@ -28,15 +26,13 @@ const EditProductPage: React.FC = () => {
     fetchProduct(productId as string).then((product) => {
       if (product) {
         setFormData({
-          id: product._id,
+          _id: product._id,
           name: product.name,
           description: product.description,
           price: product.price,
-          image: product.image[0],
+          images: product.image,
           stock: product.stock,
           category: product.categories[0].name,
-       
-          distributorId: product.distributor
         });
       }
     });
@@ -44,15 +40,30 @@ const EditProductPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
-    try {
-      await updateProduct(formData);
-      navigate('/products'); // Redirect to products page after successful update
-    } catch (err) {
-      setError('Failed to update product. Please try again.');
-      console.error('Error updating product:', err);
+    console.log('Form data:', formData);
+    const formDataToSend = new FormData();
+    Object.keys(formData).forEach((key) => {
+      console.log('Key:', key);
+      if (key === 'image') {
+        if (formData.images) {
+          formDataToSend.append('image', formData.images);
+        }
+      } else {
+        formDataToSend.append(key, formData[key]);
+      }
     }
-  };
+    );
+    try {
+      console.log('Sending form data:', formDataToSend);
+      const response = await editProduct(formData._id,formDataToSend);
+      console.log('Response:', response);
+    } catch (error) {
+      console.error('Error editing product:', error);
+      setError('Error editing product. Please try again.');
+    }
+  }
+
+  
 
   return (
     <div style={{ maxWidth: '600px', margin: '0 auto' }}>
@@ -65,7 +76,7 @@ const EditProductPage: React.FC = () => {
           { id: 'category', label: 'Category', type: 'select', placeholder: 'Enter category', icon: 'category' },
           { id: 'subcategory', label: 'Subcategory', type: 'select', placeholder: 'Enter subcategory', icon: 'category' },
           { id: 'price', label: 'Price', type: 'number', placeholder: 'Enter price', icon: 'price' },
-          { id: 'image', label: 'Image URL', type: 'file', placeholder: 'Enter image URL', icon: 'image' },
+          { id: 'images', label: 'Image URL', type: 'file', placeholder: 'Enter image URL', icon: 'image' },
           { id: 'stock', label: 'Stock', type: 'number', placeholder: 'Enter stock', icon: 'stock' }
         ]}
         formData={formData}
