@@ -1,5 +1,5 @@
-.order-details {
-    height: 100%;
+.order-container {
+    height: auto;
     font-family: Arial, sans-serif;
     color: #333;
 
@@ -12,6 +12,12 @@
   .breadcrumb a {
     text-decoration: none;
     color: #007bff;
+  }
+  .order-details{
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
+    gap: 20px;
   }
   
   .order-header {

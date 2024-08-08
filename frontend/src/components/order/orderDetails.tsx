@@ -76,7 +76,7 @@ const OrderDetails: React.FC = () => {
   }
 
   return (
-    <div className="order-details">
+    <div className="order-container">
       <div className="order-header">
         <h1>Order nr. {order?._id}</h1>
         
@@ -88,7 +88,7 @@ const OrderDetails: React.FC = () => {
             <p>Status: <strong>{order?.status}</strong></p> 
         </div>
       </div>
-      <div className="products-sold">
+      <div className="order-details">
         <h2>Products sold by {order?.distributor.name}</h2>
         <div className="product-details">
           <div className="delivery-info">
