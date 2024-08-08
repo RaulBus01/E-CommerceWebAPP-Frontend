@@ -1,9 +1,9 @@
 
 :root{
-  --primary-color: #2A3132;
-  --secondary-color: #763626;
-  --third-color:  #90AFC5;
-  --info-color: #F4A261;
+  --primary-color: #364F6B;
+  --secondary-color: #5F5D9C;
+  --third-color:  #FC5185;
+  --info-color: #F5F5F5;
   --danger-color: #D62828;
   --success-color: #2A9D8F;
   --warning-color: #F4A261;
@@ -24,7 +24,7 @@
 html,body {
   margin: 0;
   padding: 0;
-  color:var(--third-color);
+
   font-family: 'Roboto', sans-serif;
   font-size: large;
   height: 100%;
