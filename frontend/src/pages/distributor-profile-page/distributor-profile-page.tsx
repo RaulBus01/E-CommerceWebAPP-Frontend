@@ -45,12 +45,12 @@ const DistributorProfilePage = () => {
    
 
     return (
-        <div className="user-profile-main-container">
+        <div className="distributor-profile-main-container">
             <div className="top-container">
                 <h2>Your account</h2>
                 <button className="signOut-btn" onClick={handleLogOut}>Sign out</button>
             </div>
-            <div className="user-info-container">
+            <div className="distributor-info-container">
                 <SideMenu 
                     setSelectedMenu={setSelectedMenu} 
                     name={user?.name || ""} 

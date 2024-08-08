@@ -4,7 +4,6 @@ import Spinner from "../../spinner/spinner";
 import { formatDateTime, getNumberOfDays } from "../../../utils/formatDataTime";
 import InfoCell from "../../info-cell/info-cell";
 import useUser from "../../../hooks/useUser";
-import { useAuth } from "../../../hooks/useAuth";
 
 const defaultAddress = {
   country: "",
@@ -15,7 +14,7 @@ const defaultAddress = {
   zip: ""
 };
 
-const PersonalInformationMenu = ({ user,loading, title = "Personal Information" }) => {
+const PersonalInformationMenu = ({ user, title = "Personal Information" }) => {
   
   const { editUser } = useUser();
   const [editingField, setEditingField] = useState(null);
@@ -59,7 +58,7 @@ const PersonalInformationMenu = ({ user,loading, title = "Personal Information" 
     }
   };
 
-  if (loading) return <div className="personal-info-menu"><Spinner /></div>;
+ 
 
   const formattedDate = formatDateTime(user?.role === 'customer' ? user?.customerInfo?.createdAt : user?.distributorInfo?.createdAt);
   const numberOfDays = getNumberOfDays(user?.role === 'customer' ? user?.customerInfo?.createdAt : user?.distributorInfo?.createdAt);

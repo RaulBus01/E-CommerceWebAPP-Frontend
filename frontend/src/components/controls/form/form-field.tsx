@@ -85,7 +85,7 @@ const FormField: React.FC<FormFieldProps> = ({
      
     }
   }, [value]);
-  console.log(selectedFiles);
+
   const handleVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -113,6 +113,7 @@ const FormField: React.FC<FormFieldProps> = ({
     const file = selectedFiles[index];
 
     
+    console.log(file);
     
     return (
       <div key={index} className="image-input-container">
@@ -172,7 +173,7 @@ const FormField: React.FC<FormFieldProps> = ({
           </div>
         )  : type === 'category' ? (
           <div className="category-selects">
-            <MultiSelect categories={categories} onCategoriesSelected={handleCategoryChange} />
+            <MultiSelect categories={categories} onCategoriesSelected={handleCategoryChange}  />
           </div>
         ) : (
           <input

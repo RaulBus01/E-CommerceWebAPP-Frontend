@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
-const MultiSelect = ({ categories, onCategoriesSelected }) => {
-  const [selections, setSelections] = useState<Array<string>>([]);
+const MultiSelect = ({ categories, onCategoriesSelected, initialSelections }) => {
+  const [selections, setSelections] = useState<Array<string>>(initialSelections || []);
   const [options, setOptions] = useState([categories]);
 
-  const handleSelectionChange = (level, selectedId) => {
+  const findCategoryById = useCallback((categories, id) => {
+    for (const category of categories) {
+      if (category._id === id) return category;
+      if (category.children) {
+        const found = findCategoryById(category.children, id);
+        if (found) return found;
+      }
+    }
+    return null;
+  }, []);
+
+  const handleSelectionChange = useCallback((level, selectedId) => {
     const newSelections = [...selections];
     newSelections[level] = selectedId;
 
@@ -21,18 +32,20 @@ const MultiSelect = ({ categories, onCategoriesSelected }) => {
 
     const selectedCategories = truncatedSelections.map(id => findCategoryById(categories, id));
     onCategoriesSelected(selectedCategories);
-  };
+  }, [selections, options, categories, findCategoryById, onCategoriesSelected]);
 
-  const findCategoryById = (categories, id) => {
-    for (const category of categories) {
-      if (category._id === id) return category;
-      if (category.children) {
-        const found = findCategoryById(category.children, id);
-        if (found) return found;
-      }
+  useEffect(() => {
+    if (initialSelections && initialSelections.length > 0) {
+      const newOptions = [categories];
+      initialSelections.forEach((id, level) => {
+        const selectedCategory = findCategoryById(categories, id);
+        if (selectedCategory && selectedCategory.children) {
+          newOptions.push(selectedCategory.children);
+        }
+      });
+      setOptions(newOptions);
     }
-    return null;
-  };
+  }, [initialSelections, categories, findCategoryById]);
 
   return (
     <div>

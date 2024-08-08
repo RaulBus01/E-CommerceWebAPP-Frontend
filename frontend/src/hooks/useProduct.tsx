@@ -87,6 +87,7 @@ const useProduct = (): UseOrderResult => {
   }
   const editProduct = async (productId:string,product: FormData) => {
     try {
+   
       await _put(`/products/edit/${productId}`, product, token);
       return true;
     } catch (error: any) {

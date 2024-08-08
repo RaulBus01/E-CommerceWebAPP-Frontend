@@ -1,25 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Form from '../../components/controls/form/form';
 
 import { useAuth } from '../../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+
+import useProduct from '../../hooks/useProduct';
 import { _post } from '../../utils/api';
-import './add-product.css';
+import './distributor-product-page.css';
+import { Category } from '../../types/CategoryType';
+interface Product {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  images: File[];
+  stock: number;
+  categories: Category[];
+  distributor?: string;
+  isActive?: boolean;
+}
 
-const AddProductPage = () => {
+const DistributorProductPage = ({type}:{type:string}) => {
   const { user,token } = useAuth();
-  const navigate = useNavigate();
+  const { productId } = type === 'edit-product' ? useParams() : {productId: ''};
+  const {  addProduct } = useProduct();
+  const { fetchProduct,editProduct } = type === 'edit-product' ? useProduct() : {fetchProduct: () => {},editProduct: () => {}};
 
 
-  const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    price: '',
-    images: [], 
-    stock: '',
-    categories: '',
-    distributor: user?.id
-  });
+
+  const [formData, setFormData] = useState<Product>({} as Product);
+  useEffect(() => {
+    if (type === 'add-product') {
+      return;
+    }
+    fetchProduct(productId as string).then((product) => {
+      if (product) {
+        setFormData({
+          _id: product._id,
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          images: product.image,
+          stock: product.stock,
+          categories: product.categories[0].name,
+          isActive: product.isActive,
+        });
+      }
+    });
+  }, [productId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,22 +78,23 @@ const AddProductPage = () => {
     });
 
     try {
-      console.log('Sending form data:', formDataToSend);
-      const response = await _post('/products/add', formDataToSend, token);
+     
+      const response =  type === 'edit-product' ? await editProduct(formData._id,formDataToSend)  : await addProduct(formDataToSend);
       console.log('Response:', response);
-      if (response) {
-        navigate('/products');
-      }
+
+    
     } catch (error) {
       console.error('Error adding product:', error);
 
     }
   };
+  console.log(formData);
 
   return (
     <div className="add-product-container">
       <header>
-        <h1>Add Product</h1>
+        <h1>{user?.role === 'distributor' ? type === 'add-product' ? 'Add Product' : 'Edit Product' : 'Access Denied'}</h1>
+
       </header>
       <main>
       <Form
@@ -75,7 +104,8 @@ const AddProductPage = () => {
           { id: 'categories', label: 'Category', type: 'category', placeholder: 'Enter category', icon: 'category' },
           { id: 'price', label: 'Price', type: 'number', placeholder: 'Enter price', icon: 'price' },
           { id: 'images', label: 'Images', type: 'file', placeholder: 'Select images', icon: 'image' }, 
-          { id: 'stock', label: 'Stock', type: 'number', placeholder: 'Enter stock', icon: 'stock' }
+          { id: 'stock', label: 'Stock', type: 'number', placeholder: 'Enter stock', icon: 'stock' },
+          type === 'edit-product' ? { id: 'isActive', label: 'Active', type: 'checkbox', placeholder: 'Enter product status', icon: 'status' } : null
         ]}
         formData={formData}
         setFormData={setFormData}
@@ -87,4 +117,4 @@ const AddProductPage = () => {
   );
 };
 
-export default AddProductPage;
+export default DistributorProductPage;

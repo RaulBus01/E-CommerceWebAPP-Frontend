@@ -2,8 +2,11 @@ footer {
   
   background-color: var(--primary-color);
   color:var(--third-color);
-  padding: 20px 0;
+  padding: 10px;
+  width: 100%;
+  
   bottom : 0;
+  position: relative;
 }
 
 .footer-container {

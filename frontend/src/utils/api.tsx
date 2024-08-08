@@ -63,15 +63,20 @@ export const _put = (url, data,token, config = {}) => {
   let body;
   
   if (data instanceof FormData) {
+    for (var pair of data.entries()) {
+      console.log(pair[0]+ ', ' + pair[1]);
+    }
     body = data;
   } else {
     body = JSON.stringify(data);
   }
-    return fetchClient(url,token, {
-      method: 'PUT',
-      body: body,
-      ...config,
-    });
+  return fetchClient(url, token, {
+    method: 'PUT',
+    body: body,
+    ...config,
+  });
+
+  
   };
 
 //DELETE

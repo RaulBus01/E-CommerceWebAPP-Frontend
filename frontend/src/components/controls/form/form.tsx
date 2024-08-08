@@ -8,9 +8,7 @@ const Form = ({ fieldList, formData, setFormData, onSubmit, type }) => {
   const { categories, loading } = useCategory();
 
   const handleChange = (id) => (value) => {
-    console.log(id, value);
     setFormData({ ...formData, [id]: value });
-    console.log(formData);
   };
 
   if (loading) {
@@ -21,15 +19,16 @@ const Form = ({ fieldList, formData, setFormData, onSubmit, type }) => {
   return (
     <form onSubmit={onSubmit} className="form-container">
       {fieldList.map((field) => (
+        field &&
         <FormField
-          key={field.id}
-          type={field.type}
-          label={field.label}
-          placeholder={field.placeholder}
-          value={formData[field.id]}
-          onChange={handleChange(field.id)}
-          icon={field.icon}
-          categories={field.type === 'category' ? categories as Category[] : undefined}
+          key={field?.id}
+          type={field?.type}
+          label={field?.label}
+          placeholder={field?.placeholder}
+          value={formData[field?.id]}
+          onChange={handleChange(field?.id)}
+          icon={field?.icon}
+          categories={field?.type === 'category' ? categories as Category[] : undefined}
         />
       ))}
       <button className="btn" type="submit">
