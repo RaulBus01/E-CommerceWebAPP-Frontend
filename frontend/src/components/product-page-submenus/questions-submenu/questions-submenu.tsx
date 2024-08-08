@@ -4,13 +4,16 @@ import {formatDateTime} from "../../../utils/formatDataTime.ts";
 import useQuestion from "../../../hooks/useQuestion.tsx";
 import QuestionModal from "../../modals/question-modal/question-modal.tsx";
 import { postQuestionData } from "../../../types/QuestionType.ts";
+import useReply from "../../../hooks/useReply.tsx";
 
 const QuestionsSubmenu = ({productId, token, user}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isReplyOpen, setIsReplyOpen] = useState({});
+    const [replyContent, setReplyContent] = useState({});
 
-    const {questions, fetchQuestionsByProduct, createQuestion} = useQuestion(user.id, token, productId);
-    console.log("Questions:", questions);
+    const {loading: questionsLoading, questions, fetchQuestionsByProduct, createQuestion} = useQuestion(user.id, token, productId);
+    const {createReply, loading: replyLoading} = useReply(token);
+
     useEffect(() => {
       fetchQuestionsByProduct(productId);
     }, [fetchQuestionsByProduct, productId]);
@@ -21,11 +24,31 @@ const QuestionsSubmenu = ({productId, token, user}) => {
           productId: productId,
         };
         await createQuestion(newQuestion);
-    }
+    };
 
     const toggleReply = (questionId) => {
         setIsReplyOpen((prev) => ({...prev, [questionId]: !prev[questionId]}));
-    }
+    };
+
+    const handleReply = (e, questionId) => {
+        setReplyContent((prev) => ({...prev, [questionId]: e.target.value}));
+    };
+
+    const handleReplySubmit = async (questionId) => {
+        const content = replyContent[questionId];
+        if(!content) return;
+        const newReply = {
+            content,
+            questionId,
+        };
+        const addedReply = await createReply(newReply);
+        if(addedReply){
+          setIsReplyOpen((prev) => ({...prev, [questionId]: false}));
+          setReplyContent((prev) => ({...prev, [questionId]: ""}));
+
+          fetchQuestionsByProduct(productId);
+        }
+    };
 
     return(
         <div className="product-reviews-container">
@@ -48,23 +71,23 @@ const QuestionsSubmenu = ({productId, token, user}) => {
                     </div>
                 </div>
                 <div className="replies-container">
-                {question?.replies && question?.replies.map((reply) => (
-                    <div key={reply.id} className="reply-cell">
-                        <div className="left-review-cell">
-                            <h3>{reply?.user.name} replied:</h3>
-                            <p>{reply?.content}</p>
-                        </div>
-                        <div className="right-review-cell">
-                            <p>Posted on: <strong>{formatDateTime(reply?.createdAt)}</strong></p>
-                        </div>
-                    </div>
-                ))}
+                  {question?.replies && question?.replies.map((reply) => (
+                      <div key={reply?._id} className="reply-cell">
+                          <div className="left-review-cell">
+                              <h3>{reply?.user.name} replied:</h3>
+                              <p>{reply?.content}</p>
+                          </div>
+                          <div className="right-review-cell">
+                              <p>Posted on: <strong>{formatDateTime(reply?.createdAt)}</strong></p>
+                          </div>
+                      </div>
+                  ))}
                 </div>
                 <div className="reply-container">
                   {isReplyOpen[question.id] ? (
                     <div className="reply-container">
-                      <textarea placeholder="Reply to this question"></textarea>
-                      <button>Submit reply</button>
+                      <textarea value={replyContent[question.id]} onChange={(e) => handleReply(e, question.id)} placeholder="Reply to this question"></textarea>
+                      <button onClick={() => handleReplySubmit(question.id)} disabled={replyLoading}>{replyLoading ? "Sending reply..." : "Submit reply"}</button>
                       <button onClick={() => toggleReply(question.id)}>Cancel</button>
                     </div>
                   ) : (

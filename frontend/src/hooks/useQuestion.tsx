@@ -6,7 +6,7 @@ interface useQuestionResult{
     questions: questionData[]| null;
     loading: boolean;
     fetchQuestionsByProduct: (productId: string) => Promise<void>;
-    createQuestion: (question: postQuestionData) => Promise<questionData | null>;
+    createQuestion: (question: postQuestionData) => Promise<questionData | undefined>;
 }
 
 const useQuestion = (userId: string, token: string, productId: string): useQuestionResult => {

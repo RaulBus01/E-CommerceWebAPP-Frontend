@@ -6,7 +6,7 @@ interface UseReviewResult{
     reviews: reviewData[] | null;
     loading: boolean;
     fetchReviewsByProduct: (productId: string) => Promise<void>;
-    createReview: (review: postReviewData) => Promise<reviewData | null>;
+    createReview: (review: postReviewData) => Promise<reviewData | undefined>;
 }
 
 const useReview = (token: string, productId: string): UseReviewResult => {
@@ -18,7 +18,6 @@ const useReview = (token: string, productId: string): UseReviewResult => {
         try{
             const response = await _get(`/reviews/getReviewsForProduct/${productId}`, {}, {});
             const res: reviewData[] = response;
-            console.log("Product Reviews:", res);
             setReviews(res);
         }catch(error:any){
             console.log(error);
@@ -32,7 +31,6 @@ const useReview = (token: string, productId: string): UseReviewResult => {
         try{
             const response = await _get(`/reviews/getReviews`, token);
             const res: reviewData[] = response;
-            console.log("User Reviews:", res);
             setReviews(res);
         }catch(error:any){
             console.log(error);
@@ -46,7 +44,6 @@ const useReview = (token: string, productId: string): UseReviewResult => {
         try{
             const response = await _post(`/reviews/addReview`, review, token);
             const res: reviewData = response;
-            console.log("Created Review:", res);
             setReviews((prevReviews) => (prevReviews ? [res, ...prevReviews] : [res]));
             return res;
         }catch(error:any){

@@ -30,6 +30,9 @@
     width: 70%;
     height: auto;
     align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .reply-cell{

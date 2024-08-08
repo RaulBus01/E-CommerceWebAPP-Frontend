@@ -58,11 +58,13 @@ const ProductPage = () => {
   }, [isFavourite, product, addToFavourite, removeFavourite]);
 
   const scrollToReviews = () => {
-    if(reviewRef.current){
-      reviewRef.current.scrollIntoView({ behavior: "smooth" });
-    }else {
-      console.log("reviewRef is not attached to an element");
-    }
+    setSelectedMenu("Reviews");
+
+    setTimeout(() => {
+      if(reviewRef.current){
+        reviewRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 0);
   }
 
   if (loading) {
