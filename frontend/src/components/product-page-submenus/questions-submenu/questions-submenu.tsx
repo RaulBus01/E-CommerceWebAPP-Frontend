@@ -10,6 +10,7 @@ const QuestionsSubmenu = ({productId, token, user}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isReplyOpen, setIsReplyOpen] = useState({});
     const [replyContent, setReplyContent] = useState({});
+    const [expandedReplies, setExpandedReplies] = useState({});
 
     const {loading: questionsLoading, questions, fetchQuestionsByProduct, createQuestion} = useQuestion(user.id, token, productId);
     const {createReply, loading: replyLoading} = useReply(token);
@@ -33,6 +34,10 @@ const QuestionsSubmenu = ({productId, token, user}) => {
     const handleReply = (e, questionId) => {
         setReplyContent((prev) => ({...prev, [questionId]: e.target.value}));
     };
+
+    const toggleExpandedReplies = (questionId) => {
+        setExpandedReplies((prev) => ({...prev, [questionId]: !prev[questionId]}));
+    }
 
     const handleReplySubmit = async (questionId) => {
         const content = replyContent[questionId];
@@ -71,17 +76,23 @@ const QuestionsSubmenu = ({productId, token, user}) => {
                     </div>
                 </div>
                 <div className="replies-container">
-                  {question?.replies && question?.replies.map((reply) => (
+                  {question?.replies && question?.replies.slice(0, expandedReplies[question.id] ? question.replies.length : 1)
+                    .map((reply) => (
                       <div key={reply?._id} className="reply-cell">
-                          <div className="left-review-cell">
-                              <h3>{reply?.user.name} replied:</h3>
-                              <p>{reply?.content}</p>
-                          </div>
-                          <div className="right-review-cell">
-                              <p>Posted on: <strong>{formatDateTime(reply?.createdAt)}</strong></p>
-                          </div>
+                        <div className="left-review-cell">
+                          <h3>{reply?.user.name || user?.name} replied:</h3>
+                          <p>{reply?.content}</p>
+                        </div>
+                        <div className="right-review-cell">
+                          <p>Posted on: <strong>{formatDateTime(reply?.createdAt)}</strong></p>
+                        </div>
                       </div>
-                  ))}
+                    ))}
+                    {question?.replies && question?.replies.length > 1 && (
+                      <button onClick={() => toggleExpandedReplies(question.id)}>
+                        {expandedReplies[question.id] ? "Show less" : "Show more"}
+                      </button>
+                    )}
                 </div>
                 <div className="reply-container">
                   {isReplyOpen[question.id] ? (
