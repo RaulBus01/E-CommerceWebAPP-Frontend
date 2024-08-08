@@ -1,7 +1,8 @@
+import { reviewUserData } from "./UserType";
+
 interface replyData{
-    _id: string;
-    user: string;
-    questionId: string;
+    id: string;
+    user: reviewUserData;
     content: string;
     createdAt: string;
     updatedAt: string;

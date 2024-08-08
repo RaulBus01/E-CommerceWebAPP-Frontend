@@ -5,12 +5,11 @@ import {formatDateTime} from "../../../utils/formatDataTime.ts";
 import ReviewModal from "../../modals/review-modal/review-modal.tsx";
 import useReview from "../../../hooks/useReview.tsx";
 import { postReviewData } from "../../../types/ReviewType.ts";
-import { useAuth } from "../../../hooks/useAuth.tsx";
 
 const ReviewsSubmenu = ({productId, token, reviewRef, user}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+
     const {reviews, loading, fetchReviewsByProduct, createReview} = useReview(token, productId);
-    const {user: authenticatedUser} = useAuth();
 
     useEffect(() => {
       fetchReviewsByProduct(productId);
@@ -28,7 +27,7 @@ const ReviewsSubmenu = ({productId, token, reviewRef, user}) => {
     return(
         <div className="product-reviews-container">
           <div className="product-reviews-header" ref={reviewRef}>
-            <h1>Buyer's reviews</h1>
+            <h1>Buyer's reviews ({reviews?.length})</h1>
             <button onClick={() => setIsModalOpen(true)}>Add a review</button>
           </div>
           <div className="review-cells-container"> 
@@ -44,7 +43,7 @@ const ReviewsSubmenu = ({productId, token, reviewRef, user}) => {
                     <StarIcon style={{ color: "yellow" }} />
                   </div>
                   <p>Posted on: <strong>{formatDateTime(review.createdAt)}</strong></p>
-                  <p>Posted by: <strong>{review.user.name || authenticatedUser?.name}</strong></p>
+                  <p>Posted by: <strong>{review.user.name || user?.name}</strong></p>
                 </div>
               </div>
             ))}

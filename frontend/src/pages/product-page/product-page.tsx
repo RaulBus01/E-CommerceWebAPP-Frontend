@@ -7,8 +7,6 @@ import useFavourite from "../../hooks/useFavourite";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import StarIcon from "@mui/icons-material/Star";
-import useReview from "../../hooks/useReview.tsx";
-import useQuestion from "../../hooks/useQuestion.tsx";
 import ReviewsSubmenu from "../../components/product-page-submenus/reviews-submenu/reviews-submenu.tsx";
 import QuestionsSubmenu from "../../components/product-page-submenus/questions-submenu/questions-submenu.tsx";
 
@@ -17,7 +15,6 @@ const ProductPage = () => {
   const { loading, product, fetchProductById } = useProduct();
   const { user, token } = useAuth();
   const { addToFavourite, removeFavourite, isProductFavourite } = useFavourite(token);
-  const { questions, loading: questionLoading, fetchQuestionsByProduct  } = useQuestion(user?.id, token, productId);
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [selectedMenu, setSelectedMenu] = useState<string>("Reviews");
 
@@ -28,7 +25,7 @@ const ProductPage = () => {
       case "Reviews":
         return <ReviewsSubmenu user={user} reviewRef={reviewRef} productId={productId} token={token} />;
       case "Questions":
-        return <QuestionsSubmenu questions={questions} />;
+        return <QuestionsSubmenu productId={productId} user={user} token={token} />;
       default:
         return <ReviewsSubmenu user={user} reviewRef={reviewRef} productId={productId} token={token} />;
     }
@@ -36,9 +33,8 @@ const ProductPage = () => {
   useEffect(() => {
     if (productId) {
       fetchProductById(productId);
-      fetchQuestionsByProduct(productId);
     }
-  }, [productId, fetchProductById, fetchQuestionsByProduct]);
+  }, [productId, fetchProductById]);
 
   useEffect(() => {
     if (product && productId) {

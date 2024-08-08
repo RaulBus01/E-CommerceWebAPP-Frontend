@@ -46,6 +46,8 @@
 .form-field textarea{
     width: 400px;
     height: 200px;
+
+    resize: none;
 }
 
 .review-modal-button-container{
@@ -56,4 +58,16 @@
 
     align-items: center;
     justify-content: center;
+}
+.review-modal-button-container button{
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background: var(--secondary-color);
+    color: white;
+    font-size: 1rem;
+}
+.review-modal-button-container button:hover{
+    cursor: pointer;
+    background-color: #f5cf9e;
 }

@@ -1,4 +1,4 @@
-import { questionData } from "./Question";
+import { questionData } from "./QuestionType";
 import { reviewData } from "./ReviewType";
 
 interface productDataForOrder{
