@@ -48,7 +48,7 @@ const useCart = (token:string) => {
 
   const addProductToCart = async ( product, token) => {
     try {
-      await _put(`/cart/add`, { productId: product._id, quantity: 3 },  token );
+      await _put(`/cart/add`, { productId: product._id, quantity: 1 },  token );
     } catch (err) {
       console.error('Failed to add product to cart:', err);
     }

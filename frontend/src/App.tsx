@@ -55,8 +55,10 @@ const App = () => {
               <Route path="/distributor-dashboard/:id/add-product" element={<AddProductPage />} />
               <Route path="edit-product/:productId" element={<EditProductPage />} />
               <Route path="/distributor-dashboard/:id/order/:orderId" element={<Order />} />
-          
+              <Route path="/user-dashboard/:id/order/:orderId" element={<Order />} />
             </Route>
+  
+            
           </Routes>
           {showNav && <Footer />}
           <Toaster />

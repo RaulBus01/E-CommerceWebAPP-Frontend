@@ -92,8 +92,8 @@ const OrderDetails: React.FC = () => {
         <h2>Products sold by {order?.distributor.name}</h2>
         <div className="product-details">
           <div className="delivery-info">
-            {/* <h3>Produse ridicate</h3>
-            <p>Data de livrare: <strong>{new Date(order.createdAt).toLocaleDateString()}</strong></p> */}
+            
+           
           </div>
           <div className="delivery-modalities">
             <div className="delivery-method">
@@ -119,23 +119,25 @@ const OrderDetails: React.FC = () => {
               <p>Number:{order?.address.number}</p>
             </div>
             <div className="payment-method">
-              <h4>Modalitate de plata</h4>
+              <h4>Payment Method</h4>
               <p>{order?.paymentMethod}</p>
-              <p className="payment-status">Plata acceptata</p>
+              <p className="payment-status">
+                <strong>Payment Status</strong> {order?.paymentStatus}
+              </p>
 
               <h4>Order Status</h4>
               <p>{order?.status} </p>
-              {order?.status === 'Pending' && <button onClick={handleEditOrderStatus}>Confirm Shipment from Distributor<Edit/></button>}
+              {order?.status === 'Pending' && user?.role ==='distributor' && <button onClick={handleEditOrderStatus}>Confirm Shipment from Distributor<Edit/></button>}
               {order?.status === 'Pending' && <button onClick={handleCancelOrder}>Cancel Order<DisabledByDefaultIcon/></button>}
             </div>
           </div>
           {order?.products.map((p, index) => (
             <div key={index} className="product-item">
-              <img src={p.product.image[0]} alt="Product" />
+              <img src={p?.product.image[0]} alt="Product" />
               <div className="product-description">
-                <p className="product-name">{p.product.name}</p>
-                <p className="product-price">{p.product.price}<sup> Lei</sup></p>
-                <p className="product-quantity">{p.quantity} buc</p>
+                <p className="product-name">{p?.product.name}</p>
+                <p className="product-price">{p?.product.price}<sup> Lei</sup></p>
+                <p className="product-quantity">{p?.quantity} buc</p>
               </div>
             </div>
           ))}
