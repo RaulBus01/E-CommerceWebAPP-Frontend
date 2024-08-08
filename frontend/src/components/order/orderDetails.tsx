@@ -124,11 +124,13 @@ const OrderDetails: React.FC = () => {
               <p className="payment-status">
                 <strong>Payment Status</strong> {order?.paymentStatus}
               </p>
-
-              <h4>Order Status</h4>
-              <p>{order?.status} </p>
-              {order?.status === 'Pending' && user?.role ==='distributor' && <button onClick={handleEditOrderStatus}>Confirm Shipment from Distributor<Edit/></button>}
-              {order?.status === 'Pending' && <button onClick={handleCancelOrder}>Cancel Order<DisabledByDefaultIcon/></button>}
+              <p><strong>Order Status:</strong>{order?.status}</p> 
+              <div className="order-actions">
+              {order?.status === 'Pending' && user?.role ==='distributor' && <button className="btn-confirm"onClick={handleEditOrderStatus}><h3>
+                </h3>Confirm Shipment from Distributor</button>}
+              {order?.status === 'Pending' && <button className="btn-cancel" onClick={handleCancelOrder}>Cancel Order</button>}
+              </div>
+             
             </div>
           </div>
           {order?.products.map((p, index) => (

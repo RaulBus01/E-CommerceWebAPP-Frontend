@@ -57,7 +57,8 @@ const useOrder = (token: string): UseOrderResult => {
     const editOrderStatus = async (orderId: string, status: string) => {
         setLoading(true);
         try {
-            const response = await _get(`/orders/edit/${orderId}/${status}`, token);
+            const response = await _put(`/orders/editOrderStatus/${orderId}`, { status }, token);
+
             setLoading(false);
             return response;
         } catch (error: any) {

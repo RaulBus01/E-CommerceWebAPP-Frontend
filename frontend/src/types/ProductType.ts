@@ -13,13 +13,17 @@ interface productData {
     description: string;
     image: string;
     stock: number;
-    distributor: string;
+    distributor: {
+        _id: string;
+        name: string
+    }
     createdAt: string;
     updatedAt: string;
     ratingProduct?: number;
     numberOfReviews?: number;
     reviews?: reviewData[];
     questions?: questionData[];
+    isActive: boolean;
   }
 interface productFormData {
     

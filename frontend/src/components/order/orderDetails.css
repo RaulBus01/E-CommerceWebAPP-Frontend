@@ -111,6 +111,35 @@
   .order-summary span {
     font-weight: bold;
   }
+  .order-actions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+
+  }
+  .btn-confirm {
+    display: flex;
+    align-items: center;
+    gap:10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px ;
+    cursor: pointer;
+    border-radius: 5px;
+  
+
+  }
+  .btn-cancel {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+
+  }
   
   .rating-section {
     margin-top: 20px;

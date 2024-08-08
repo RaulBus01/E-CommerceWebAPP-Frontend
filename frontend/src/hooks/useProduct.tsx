@@ -12,6 +12,7 @@ interface UseOrderResult {
     addProduct: (product: FormData) => Promise<boolean>;
     fetchProduct: (productId: string) => Promise<productData | null>;
     editProduct: (productId: string,product: FormData) => Promise<boolean>;
+    setDistributorProducts: (products: productData[] | null) => void;
 }
 
 const useProduct = (): UseOrderResult => {
@@ -57,7 +58,7 @@ const useProduct = (): UseOrderResult => {
 
   const fetchProduct = async (productId: string) => {
     try {
-      const response = await _get(`/products/find/${productId}`, {}, token);
+      const response = await _get(`/products/find/${productId}`, {}, token as string);
       return response;
     } catch (error: any) {
       console.error("Error fetching product:", error);
@@ -68,6 +69,7 @@ const useProduct = (): UseOrderResult => {
   const deleteProduct = async (productId: string) => {
     try {
       await _delete(`/products/delete/${productId}`, {}, token);
+  
       return true;
     } catch (error: any) {
       console.error("Error deleting product:", error);
@@ -94,7 +96,7 @@ const useProduct = (): UseOrderResult => {
   }
 
 
-  return { products, setProducts, loading, deleteProduct, distributorProducts, addProduct ,fetchProduct, editProduct};
+  return { products, setProducts, loading, deleteProduct, distributorProducts, addProduct ,fetchProduct, editProduct,setDistributorProducts};
 };
 
 export default useProduct;

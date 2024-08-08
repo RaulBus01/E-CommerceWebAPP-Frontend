@@ -15,8 +15,8 @@ const defaultAddress = {
   zip: ""
 };
 
-const PersonalInformationMenu = ({ usera, loading, title = "Personal Information" }) => {
-  const { user } = useAuth();
+const PersonalInformationMenu = ({ user,loading, title = "Personal Information" }) => {
+  
   const { editUser } = useUser();
   const [editingField, setEditingField] = useState(null);
   const [formData, setFormData] = useState({

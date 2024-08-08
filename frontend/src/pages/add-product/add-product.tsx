@@ -3,7 +3,7 @@ import Form from '../../components/controls/form/form';
 
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-import { _post } from '../../utils/api'; // Assuming this is where your API functions are
+import { _post } from '../../utils/api';
 import './add-product.css';
 
 const AddProductPage = () => {

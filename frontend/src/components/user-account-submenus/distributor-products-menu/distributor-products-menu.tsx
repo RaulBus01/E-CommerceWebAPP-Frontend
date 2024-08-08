@@ -9,7 +9,7 @@ import useProduct from '../../../hooks/useProduct';
 import { productData } from '../../../types/ProductType';
 
 const DistributorProductsMenu = () => {
-  const { distributorProducts,loading } = useProduct();
+  const { distributorProducts,loading,setDistributorProducts,deleteProduct } = useProduct();
   const [filteredProducts, setFilteredProducts] = useState<productData[] | null>(null);
   const navigate = useNavigate();
 
@@ -61,6 +61,10 @@ const DistributorProductsMenu = () => {
               key={product._id}
               product={product}
               loading={false}
+              products={distributorProducts}
+              setProducts={setDistributorProducts}
+              deleteProduct={deleteProduct}
+
             />
           ))
         ) : (

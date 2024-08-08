@@ -17,7 +17,7 @@ const Navbar = () => {
       <nav>
         <ul>
           <li>
-            <NavLink to="/">
+            <NavLink to="/" className="nav-link">
               <img className="logo" src="src\assets\Logo.png" alt="logo" />
             </NavLink>
           </li>
@@ -27,7 +27,8 @@ const Navbar = () => {
           <div className="icons">
           <li className="nav-icons">
             <NavLink
-              to={token ? `/user-dashboard/${user?.id}` : "/login"}
+              className="nav-link"
+              to={token ? `/user-dashboard/${user?.id}` : "/login" }
             >
               <AccountCircleIcon />
               <span className="nav-text">Account</span>
@@ -36,7 +37,7 @@ const Navbar = () => {
           
           <li className="nav-icons">
             { user?.role === "customer" &&
-            <NavLink to="/favorites">
+            <NavLink className="nav-link" to="/favorites">
               <FavoriteBorderIcon />
               <span className="nav-text">Favourites</span>
             </NavLink>
@@ -44,7 +45,7 @@ const Navbar = () => {
           </li>
           <li className="nav-icons">
             { user?.role === "customer" &&
-            <NavLink to="/cart">
+            <NavLink  className="nav-link" to="/cart">
               <ShoppingCartIcon />
               <span className="nav-text">Cart</span>
             </NavLink>

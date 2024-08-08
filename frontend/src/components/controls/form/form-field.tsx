@@ -19,6 +19,7 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import TitleIcon from '@mui/icons-material/Title';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Delete, Remove } from '@mui/icons-material';
 import './form.css';
@@ -74,6 +75,7 @@ const FormField: React.FC<FormFieldProps> = ({
       case 'price': return <LocalOfferIcon className='icon' />;
       case 'stock': return <InventoryIcon className='icon' />;
       case 'product': return <TitleIcon className='icon' />;
+      case  'storefront': return <AddBusinessIcon className='icon' />;
       default: return null;
     }
   };

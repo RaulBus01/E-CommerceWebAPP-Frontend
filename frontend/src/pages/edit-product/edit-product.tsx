@@ -18,6 +18,7 @@ const EditProductPage: React.FC = () => {
     images: '',
     stock: 0,
     category: '',
+    isActive: true,
   });
 
   const [error, setError] = useState<string | null>(null);
@@ -33,6 +34,7 @@ const EditProductPage: React.FC = () => {
           images: product.image,
           stock: product.stock,
           category: product.categories[0].name,
+          isActive: product.isActive,
         });
       }
     });
@@ -77,7 +79,8 @@ const EditProductPage: React.FC = () => {
           { id: 'subcategory', label: 'Subcategory', type: 'select', placeholder: 'Enter subcategory', icon: 'category' },
           { id: 'price', label: 'Price', type: 'number', placeholder: 'Enter price', icon: 'price' },
           { id: 'images', label: 'Image URL', type: 'file', placeholder: 'Enter image URL', icon: 'image' },
-          { id: 'stock', label: 'Stock', type: 'number', placeholder: 'Enter stock', icon: 'stock' }
+          { id: 'stock', label: 'Stock', type: 'number', placeholder: 'Enter stock', icon: 'stock' },
+          { id: 'isActive', label: 'Active', type: 'checkbox', placeholder: 'Enter stock', icon: 'storefront' }
         ]}
         formData={formData}
         setFormData={setFormData}

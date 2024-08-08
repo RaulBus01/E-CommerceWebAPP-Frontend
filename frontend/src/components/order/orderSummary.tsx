@@ -1,7 +1,6 @@
 import React, { useEffect,useState } from 'react';
 import './order.css';
 import { useNavigate } from 'react-router-dom';
-import useProduct from '../../hooks/useProduct';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import { orderData } from '../../types/OrderType';
 import { formatDateTime } from '../../utils/formatDataTime';
