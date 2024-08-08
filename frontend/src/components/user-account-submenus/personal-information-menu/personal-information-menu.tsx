@@ -19,25 +19,26 @@ const PersonalInformationMenu = ({ user, title = "Personal Information" }) => {
   const { editUser } = useUser();
   const [editingField, setEditingField] = useState(null);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    address: defaultAddress,
-    phoneNumber: ""
+    name: user.name || "",
+    email: user.email || "",
+    address: { 
+      ...defaultAddress, 
+      ...(user.customerInfo?.address || user.distributorInfo?.address || {}) 
+    },
+    phoneNumber: user.phoneNumber || ""
   });
+  
 
-  useEffect(() => {
-    if (user) {
-      setFormData({
-        name: user.name || "",
-        email: user.email || "",
-        address: user.customerInfo?.address || user.distributorInfo?.address || defaultAddress,
-        phoneNumber: user.phoneNumber || ""
-      });
-    }
-  }, [user]);
-
-  const handleEdit = (fieldName) => {
+  const handleEdit = (fieldName: string) => {
     setEditingField(fieldName);
+    setFormData(prev => ({
+      ...prev,
+      [fieldName]: fieldName === 'address' 
+        ? { ...defaultAddress, ...(user.customerInfo?.address || user.distributorInfo?.address || {}) }
+        : user[fieldName] || ""
+    }));
+  
+
   };
 
   const handleInputChange = (field, value) => {

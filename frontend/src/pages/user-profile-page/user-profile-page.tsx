@@ -56,10 +56,6 @@ const UserProfilePage: React.FC = () => {
         toast.success('You have been logged out');
     };
 
-    
-
-   
-
     return (
         <div className="user-profile-main-container">
             <div className="top-container">
