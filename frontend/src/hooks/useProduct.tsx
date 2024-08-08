@@ -4,6 +4,9 @@ import { _delete, _get,_post,_put } from "../utils/api";
 import { useAuth } from "./useAuth";
 
 interface UseOrderResult {
+
+  product: productData | null;
+  fetchProductById: (productId: string) => Promise<void>;
   products: productData[] | null;
   setProducts: (products: productData[] | null) => void;
   loading: boolean;
@@ -18,6 +21,7 @@ interface UseOrderResult {
 const useProduct = (): UseOrderResult => {
   const { token, user } = useAuth();
   
+  const [product, setProduct] = useState<productData | null>(null);
   const [products, setProducts] = useState<productData[] | null>(null);
   const [distributorProducts, setDistributorProducts] = useState<productData[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -25,12 +29,23 @@ const useProduct = (): UseOrderResult => {
   const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {
-     
       const response = await _get(`/products/findAll`, {}, {});
       setProducts(response);
     
     } catch (error: any) {
       console.error("Error fetching all products:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const fetchProductById = useCallback(async (productId: string) => {
+    setLoading(true);
+    try {
+      const response = await _get(`/products/find/${productId}`, {}, {});
+      setProduct(response);
+    } catch (error: any) {
+      console.error("Error fetching product by id:", error);
     } finally {
       setLoading(false);
     }
@@ -97,7 +112,8 @@ const useProduct = (): UseOrderResult => {
   }
 
 
-  return { products, setProducts, loading, deleteProduct, distributorProducts, addProduct ,fetchProduct, editProduct,setDistributorProducts};
+  return { fetchProductById,product,products, setProducts, loading, deleteProduct, distributorProducts, addProduct ,fetchProduct, editProduct,setDistributorProducts};
+
 };
 
 export default useProduct;

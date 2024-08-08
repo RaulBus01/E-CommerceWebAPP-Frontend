@@ -82,6 +82,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
    
   }
 }
+  const handleProductPage = () => {
+    console.log(product._id);
+    navigate(`/product/${product._id}`);
+  };
 
   if (loading) {
     return <div>Loading</div>;
@@ -91,9 +95,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
 
   return (
     <div className="card-container">
-      <img  src={product.image[0]} alt="product" />
+      <img  src={product.image[0]} alt="product" onClick={handleProductPage} />
       <div className="information-container">
-        <p className="product-name">{product.name}</p>
+        
+        {<p onClick={handleProductPage} className="product-name">{product.name}</p>}
         <h2>{product.price} lei</h2>
       </div>
       <div className="rating-container">

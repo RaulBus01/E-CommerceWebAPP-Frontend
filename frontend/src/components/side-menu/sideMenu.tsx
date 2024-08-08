@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import  useUser  from "../../hooks/useUser";
-import { useAuth } from "../../hooks/useAuth";
 import './sideMenu.css'
 
 const SideMenu = ({setSelectedMenu,name,sectionList}) => {
