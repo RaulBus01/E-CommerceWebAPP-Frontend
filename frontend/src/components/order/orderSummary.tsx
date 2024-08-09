@@ -16,7 +16,7 @@ const OrderSummary = ({order}:{order:orderData}) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate(`order/${order._id}`);
+    navigate(`order/${order?.orderNumber}`);
   }
 
 
@@ -33,7 +33,7 @@ const OrderSummary = ({order}:{order:orderData}) => {
   
     <div className="orderSummary" key={order._id}>
       <div className="orderHeader">
-        <span>Order : {order._id}</span>  
+        <span>Order : #{order?.orderNumber}</span>  
 
         <span className="orderDate">Placed on: {formatDateTime(order.createdAt)}</span>
         <span className="orderTotal">Total: {Math.round(order.totalPrice)} Lei</span>

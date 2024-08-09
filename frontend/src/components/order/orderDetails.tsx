@@ -78,11 +78,10 @@ const OrderDetails: React.FC = () => {
   return (
     <div className="order-container">
       <div className="order-header">
-        <h1>Order nr. {order?._id}</h1>
+        <h1>Order nr. {order?.orderNumber}</h1>
         
         <div className="order-info">
           <p>Placed on: <strong>{formatDateTime(order?.createdAt as string)}</strong></p>
-          <p>Total: <strong>{Math.round(order?.totalPrice as number)}<sup> Lei</sup></strong></p>
         </div>
         <div className="order-status">
             <p>Status: <strong>{order?.status}</strong></p> 
@@ -101,22 +100,15 @@ const OrderDetails: React.FC = () => {
               <p>DHL Express</p>
               <p>Customer: {order?.name} </p>
               <p>Phone: {order?.phoneNumber}</p>
-              <h4>Delivery Address:</h4>
+            </div>
+            <div className="billing-info">
+            <h4>Delivery Address:</h4>
                 <p>Country: {order?.address.country}</p>
                 <p>County:{order?.address.county}</p>
                 <p>City: {order?.address.city}</p>
                 <p>Street: {order?.address.street}</p>
                 <p>Number:{order?.address.number}</p>
                 <p>Postal Code: {order?.address.zip}</p> 
-            </div>
-            <div className="billing-info">
-              <h4>Billing info</h4>
-              <p>Customer: {order?.name}</p>
-              <p>Country: {order?.address.country}</p>
-              <p>County:{order?.address.county}</p>
-              <p>City: {order?.address.city}</p>
-              <p>Street: {order?.address.street}</p>
-              <p>Number:{order?.address.number}</p>
             </div>
             <div className="payment-method">
               <h4>Payment Method</h4>

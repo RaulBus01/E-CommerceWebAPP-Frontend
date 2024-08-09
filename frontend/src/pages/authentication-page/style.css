@@ -3,7 +3,8 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
+    min-height : 100vh;
+    height: auto;
     width: 100%;
     background-color: var(--primary-color);
 
@@ -13,11 +14,12 @@
     justify-content: center;
     align-items: center;
     background-color: var(--secondary-color);
-    height: 70vh;
+    height: auto;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 80vw;
     max-width: 960px; 
+    margin-bottom: 10rem;
   }
   .auth-header{
     display: flex;
@@ -46,6 +48,9 @@
   .auth-box h2 {
     margin-bottom: 2rem;
     color: var(--third-color);
+  }
+  .auth-box button{
+    margin-bottom: 2rem;
   }
   
   .auth-image {

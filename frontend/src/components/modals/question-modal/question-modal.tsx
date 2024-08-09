@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./question-modal.css";
+
 
 const QuestionModal = ({onSubmit, isOpen, onClose}) => {
     const [content, setContent] = useState("");
@@ -24,8 +24,8 @@ const QuestionModal = ({onSubmit, isOpen, onClose}) => {
             </div>
             <div className="modal-body">
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <div className="form-field">
+                    <div className="form-group-modal">
+                        <div className="form-field-modal">
                             <label>Your question</label>
                             <textarea id="content" placeholder="Your question..." value={content} onChange={(e) => setContent(e.target.value)} required maxLength={500}></textarea>
                         </div>

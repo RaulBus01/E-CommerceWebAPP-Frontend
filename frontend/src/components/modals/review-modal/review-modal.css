@@ -30,13 +30,13 @@
     align-items: center;
 }
 
-.form-group{
+.form-group-modal{
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.form-field{
+.form-field-modal{
     display: flex;
     flex-direction: column;
     align-items: center;
