@@ -22,7 +22,10 @@ import PublicRoute from './pages/authentication-page/publicRoute';
 import DistributorProductPage from './pages/distributor-product-page/distributor-product-page';
 import Order from './pages/order-page/order';
 import ProductPage from './pages/product-page/product-page';
-
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
+import CreateOrder from './pages/order-page/create-order';
+const stripePromise = loadStripe('pk_test_51PldaG2KhZgwiVa57G1QWSC67ilvXaJI8hsgRDB96syfOzPKrhDdC82rkEA1yhVRo7Q1VX19VbBBBRhCjTJOJMI600RomhFSQL');
 const App = () => {
   const location = useLocation();
   const disableNavPaths = ['/login', '/register/customer', '/register/distributor', '/admin/login'];
@@ -35,6 +38,7 @@ const App = () => {
   return (
     <>
          <AuthProvider>
+   
           {showNav && <Navbar />}
           <Routes>
             <Route path="/" element={<Home />} />
@@ -57,12 +61,15 @@ const App = () => {
               <Route path="edit-product/:productId" element={<DistributorProductPage type="edit-product" />} />
               <Route path="/distributor-dashboard/:id/order/:orderId" element={<Order />} />
               <Route path="/user-dashboard/:id/order/:orderId" element={<Order />} />
+              <Route path="/order/create" element={<CreateOrder/>} />
+
             </Route>
   
             
           </Routes>
           {showNav && <Footer />}
           <Toaster />
+    
         </AuthProvider>
 
     </>
