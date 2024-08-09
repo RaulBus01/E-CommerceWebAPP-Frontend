@@ -3,6 +3,8 @@ import { NavLink } from 'react-router-dom'
 import './Footer.css';
 
 const Footer = () => {
+    const currentYear = new Date().getFullYear();
+
   return (
     <footer>
         <div className="footer-container">
@@ -43,7 +45,7 @@ const Footer = () => {
         </div>
         <div className="footer-bottom">
             <ul>
-                <li> @ 2024 E-Website</li>
+                <li> @ {currentYear} E-Website</li>
              
             </ul>
         </div>

@@ -5,8 +5,8 @@
 
   height: auto;
   width: 100%;
-  padding-bottom: 20px;
-  margin-top: 135px;
+  padding: 20px 0;
+
 
   background-color: var(--secondary-color);
   border-bottom: 2px solid var(--primary-color);
@@ -25,11 +25,6 @@
 
   align-items: center;
   justify-content: center;
-
-  background-image: url("../../assets/book-shelf.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 .product-slider-container h1{
