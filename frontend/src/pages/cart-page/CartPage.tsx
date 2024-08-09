@@ -5,11 +5,14 @@ import useCart from "../../hooks/useCart";
 import useFavourite from "../../hooks/useFavourite";
 import "./CartPage.css";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 const CartPage = () => {
-  const { token} = useAuth();
+  const { token, user} = useAuth();
   const { cart, setCart, editProductQuantity, removeProduct } = useCart(token as string);
   const { addToFavourite, removeFavourite } = useFavourite(token as string);
+
+  const navigate = useNavigate();
 
   const handleEditProductQuantity = async (product, type) => {
     let quantity = product.quantity;
@@ -58,6 +61,10 @@ const CartPage = () => {
     const newCart = cart.products.filter((cartItem) => cartItem.product._id !== product._id);
     setCart({ ...cart, products: newCart });
   };
+
+  const handleCheckout = () => {
+    navigate('/checkoutData', { state: { cart, token, user} });
+  }
 
   return (
     <div className="cart-page">
@@ -122,6 +129,11 @@ const CartPage = () => {
           <p>No products in the cart</p>
         )}
       </div>
+      {cart.products && cart.products.length > 0 && (
+        <div className="checkout-button-container">
+          <button onClick={(handleCheckout)}>Proceed to checkout</button>
+        </div>
+      )}
     </div>
   );
 };

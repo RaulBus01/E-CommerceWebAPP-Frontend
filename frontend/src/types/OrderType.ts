@@ -15,7 +15,19 @@ interface orderData{
     paymentMethod: string;
     distributor: userData;
     createdAt: string;
-
-
 }
-export type {orderData};
+
+interface postOrderData{
+    products: productDataForPlacingOrder[];
+    name: string;
+    phoneNumber: string;
+    address: addressData;
+    paymentMethod: string; 
+}
+
+interface productDataForPlacingOrder{
+    productId: string;
+    quantity: number;
+}
+
+export type {orderData, postOrderData};

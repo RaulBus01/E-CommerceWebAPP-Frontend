@@ -25,6 +25,7 @@ import ProductPage from './pages/product-page/product-page';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import CreateOrder from './pages/order-page/create-order';
+import CheckoutPage from './pages/checkout-page/checkout-page';
 const stripePromise = loadStripe('pk_test_51PldaG2KhZgwiVa57G1QWSC67ilvXaJI8hsgRDB96syfOzPKrhDdC82rkEA1yhVRo7Q1VX19VbBBBRhCjTJOJMI600RomhFSQL');
 const App = () => {
   const location = useLocation();
@@ -52,7 +53,7 @@ const App = () => {
             <Route element={<ProtectedRoute />}>
               
               <Route path="/cart" element={<CartPage />} />
-              <Route path="/checkout" element={<PaymentCheckoutPage />} />
+              <Route path="/checkoutData" element={<CheckoutPage />} />
               <Route path="/profile" element={<UserProfilePage />} />
               <Route path="/favorites" element={<FavoritePage />} />
               <Route path="/distributor-dashboard/:id" element={<DistributorProfilePage />} />
@@ -61,7 +62,7 @@ const App = () => {
               <Route path="edit-product/:productId" element={<DistributorProductPage type="edit-product" />} />
               <Route path="/distributor-dashboard/:id/order/:orderId" element={<Order />} />
               <Route path="/user-dashboard/:id/order/:orderId" element={<Order />} />
-              <Route path="/order/create" element={<CreateOrder/>} />
+              <Route path="/order/pay" element={<CreateOrder/>} />
 
             </Route>
   
