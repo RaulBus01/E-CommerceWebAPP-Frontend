@@ -24,7 +24,7 @@ const useReview = (token: string, productId: string): UseReviewResult => {
         }finally{
             setLoading(false);
         }
-    }, []);
+    }, [productId]);
 
     const fetchReviewsByUser = useCallback(async (token: string) => {
         setLoading(true);
@@ -54,9 +54,9 @@ const useReview = (token: string, productId: string): UseReviewResult => {
     }, [token]);
 
     useEffect(() => {
-        if(productId){
-            fetchReviewsByProduct(productId);
-        }
+        
+        fetchReviewsByProduct(productId);
+        
     },[productId, fetchReviewsByProduct]);
 
     useEffect(() => { 
