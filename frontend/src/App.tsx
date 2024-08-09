@@ -9,7 +9,6 @@ import Footer from './footer/Footer';
 import AuthProvider from './hooks/useAuth';
 import ProtectedRoute from './pages/authentication-page/protectedRoute';
 import CartPage from './pages/cart-page/CartPage';
-import PaymentCheckoutPage from './pages/payment-checkout-page/PaymentCheckoutPage';
 import SubCategoryPage from './pages/subcategory-page/SubcategoryPage';
 
 import { Toaster } from 'react-hot-toast';
@@ -26,6 +25,7 @@ import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import CreateOrder from './pages/order-page/create-order';
 import CheckoutPage from './pages/checkout-page/checkout-page';
+import OrderSummaryPage from './pages/order-summary-page/order-summary-page';
 const stripePromise = loadStripe('pk_test_51PldaG2KhZgwiVa57G1QWSC67ilvXaJI8hsgRDB96syfOzPKrhDdC82rkEA1yhVRo7Q1VX19VbBBBRhCjTJOJMI600RomhFSQL');
 const App = () => {
   const location = useLocation();
@@ -63,6 +63,7 @@ const App = () => {
               <Route path="/distributor-dashboard/:id/order/:orderId" element={<Order />} />
               <Route path="/user-dashboard/:id/order/:orderId" element={<Order />} />
               <Route path="/order/pay" element={<CreateOrder/>} />
+              <Route path="/order/summary" element={<OrderSummaryPage/>} />
 
             </Route>
   

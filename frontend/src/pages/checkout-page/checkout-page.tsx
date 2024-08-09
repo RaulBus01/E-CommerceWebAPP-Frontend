@@ -2,6 +2,7 @@ import React, { FormEvent, useState } from "react";
 import "./checkout-page.css";
 import useOrder from "../../hooks/useOrder";
 import { useLocation, useNavigate } from "react-router";
+import useCart from "../../hooks/useCart";
 
 const CheckoutPage = () => {
     const [country, setCountry] = useState("");
@@ -18,7 +19,9 @@ const CheckoutPage = () => {
     const cart = location.state?.cart;
     const token = location.state?.token;
     const user = location.state?.user;
-
+    const shipping = 12.99;
+    
+    const { emptyCart } = useCart(token);
     const { createOrder } = useOrder(token);
 
     const handleSendOrder = async (event:FormEvent) => {
@@ -32,10 +35,11 @@ const CheckoutPage = () => {
         };
         try{
             await createOrder(newOrder);
+            await emptyCart();
             if(payment === "Credit Card") {
                 navigate('/order/pay', {state: {cart, token, user}});
             }else{
-                navigate('/order/summary', {state: {cart, token, user}});
+                navigate('/order/summary', {state: {newOrder}});
             }
         }catch(err){
             console.error("Failed to create order: ", err);
@@ -44,7 +48,11 @@ const CheckoutPage = () => {
 
     const handleGoBack = () => {
         navigate('/cart');
-    }   
+    }
+
+    const productsPrice = () => {
+        return cart.products.reduce((acc, product) => acc + product.product.price * product.quantity, 0);
+    }
 
     return(
         <div className="checkout-data-main-container">
@@ -91,6 +99,14 @@ const CheckoutPage = () => {
                                     <option>Credit Card</option>
                                 </select>
                             </div>
+                        </div>
+                    </div>
+                    <div className="order-price-info">
+                        <h2>Order summary</h2>
+                        <div>
+                            <h3>Products: {productsPrice().toFixed(2)} lei</h3>
+                            {productsPrice().toFixed(2) > 100 ? <h3>Free shipping</h3> : <h3>Shipping: {shipping} lei</h3>}
+                            <h2>Order total: {productsPrice().toFixed(2) > 100 ? productsPrice().toFixed(2) : (productsPrice() + shipping).toFixed(2)}</h2>
                         </div>
                     </div>
                     <div className="checkout-button-container">
