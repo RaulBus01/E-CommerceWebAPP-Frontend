@@ -5,35 +5,31 @@ import PersonalInformationMenu from "../../components/user-account-submenus/pers
 import MyOrdersMenu from "../../components/user-account-submenus/my-orders-menu/my-orders-menu";
 import MyReviewsMenu from "../../components/user-account-submenus/my-reviews-menu/my-reviews-menu";
 import MyQuestionsMenu from "../../components/user-account-submenus/my-questions-menu/my-questions-menu";
+import AdminMenu from "../../components/user-account-submenus/admin-menu/admin-menu";
+import UsersMenu from "../../components/user-account-submenus/admin-menu/users-menu";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 import { useParams } from "react-router-dom";
-
+import DistributorProductsMenu from "../../components/user-account-submenus/products-menu/products-menu";
+import { userData } from "../../types/UserType";
 
 const UserProfilePage: React.FC = () => {
-    const [selectedMenu, setSelectedMenu] = useState<string>("Personal Information");
-    const { token, user, logout } = useAuth();
+    const { token,user, logout } = useAuth();
     const { id: userIdPath } = useParams<{ id: string }>();
-    console.log(user);
+    if(!user){
+        return;
+    }
+    const sectionList = {
+        customer: ['Personal Information', 'My orders', 'My reviews', 'My questions'],
+        admin: ['Users', 'Products', 'Orders', 'Reviews', 'Questions'],
+        distributor: ['Personal Information', 'Products', 'Orders'],
+    };
+
+    const [selectedMenu, setSelectedMenu] = useState<string>(sectionList[user?.role][0]);
     const navigate = useNavigate();
- 
-    useEffect(() => {
-        if (user) {
-            switch (user.role) {
-                case "admin":
-                    navigate("/admin-dashboard");
-                    break;
-                case "distributor":
-                    navigate(`/distributor-dashboard/${user.id}`);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }, [user, navigate]);
-  
+
 
     const loadSelectedMenu = () => {
         switch (selectedMenu) {
@@ -42,13 +38,28 @@ const UserProfilePage: React.FC = () => {
             case "My orders":
                 return <MyOrdersMenu token={token}/>;
             case "My reviews":
-                return <MyReviewsMenu token={token} />;
+                return <MyReviewsMenu token={token as string} user={user}/>;
             case "My questions":
-                return <MyQuestionsMenu userId={userIdPath} token={token}/>;
+                return <MyQuestionsMenu userId={userIdPath} token={token as string}/>;
+            case "Users":
+                return <UsersMenu />;
+            case "Products":
+                return <DistributorProductsMenu user={user as userData} />;
+            case "Orders":
+                return <MyOrdersMenu token={token}/>;
+            case "Reviews":
+                return <MyReviewsMenu user={user} token={token as string} />;
+            case "Questions":
+                return <MyQuestionsMenu  user={user as userData} token={token as string}/>;
             default:
-                return <PersonalInformationMenu user={user} />;
+               if(user?.role === 'customer' || user?.role === 'distributor'){
+                return <PersonalInformationMenu user={user}/>;
+               }
+                else if(user?.role === 'admin'){
+                 return <UsersMenu />;
+                }  
         }
-    };
+    }
 
     const handleLogOut = () => {
         logout();
@@ -60,14 +71,18 @@ const UserProfilePage: React.FC = () => {
         <div className="user-profile-main-container">
             <div className="top-container">
                 <h2>Your account</h2>
-                <button className="signOut-btn" onClick={handleLogOut}>Sign out</button>
+               
             </div>
             <div className="user-info-container">
+              
                 <SideMenu 
                     setSelectedMenu={setSelectedMenu} 
                     name={user?.name || ""} 
-                    sectionList={['Personal Information','My orders','My reviews','My questions']}
+                    sectionList={sectionList[user?.role]}
+                    logout={handleLogOut}
                 />
+               
+
                 <div className="user-info">{loadSelectedMenu()}</div>
             </div>
         </div>

@@ -27,11 +27,12 @@ const MyOrdersMenu = ({token}) => {
             <div className="my-orders-menu">
                 <h2>My Orders</h2>
                 {orders && orders.length > 0 ? (
-                    <div className="orders-container">
+                    <>
                         {orders.map((order) => (
-                            <OrderSummary order={order}/>
+                            <OrderSummary order={order} key={order._id}/>
                         ))}
-                    </div>
+                    </>
+                    
                 ) : (
                     <p>No orders found.</p>
                 )}

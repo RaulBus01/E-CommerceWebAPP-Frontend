@@ -13,8 +13,10 @@ const QuestionsSubmenu = ({productId, token, user}) => {
     const [replyContent, setReplyContent] = useState({});
     const [expandedReplies, setExpandedReplies] = useState({});
 
-    const {loading: questionsLoading, questions, fetchQuestionsByProduct, createQuestion} = useQuestion(user.id, token, productId);
+    const {loading: questionsLoading, questions, fetchQuestionsByProduct, createQuestion} = useQuestion(token,user.id,productId);
     const {createReply, loading: replyLoading} = useReply(token);
+
+    console.log(questions);
 
     useEffect(() => {
       fetchQuestionsByProduct(productId);

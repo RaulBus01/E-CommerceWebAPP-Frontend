@@ -1,8 +1,9 @@
+import { productData } from "./ProductType";
 import { reviewUserData } from "./UserType";
 
 interface reviewData{
     _id:string;
-    product:string
+    product:productData;
     user:reviewUserData;
     rating:number;
     content?:string;

@@ -32,6 +32,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading, onRemoveFav
   
   const isFavorite = isCustomer ? isProductFavourite(product._id) : false;
   const isDistributorAssigned = user?.role === "distributor" && product.distributor._id === user.id;
+  const isAdmin = user?.role === "admin";
 
   const handleFavorite = useCallback(async () => {
     if (isFavorite) {
@@ -59,8 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading, onRemoveFav
           await deleteProduct(product._id);
         
         const updatedProduct = { ...product, isActive: false };
-        console.log(product); 
-        console.log(updatedProduct);
+     
 
         const updatedProducts = products?.map((product) =>
           product._id === updatedProduct._id ? updatedProduct : product
@@ -112,7 +112,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading, onRemoveFav
             <FavoriteIcon style={{ color: isFavorite ? "var(--third-color)" : "white" }} />
           </button>
           </>
-          : isDistributorAssigned &&
+          : isDistributorAssigned || isAdmin ?
           <>
           <button className="edit-button" onClick={() => navigate(`/edit-product/${product._id}`)}>
             <EditIcon /> Edit
@@ -124,6 +124,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading, onRemoveFav
             } 
             
           </> 
+          : null
         }
       </div>
     </div>

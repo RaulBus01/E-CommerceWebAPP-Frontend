@@ -26,10 +26,11 @@
     height: 3rem;
 }
 
+
 .main-wrapper ul li button{
     width: 100%;
     height: 100%;
-
+    color : var(--info-color);
     border: none;
     font-weight: 700;
     font-size: medium;
@@ -45,4 +46,9 @@
 .main-wrapper ul li button.selected{
     color: var(--secondary-color);
     font-size: larger;
+}
+.main-wrapper ul li .logout{
+    margin-top: 20px;
+    background-color: var(--danger-color);
+    color: var(--info-color);
 }

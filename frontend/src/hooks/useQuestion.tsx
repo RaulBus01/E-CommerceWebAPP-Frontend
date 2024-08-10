@@ -1,23 +1,27 @@
 import { useCallback, useEffect, useState } from "react";
-import { _get, _post } from "../utils/api";
+import { _delete, _get, _post } from "../utils/api";
 import { postQuestionData, questionData } from "../types/QuestionType";
 
 interface useQuestionResult{
-    questions: questionData[]| null;
+    questions: questionData[]| undefined;
     loading: boolean;
     fetchQuestionsByProduct: (productId: string) => Promise<void>;
     fetchQuestionsByUser: (userId: string) => Promise<void>;
     createQuestion: (question: postQuestionData) => Promise<questionData | undefined>;
+    deleteQuestion: (questionId: string) => Promise<questionData | undefined>;
+    setQuestions: React.Dispatch<React.SetStateAction<questionData[] | undefined>>;
+
 }
 
-const useQuestion = (userId: string, token: string, productId: string): useQuestionResult => {
-    const [questions, setQuestions] = useState<questionData[]| null>(null);
+const useQuestion = (token: string, userId?: string,productId?: string): useQuestionResult => {
+    const [questions, setQuestions] = useState<questionData[]| undefined>(undefined);
     const [loading, setLoading] = useState<boolean>(true);
 
     const fetchQuestionsByProduct = useCallback(async (productId: string) => {
         setLoading(true);
         try {
             const response = await _get(`/question/findQuestion/${productId}`, token);
+            
             const res: questionData[] = response.questions;
             setQuestions(res);
         } catch (error: any) {
@@ -27,11 +31,12 @@ const useQuestion = (userId: string, token: string, productId: string): useQuest
         }
     }, []);
 
-    const fetchQuestionsByUser = useCallback(async (userId: string) => {
+    const fetchQuestionsByUser = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await _get(`/question/findUserQuestion/${userId}`, token);
+            const response = await _get(`/question/findUserQuestion/${userId ? userId : 'admin'}`, token);
             const res: questionData[] = response.questions;
+           
             setQuestions(res);
         } catch (error: any) {
             console.log("Error fetching questions by user:", error);
@@ -39,6 +44,19 @@ const useQuestion = (userId: string, token: string, productId: string): useQuest
             setLoading(false);
         }
     }, [token]);
+    const deleteQuestion = useCallback(async (questionId: string) => {
+        setLoading(true);
+        try {
+            const response = await _delete(`/question/deleteQuestion/`, {questionId}, token);
+            const res: questionData = response.question;
+            return res;
+        } catch (error: any) {
+            console.log("Error deleting question:", error);
+        } finally {
+            setLoading(false);
+        }
+    }
+    , [token]);
 
     const createQuestion = useCallback(async (question: postQuestionData) => {
         setLoading(true);
@@ -60,7 +78,7 @@ const useQuestion = (userId: string, token: string, productId: string): useQuest
         }
     }, [productId, fetchQuestionsByProduct]);
 
-    return {questions, loading, fetchQuestionsByProduct, fetchQuestionsByUser, createQuestion};
+    return {questions, setQuestions, loading, fetchQuestionsByProduct, fetchQuestionsByUser, createQuestion, deleteQuestion};
 }
 
 export default useQuestion;

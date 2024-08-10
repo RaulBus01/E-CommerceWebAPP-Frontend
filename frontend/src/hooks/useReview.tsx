@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { postReviewData, reviewData } from "../types/ReviewType";
-import { _get, _post } from "../utils/api";
+import { _get, _post,_delete } from "../utils/api";
 
 interface UseReviewResult{
     reviews: reviewData[] | null;
@@ -8,9 +8,11 @@ interface UseReviewResult{
     fetchReviewsByProduct: (productId: string) => Promise<void>;
     fetchReviewsByUser: (token: string) => Promise<void>;
     createReview: (review: postReviewData) => Promise<reviewData | undefined>;
+    deleteReview: (reviewId: string) => Promise<void>;
+    setReviews: React.Dispatch<React.SetStateAction<reviewData[] | null>>;
 }
 
-const useReview = (token: string, productId: string): UseReviewResult => {
+const useReview = (token: string, productId?: string): UseReviewResult => {
     const [reviews, setReviews] = useState<reviewData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -53,11 +55,32 @@ const useReview = (token: string, productId: string): UseReviewResult => {
             setLoading(false);
         }
     }, [token]);
-    useEffect(() => {   
-        fetchReviewsByProduct(productId);     
+    const deleteReview = useCallback(async (reviewId: string) => {
+        setLoading(true);
+        try{
+            const response = await _delete(`/reviews/deleteReview`, {reviewId}, token);
+            return response;
+        }catch(error:any){
+            console.log(error);
+        }finally{
+            setLoading(false);
+        }
+    }, [token]);
+
+
+    useEffect(() => {
+        
+        fetchReviewsByProduct(productId);
+        
     },[productId, fetchReviewsByProduct]);
 
-    return {reviews, loading, fetchReviewsByProduct, fetchReviewsByUser, createReview};
+    useEffect(() => { 
+        if(token){
+            fetchReviewsByUser(token);
+        }
+    }, [token, fetchReviewsByUser]);
+
+    return {reviews, loading, fetchReviewsByProduct, createReview, deleteReview, setReviews, fetchReviewsByUser};
 }
 
 export default useReview;

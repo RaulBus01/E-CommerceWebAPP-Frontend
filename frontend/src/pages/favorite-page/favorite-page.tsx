@@ -25,8 +25,8 @@ const FavoritePage = () => {
             <div className="items-container">
                 {favourites?.map((favourite) => (
                     <ProductCard
-                        key={favourite.product._id}
-                        product={favourite.product}
+                        key={favourite?.product._id}
+                        product={favourite?.product}
                         loading={loading}
                         onRemoveFavorite={handleRemoveFavorite}
                     />

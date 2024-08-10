@@ -1,10 +1,11 @@
 import { useCallback, useState } from "react"
 import { postReplyData, replyData } from "../types/ReplyType"
-import { _post } from "../utils/api";
+import { _post,_delete } from "../utils/api";
 
 interface UseReplyResult{
     loading: boolean;
     createReply: (reply: postReplyData) => Promise<replyData | undefined>;
+    deleteReply: (replyId: string) => Promise<void>;
 }
 
 const useReply = (token: string): UseReplyResult => {
@@ -22,8 +23,22 @@ const useReply = (token: string): UseReplyResult => {
             setLoading(false);
         }
     }, [token]);
+    const deleteReply = useCallback(async (replyId: string) => {
+        setLoading(true);
+        try{
+            console.log(replyId);
+            const response = await _delete('/reply/deleteReply', {replyId}, token);
+            return response;
+        }catch{
+            console.log("Error deleting reply");
+            
+        }
+        finally{
+            setLoading(false);
+        }
+    }, [token]);
 
-    return {createReply, loading};
+    return {createReply, loading,deleteReply};
 }
 
 export default useReply;

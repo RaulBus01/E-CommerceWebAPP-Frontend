@@ -16,8 +16,6 @@ import { Toaster } from 'react-hot-toast';
 
 import UserProfilePage from './pages/user-profile-page/user-profile-page'
 import FavoritePage from './pages/favorite-page/favorite-page'
-import DistributorProfilePage from './pages/distributor-profile-page/distributor-profile-page';
-
 import PublicRoute from './pages/authentication-page/publicRoute';
 import DistributorProductPage from './pages/distributor-product-page/distributor-product-page';
 import Order from './pages/order-page/order';
@@ -27,11 +25,6 @@ const App = () => {
   const location = useLocation();
   const disableNavPaths = ['/login', '/register/customer', '/register/distributor', '/admin/login'];
   const showNav = !disableNavPaths.includes(location.pathname);
-  // const showNav = !disableNavPaths.some(path => {
-  //   const regexPath = path.replace(/:\w+/g, '[^/]+');
-  //   const regex = new RegExp(`^${regexPath}$`);
-  //   return regex.test(location.pathname);
-  // });
   return (
     <>
          <AuthProvider>
@@ -51,11 +44,12 @@ const App = () => {
               <Route path="/checkout" element={<PaymentCheckoutPage />} />
               <Route path="/profile" element={<UserProfilePage />} />
               <Route path="/favorites" element={<FavoritePage />} />
-              <Route path="/distributor-dashboard/:id" element={<DistributorProfilePage />} />
+              <Route path="/distributor-dashboard/:id" element={<UserProfilePage />} />
               <Route path='/user-dashboard/:id' element={<UserProfilePage />} />
-              <Route path="/distributor-dashboard/:id/add-product" element={<DistributorProductPage type="add-product" />} />
+              <Route path='/admin-dashboard' element={<UserProfilePage />} />
+              <Route path="/add-product" element={<DistributorProductPage type="add-product" />} />
               <Route path="edit-product/:productId" element={<DistributorProductPage type="edit-product" />} />
-              <Route path="/distributor-dashboard/:id/order/:orderId" element={<Order />} />
+              <Route path="/order/:orderId" element={<Order />} />
               <Route path="/user-dashboard/:id/order/:orderId" element={<Order />} />
             </Route>
   
