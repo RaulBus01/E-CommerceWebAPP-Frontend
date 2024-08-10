@@ -9,11 +9,13 @@ interface UseUserResult{
     user: userData | null;
     loading: boolean;
     editUser: (updates: Partial<userData>) => Promise<void>;
+    fetchUsers : () => Promise<userData[] | undefined>;
 }
 
 const useUser = (): UseUserResult => {
 
     const [loading, setLoading] = useState<boolean>(true);
+    
     const {token,user} = useAuth();
     
     // useEffect(() => {
@@ -57,9 +59,24 @@ const useUser = (): UseUserResult => {
             }
         }   
     ,[token]);
+    const fetchUsers = useCallback(async () => {
+        setLoading(true);
+        try{
+            const response = await _get(`/users/all`,token);
+            console.log(response);
+            return response;
+        }
+        catch{
+            console.error('Error fetching users');
+            toast.error('Error fetching users');
+        }
+        finally{
+            setLoading(false);
+        }
+    },[token]);
 
 
-    return {user,loading,editUser};
+    return {user,loading,editUser,fetchUsers};
 };
 
 export default useUser;

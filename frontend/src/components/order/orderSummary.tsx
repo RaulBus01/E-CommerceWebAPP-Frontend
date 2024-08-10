@@ -1,7 +1,6 @@
 import React, { useEffect,useState } from 'react';
 import './order.css';
 import { useNavigate } from 'react-router-dom';
-import useProduct from '../../hooks/useProduct';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import { orderData } from '../../types/OrderType';
 import { formatDateTime } from '../../utils/formatDataTime';
@@ -11,30 +10,13 @@ import { formatDateTime } from '../../utils/formatDataTime';
 
 const OrderSummary = ({order}:{order:orderData}) => {
   
-
-  
- 
   const navigate = useNavigate();
-
-  const handleNavigate = () => {
-    navigate(`order/${order._id}`);
-  }
-
-
-
-    
-    
-
-    
-
-   
-
 
   return (
   
     <div className="orderSummary" key={order._id}>
       <div className="orderHeader">
-        <span>Order : {order._id}</span>  
+        <span>Order : #{order?.orderNumber}</span>  
 
         <span className="orderDate">Placed on: {formatDateTime(order.createdAt)}</span>
         <span className="orderTotal">Total: {Math.round(order.totalPrice)} Lei</span>
@@ -48,14 +30,14 @@ const OrderSummary = ({order}:{order:orderData}) => {
         </div>
       
         <span className="productStatus">Status: {order.status}</span>
-        {/* <img src="path-to-product-image.jpg" alt="Product" className="productImage" /> */}
+
       </div>
 
      
       
       <div className="orderFooter">
         
-        <button className="orderDetailsButton" onClick={handleNavigate}>
+        <button className="orderDetailsButton" onClick={() => navigate(`/order/${order.orderNumber}`)}>
         <KeyboardDoubleArrowDownIcon className="orderDetailsIcon"/>
           Order Details</button>
       </div>

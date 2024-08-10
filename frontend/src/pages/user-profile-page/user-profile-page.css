@@ -1,13 +1,10 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
- }
-.user-profile-main-container{
-    height:auto;
-    width: 100%;
-    background-color: var(--light-color);
 
+.user-profile-main-container{
+    min-height: 100vh;
+    height: auto;
+    width: 100%;
+    background-color: var(--secondary-color);
+    
     display: flex;
     flex-direction: column;
 }
@@ -15,9 +12,8 @@
 .top-container{
     height: 10%;
     width: 100%;
-    background-color: var(--light-color);
+    background-color: var(--secondary-color);
     border-bottom: solid 1px var(--gray-color);
-
     margin-top: 10px;
     display: flex;
     flex-direction: row;
@@ -26,28 +22,12 @@
     padding: 0 100px 0 60px;
 }
 
-.top-container button{
-    height: 30px;
-    width: 100px;
-    border-radius: 10px;
-    border-style: none;
-    background-color: var(--danger-color);
-    color: var(--light-color);
-    font-size: medium;
-    font-weight: 600;
 
-    margin-left: auto;
-}
 
 .user-info-container{
-    
-    width: 100%;
-
+    justify-content: center;
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
-
     gap: 10px;
 }
 

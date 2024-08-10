@@ -4,12 +4,11 @@ import useProduct from '../../hooks/useProduct';
 import ProductCard from '../../components/product-card/product-card';
 import ProductSlider from "../../components/product-slider/product-slider";
 import { productData } from "../../types/ProductType";
-import { useAuth } from "../../hooks/useAuth";
 
 
 const Home = () => {
   const { products,loading } = useProduct();
-  
+
 
   if (loading) {
     return <div>Loading...</div>;
@@ -26,7 +25,8 @@ const Home = () => {
         {products?.map((product) => (
           <ProductCard 
          
-          key={product._id} product={product} loading={loading} />
+          key={product._id} product={product} loading={loading} 
+          />
         ))}
       </div>
     </div>

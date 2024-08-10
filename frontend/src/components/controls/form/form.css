@@ -9,6 +9,7 @@
   cursor: pointer;
 }
 
+
 .distributor-form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -32,7 +33,9 @@
 .form-group-container-text,
 .form-group-container-category,
 .form-group-container-number,
-.form-group-container-password
+.form-group-container-password,
+.form-group-container-tel,
+.form-group-container-email
 {
   display: flex;
   flex-direction: row;
@@ -99,7 +102,6 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap : 1rem;
   width: 100%;
 }
 

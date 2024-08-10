@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import  useUser  from "../../hooks/useUser";
-import { useAuth } from "../../hooks/useAuth";
 import './sideMenu.css'
 
-const SideMenu = ({setSelectedMenu,name,sectionList}) => {
-    const [selected, setSelected] = useState<string>('Personal Information');
+const SideMenu = ({setSelectedMenu,name,sectionList,logout}) => {
+    const [selected, setSelected] = useState<string>(sectionList[0]);
+
+  
 
 
     const handleSelectedButton = (buttonName: string) => {
@@ -25,6 +25,12 @@ const SideMenu = ({setSelectedMenu,name,sectionList}) => {
                     ))}
                    
                 </ul>
+                <ul >
+                    <li>
+                        <button className='logout' onClick={logout}>Log out</button>
+                    </li>
+                </ul>
+                
             </div>
         </>
     );

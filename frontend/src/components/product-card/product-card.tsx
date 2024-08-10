@@ -9,7 +9,6 @@ import { useAuth } from "../../hooks/useAuth";
 import useFavourite from "../../hooks/useFavourite";
 import { productData } from "../../types/ProductType";
 import  useCart  from "../../hooks/useCart";
-import useProduct from "../../hooks/useProduct";
 import { useNavigate } from "react-router-dom";
 
 
@@ -17,9 +16,12 @@ interface ProductCardProps {
   product: productData;
   loading: boolean;
   onRemoveFavorite?: (productId: string) => void;
+  setProducts?: (products: productData[]) => void;
+  products?: productData[] | null;
+  deleteProduct?: (productId: string) => Promise<boolean>;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavorite }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavorite,setProducts,products,deleteProduct }) => {
  
   const { token, user } = useAuth();
   const navigate = useNavigate();
@@ -29,6 +31,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
   const { addProductToCart } = isCustomer ? useCart(token as string) : { addProductToCart: () => {} };
   
   const isFavorite = user?.role === "customer" ? isProductFavourite(product._id) : false;
+  const isDistributorAssigned = user?.role === "distributor" && product.distributor._id === user.id;
+  const isAdmin = user?.role === "admin";
 
   const handleFavorite = useCallback(async () => {
     if (isFavorite) {
@@ -45,15 +49,40 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
     await addProductToCart(product, token);
   }, [addProductToCart, product, token]);
 
-  const { products, setProducts, deleteProduct } = useProduct();
+ 
   const handleDeleteProduct = async () => {
-    if (token && user?.role === "distributor") {
-      const response = await deleteProduct(product._id);
-      if (response) {
-        setProducts(products.filter((p) => p._id !== product._id));
+    const response = window.confirm("Are you sure you want to delete this product?");
+    if (response === true) {
+      try {
+          if (!deleteProduct) {
+            return;
+          }
+          await deleteProduct(product._id);
+        
+        const updatedProduct = { ...product, isActive: false };
+     
+
+        const updatedProducts = products?.map((product) =>
+          product._id === updatedProduct._id ? updatedProduct : product
+        );
+        
+        if (setProducts) {
+          setProducts(updatedProducts || []);
+        }
+
+    
+       
+      } catch (error) {
+        console.error("Failed to delete product:", error);
       }
-    }
+
+   
   }
+}
+  const handleProductPage = () => {
+    console.log(product._id);
+    navigate(`/product/${product._id}`);
+  };
 
   if (loading) {
     return <div>Loading</div>;
@@ -63,9 +92,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
 
   return (
     <div className="card-container">
-      <img  src={product.image[0]} alt="product" />
+      <img  src={product.image[0]} alt="product" onClick={handleProductPage} />
       <div className="information-container">
-        <p className="product-name">{product.name}</p>
+        
+        {<p onClick={handleProductPage} className="product-name">{product.name}</p>}
         <h2>{product.price} lei</h2>
       </div>
       <div className="rating-container">
@@ -84,16 +114,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
             <FavoriteIcon style={{ color: isFavorite ? "red" : "white" }} />
           </button>
           </>
-          :
+          : isDistributorAssigned || isAdmin ?
           <>
           <button className="edit-button" onClick={() => navigate(`/edit-product/${product._id}`)}>
             <EditIcon /> Edit
           </button>
-          <button className="delete-button" onClick={handleDeleteProduct}>
+
+           {product.isActive && <button className="delete-button" onClick={handleDeleteProduct}>
             <DeleteIcon /> Delete
-          </button>
+          </button> 
+            } 
             
           </> 
+          : null
         }
       </div>
     </div>
