@@ -32,6 +32,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
   
   const isFavorite = user?.role === "customer" ? isProductFavourite(product._id) : false;
   const isDistributorAssigned = user?.role === "distributor" && product.distributor._id === user.id;
+  const isAdmin = user?.role === "admin";
 
   const handleFavorite = useCallback(async () => {
     if (isFavorite) {
@@ -59,8 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
           await deleteProduct(product._id);
         
         const updatedProduct = { ...product, isActive: false };
-        console.log(product); 
-        console.log(updatedProduct);
+     
 
         const updatedProducts = products?.map((product) =>
           product._id === updatedProduct._id ? updatedProduct : product
@@ -70,10 +70,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
           setProducts(updatedProducts || []);
         }
 
-       
-
-
-
+    
        
       } catch (error) {
         console.error("Failed to delete product:", error);
@@ -117,7 +114,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
             <FavoriteIcon style={{ color: isFavorite ? "red" : "white" }} />
           </button>
           </>
-          : isDistributorAssigned &&
+          : isDistributorAssigned || isAdmin ?
           <>
           <button className="edit-button" onClick={() => navigate(`/edit-product/${product._id}`)}>
             <EditIcon /> Edit
@@ -129,6 +126,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
             } 
             
           </> 
+          : null
         }
       </div>
     </div>

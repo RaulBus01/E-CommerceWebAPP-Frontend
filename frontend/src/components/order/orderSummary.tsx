@@ -10,22 +10,7 @@ import { formatDateTime } from '../../utils/formatDataTime';
 
 const OrderSummary = ({order}:{order:orderData}) => {
   
-
-  
- 
   const navigate = useNavigate();
-
-
-
-
-
-    
-    
-
-    
-
-   
-
 
   return (
   

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './distributor-products-menu.css';
+import './products-menu.css';
 import Spinner from '../../spinner/spinner';
 import ProductCard from '../../product-card/product-card';
 import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
@@ -9,7 +9,7 @@ import useProduct from '../../../hooks/useProduct';
 import { productData } from '../../../types/ProductType';
 import { userData } from '../../../types/UserType';
 
-const DistributorProductsMenu = ({user}:{user:userData}) => {
+const ProductsMenu = ({user}:{user:userData}) => {
   const { loading,deleteProduct } = useProduct();
   const {distributorProducts,setDistributorProducts} = user?.role === 'distributor' ? useProduct() : {distributorProducts:null,setDistributorProducts:null};
   const {products,setProducts } = user?.role === 'admin' ? useProduct() : {products:null,setProducts:null};
@@ -83,5 +83,5 @@ const DistributorProductsMenu = ({user}:{user:userData}) => {
   );
 };
 
-export default DistributorProductsMenu;
+export default ProductsMenu;
 

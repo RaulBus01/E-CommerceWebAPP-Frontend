@@ -7,8 +7,7 @@ import useReview from "../../../hooks/useReview";
 import { userData } from "../../../types/UserType";
 
 const MyReviewsMenu = ({token,user}:{token:string,user?:userData | null}) => {
-    const { reviews, loading: reviewsLoading,deleteReview,setReviews } =  useReview(token as string);
-   console.log(reviews);
+    const { reviews, loading: reviewsLoading,deleteReview,setReviews } =  useReview(token as string)
     if(reviewsLoading){
         return(
             <div className="my-orders-menu">
@@ -24,8 +23,7 @@ const MyReviewsMenu = ({token,user}:{token:string,user?:userData | null}) => {
         const newReviews = reviews?.filter((review) => review._id !== reviewId) || null;
         setReviews(newReviews);
 
-    }
-    console.log(reviews);
+    };
 
     return (
         <>

@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 import { useParams } from "react-router-dom";
-import DistributorProductsMenu from "../../components/user-account-submenus/distributor-products-menu/distributor-products-menu";
+import DistributorProductsMenu from "../../components/user-account-submenus/products-menu/products-menu";
 import { userData } from "../../types/UserType";
 
 const UserProfilePage: React.FC = () => {
@@ -23,20 +23,17 @@ const UserProfilePage: React.FC = () => {
 
     const { token,user, logout } = useAuth();
     const { id: userIdPath } = useParams<{ id: string }>();
-  
-    const sectionList = (user) => {
-        if(user.role === 'customer'){
-            return ['Personal Information','My orders','My reviews','My questions'];
-        }
-        else if(user.role === 'admin'){
-            return ['Users','Products','Orders','Reviews','Questions'];
-        }
-        else if(user.role === 'distributor'){
-            return ['Personal Information','Products','Orders'];
-        }
-
+    if(!user){
+        return;
     }
-    const [selectedMenu, setSelectedMenu] = useState<string>(sectionList[0]);
+    const sectionList = {
+        customer: ['Personal Information', 'My orders', 'My reviews', 'My questions'],
+        admin: ['Users', 'Products', 'Orders', 'Reviews', 'Questions'],
+        distributor: ['Personal Information', 'Products', 'Orders'],
+    };
+  
+
+    const [selectedMenu, setSelectedMenu] = useState<string>(sectionList[user?.role][0]);
     const navigate = useNavigate();
 
 
@@ -93,7 +90,7 @@ const UserProfilePage: React.FC = () => {
                 <SideMenu 
                     setSelectedMenu={setSelectedMenu} 
                     name={user?.name || ""} 
-                    sectionList={sectionList(user)}
+                    sectionList={sectionList[user?.role]}
                     logout={handleLogOut}
                 />
                
