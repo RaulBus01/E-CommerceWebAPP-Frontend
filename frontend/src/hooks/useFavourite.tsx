@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { favouriteItem } from "../types/FavouriteType";
 import { _delete, _get, _put } from "../utils/api";
-import { useAuth } from "./useAuth";
 
 interface UseFavouriteResult {
     favourites: favouriteItem[] | null;
@@ -57,11 +56,10 @@ const useFavourite = (token:string | null): UseFavouriteResult => {
             const response = await _put(`/favourites/add`,{ productId }, token, {});
             const newFavourite = response.result;
             setFavouriteSet((prevSet) => new Set(prevSet).add(productId));
-
+            setFavourites((prev) =>
+                prev ? [...prev, newFavourite] : [newFavourite]
+            );
             return newFavourite;
-         
-            
-           
         } catch (error: any) {
             console.log("Error adding to favorites:", error);
         }
@@ -72,16 +70,14 @@ const useFavourite = (token:string | null): UseFavouriteResult => {
             const response = await _delete(`/favourites/deleteProduct/${productId}`,{}, token);
             if (!response) {
                 throw new Error("Unexpected API response format.");
-            }
-
-          
-          
-           
+            }          
             setFavouriteSet((prevSet) => {
                 const newSet = new Set(prevSet);
                 newSet.delete(productId);
                 return newSet;
             });
+            setFavourites((prev) => prev?.filter((fav) => fav.product._id !== productId) || null);
+
             return true;
         } catch (error: any) {
             console.log("Error removing from favourites:", error);

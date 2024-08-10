@@ -9,6 +9,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import StarIcon from "@mui/icons-material/Star";
 import ReviewsSubmenu from "../../components/product-page-submenus/reviews-submenu/reviews-submenu.tsx";
 import QuestionsSubmenu from "../../components/product-page-submenus/questions-submenu/questions-submenu.tsx";
+import Spinner from "../../components/spinner/spinner.tsx";
 
 const ProductPage = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -67,12 +68,12 @@ const ProductPage = () => {
     }, 0);
   }
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!product) {
-    return <div>Product not found</div>;
+  if (loading || !product) {
+    return(
+      <div>
+        <Spinner />
+      </div>
+    );
   }
 
   return (
@@ -81,15 +82,15 @@ const ProductPage = () => {
         <div className="product-data-container">
           <div className="horizontal-data">
             <div className="image-container">
-              <img src={product.image[0] || "https://placehold.jp/150x150.png"} alt="selected-product-image" />
+              <img src={product?.image[0] || "https://placehold.jp/150x150.png"} alt="selected-product-image" />
               <div className="secondary-images"></div>
             </div>
             <div className="buy-data">
-              <h1>{product.price} lei</h1>
+              <h1>{product?.price} lei</h1>
               <div className="rating-product-display" onClick={scrollToReviews}>
-                <h3>{product.ratingProduct}</h3>
+                <h3>{product?.ratingProduct}</h3>
                 <StarIcon style={{ color: "yellow" }} />
-                <p>({product.numberOfReviews})</p>
+                <p>({product?.numberOfReviews || "N/A"})</p>
               </div>
               <div className="product-button-container">
                 <button>
@@ -102,8 +103,8 @@ const ProductPage = () => {
             </div>
           </div>
           <div className="product-info-container">
-            <h2>{product.name}</h2>
-            <h3>{product.description}</h3>
+            <h2>{product?.name}</h2>
+            <h3>{product?.description}</h3>
           </div>
         </div>
         <div className="select-button-container">

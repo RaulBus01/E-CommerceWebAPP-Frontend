@@ -6,6 +6,7 @@ interface UseReviewResult{
     reviews: reviewData[] | null;
     loading: boolean;
     fetchReviewsByProduct: (productId: string) => Promise<void>;
+    fetchReviewsByUser: (token: string) => Promise<void>;
     createReview: (review: postReviewData) => Promise<reviewData | undefined>;
 }
 
@@ -24,7 +25,7 @@ const useReview = (token: string, productId: string): UseReviewResult => {
         }finally{
             setLoading(false);
         }
-    }, [productId]);
+    }, []);
 
     const fetchReviewsByUser = useCallback(async (token: string) => {
         setLoading(true);
@@ -52,20 +53,11 @@ const useReview = (token: string, productId: string): UseReviewResult => {
             setLoading(false);
         }
     }, [token]);
-
-    useEffect(() => {
-        
-        fetchReviewsByProduct(productId);
-        
+    useEffect(() => {   
+        fetchReviewsByProduct(productId);     
     },[productId, fetchReviewsByProduct]);
 
-    useEffect(() => { 
-        if(token){
-            fetchReviewsByUser(token);
-        }
-    }, [token, fetchReviewsByUser]);
-
-    return {reviews, loading, fetchReviewsByProduct, createReview};
+    return {reviews, loading, fetchReviewsByProduct, fetchReviewsByUser, createReview};
 }
 
 export default useReview;

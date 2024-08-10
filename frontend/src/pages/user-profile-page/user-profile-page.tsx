@@ -14,9 +14,9 @@ import { useParams } from "react-router-dom";
 
 const UserProfilePage: React.FC = () => {
     const [selectedMenu, setSelectedMenu] = useState<string>("Personal Information");
-    const { token,user, logout } = useAuth();
+    const { token, user, logout } = useAuth();
     const { id: userIdPath } = useParams<{ id: string }>();
-
+    console.log(user);
     const navigate = useNavigate();
  
     useEffect(() => {

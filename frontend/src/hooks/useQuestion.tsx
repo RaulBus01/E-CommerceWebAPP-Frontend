@@ -6,6 +6,7 @@ interface useQuestionResult{
     questions: questionData[]| null;
     loading: boolean;
     fetchQuestionsByProduct: (productId: string) => Promise<void>;
+    fetchQuestionsByUser: (userId: string) => Promise<void>;
     createQuestion: (question: postQuestionData) => Promise<questionData | undefined>;
 }
 
@@ -59,13 +60,7 @@ const useQuestion = (userId: string, token: string, productId: string): useQuest
         }
     }, [productId, fetchQuestionsByProduct]);
 
-    useEffect(() => {
-        if (userId) {
-            fetchQuestionsByUser(userId);
-        }
-    }, [userId, fetchQuestionsByUser]);
-
-    return {questions, loading, fetchQuestionsByProduct, createQuestion};
+    return {questions, loading, fetchQuestionsByProduct, fetchQuestionsByUser, createQuestion};
 }
 
 export default useQuestion;

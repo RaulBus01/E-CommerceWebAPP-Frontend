@@ -5,6 +5,7 @@ import useQuestion from "../../../hooks/useQuestion.tsx";
 import QuestionModal from "../../modals/question-modal/question-modal.tsx";
 import { postQuestionData } from "../../../types/QuestionType.ts";
 import useReply from "../../../hooks/useReply.tsx";
+import Spinner from "../../spinner/spinner.tsx";
 
 const QuestionsSubmenu = ({productId, token, user}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,10 +59,11 @@ const QuestionsSubmenu = ({productId, token, user}) => {
     return(
         <div className="product-reviews-container">
           <div className="product-reviews-header">
-            <h1>Questions about the product ({questions?.length})</h1>
+            <h1>Questions about the product ({questions?.length || "0"})</h1>
             <button onClick={() => setIsModalOpen(true)}>Add a question</button>
           </div>
-          <div className="question-cells-container"> 
+          <div className="question-cells-container">
+            {questionsLoading && <Spinner />}
             {questions && questions.map((question) => (
               <div key={question?.id} className="question-cell">
                 <div className="question-container">

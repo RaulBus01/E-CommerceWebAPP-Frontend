@@ -1,5 +1,5 @@
 .card-container{
-    border: 1px solid rgb(184, 184, 184);
+    border: 1px solid var(--third-color);
     border-radius: 10px;
     box-shadow: 2px 2px 2px rgb#98ac55;
     background-color: var(--primary-color);
