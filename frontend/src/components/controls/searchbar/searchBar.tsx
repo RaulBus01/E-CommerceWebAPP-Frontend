@@ -2,31 +2,14 @@ import React, { useState, useEffect } from 'react';
 import './searchBar.css';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
+import useSearch from '../../../hooks/useSearch';
 
 const SearchBar = () => {
-  const [searchInput, setSearchInput] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
-  const [showDropdown, setShowDropdown] = useState(false);
 
-  useEffect(() => {
-    if (searchInput.length > 0) {
-      setSuggestions(['Suggestion 1', 'Suggestion 2', 'Suggestion 3']);
-      setShowDropdown(true);
-    } else {
-      setShowDropdown(false);
-    }
-  }, [searchInput]);
+  const { searchInput, setSearchInput, suggestions, showDropdown, setShowDropdown, handleChange, handleSuggestionClick } = useSearch();
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    const value = e.target.value;
-    setSearchInput(value);
-  };
 
-  const handleSuggestionClick = (suggestion) => {
-    setSearchInput(suggestion);
-    setShowDropdown(false);
-  };
+ 
 
   return (
     <div className="search-bar-container">
@@ -42,17 +25,29 @@ const SearchBar = () => {
         <SearchIcon className="search-icon" />
       </div>
       {showDropdown && (
+
         <div className="search-dropdown">
-          {suggestions.map((suggestion, index) => (
-            <div
-              key={index}
-              className="search-dropdown-item"
-              onClick={() => handleSuggestionClick(suggestion)}
-            >
-              {suggestion}
+          {suggestions?.categories.map((category) => (
+            <div key={category._id} onClick={() => handleSuggestionClick(category)} className="search-dropdown-item">
+              <span className='search-dropdown-item-name'>Category: {category.name}</span>
             </div>
           ))}
-        </div>
+          {suggestions?.products.map((product) => (
+            <div key={product._id} onClick={() => handleSuggestionClick(product)} className="search-dropdown-item">
+              <img src={ product.image[0] }
+                alt={product.name} className='search-dropdown-item-image' />
+               <span className='search-dropdown-item-name'>{product.name}</span>
+
+            </div>
+          ))}
+          {
+            suggestions?.categories.length === 0 && suggestions?.products.length === 0 && (
+              <div className="no-results">No results found</div>
+            )
+          }
+        </div> 
+       
+
       )}
     </div>
   );
