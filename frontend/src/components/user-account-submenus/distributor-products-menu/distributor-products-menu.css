@@ -8,14 +8,14 @@
   justify-content: center;
 
 }
-.top-container {
+.top-container-search {
   display: flex;
   flex-direction: row;
   align-items: center; 
   justify-content: center;
   
 }
-.top-container .search-container{
+.top-container-search .search-container{
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -29,17 +29,17 @@
   resize: vertical; 
 }
 
-.top-container h2 {
+.top-container-search h2 {
   margin-right: 8px; 
 }
-.top-container input{
+.top-container-search input{
   background-color: transparent;
   width: 100%;
   border: none;
   margin-left: 1rem;
   
 }
-.top-container input:focus {
+.top-container-search input:focus {
   border: none;
   outline: none;
 }

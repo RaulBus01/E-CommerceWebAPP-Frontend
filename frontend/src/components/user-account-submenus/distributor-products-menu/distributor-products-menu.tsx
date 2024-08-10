@@ -39,7 +39,7 @@ const DistributorProductsMenu = ({user}:{user:userData}) => {
       <Spinner />
     ) : (
     <div className="distributor-products-menu">
-      <div className="top-container">
+      <div className="top-container-search">
         <h2>Search your product list</h2>
         <div className="search-container">
           <input

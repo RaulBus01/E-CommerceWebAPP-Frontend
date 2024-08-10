@@ -86,7 +86,7 @@ const UserProfilePage: React.FC = () => {
         <div className="user-profile-main-container">
             <div className="top-container">
                 <h2>Your account</h2>
-                <button className="signOut-btn" onClick={handleLogOut}>Sign out</button>
+               
             </div>
             <div className="user-info-container">
               
@@ -94,6 +94,7 @@ const UserProfilePage: React.FC = () => {
                     setSelectedMenu={setSelectedMenu} 
                     name={user?.name || ""} 
                     sectionList={sectionList(user)}
+                    logout={handleLogOut}
                 />
                
 
