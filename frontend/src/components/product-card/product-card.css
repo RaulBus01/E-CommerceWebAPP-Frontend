@@ -6,7 +6,7 @@
     display: flex;
     flex-direction: column;
   
-    width: 200px;
+    width: 230px;
     height: 400px;
     position: relative;
 }
@@ -83,7 +83,7 @@
     border: none;
     border-radius: 15px;
 
-    width: 70px;
+    width: 80px;
     height: 30px;
 
     align-items: center;
@@ -95,7 +95,7 @@
 
 .button-container button:hover{
     cursor: pointer;
-    box-shadow: 2px 2px 2px var(--third-color)
+    background-color: var(--success-color);
 }
 .edit-button,
 .delete-button{
@@ -110,6 +110,6 @@
 .edit-button:hover,
 .delete-button:hover{
     cursor: pointer;
-    background-color: rgb(152, 189, 224);
-    color: rgb(255, 255, 255);
+    background-color: var(--third-color);
+    color: var(--info-color);
 }

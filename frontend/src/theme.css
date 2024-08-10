@@ -1,20 +1,15 @@
 
 :root{
-  --primary-color: #364F6B;
+  --primary-color: #364f68;
   --secondary-color: #5F5D9C;
-  --third-color:  #FC5185;
+  --third-color:  #ff84a9;
   --info-color: #F5F5F5;
   --danger-color: #D62828;
   --success-color: #2A9D8F;
   --warning-color: #F4A261;
   --light-color: #F4A261;
   --dark-color: #1D3557;
-
-
-
-
-
-
+  --test-color: #faebd0;
 }
 * {
   margin: 0;

@@ -14,6 +14,10 @@
     z-index: 1000;
 }
 
+.modal-header{
+    color: var(--info-color);
+}
+
 .modal-body{
     background: var(--primary-color);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -21,7 +25,7 @@
     padding: 40px 20px;
 
     position: relative;
-    height: 70%;
+    height: 60%;
     width: 40%;
 
     display: flex;
@@ -30,28 +34,61 @@
     align-items: center;
 }
 
-.form-group-modal{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.form-field-modal{
+.form-group-modal-review{
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 30px;
+}
+.form-group-modal-review label{
+    color: var(--info-color);
 }
 
+.form-field{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.form-field input{
+    width: 200px;
+    height: 30px;
+
+    border-radius: 15px;
+    padding: 10px;
+    background-color: transparent;
+    border: 1px solid var(--info-color);
+    color: var(--info-color);
+}
 .form-field textarea{
     width: 400px;
     height: 200px;
 
+    border-radius: 15px;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid var(--info-color);
+    color: var(--info-color);
+
     resize: none;
 }
 
+.form-field-star{
+    width: 300px;
+    height: 150px;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+.form-field-star label{
+    color: var(--info-color);
+    font-size: larger;
+}
 .review-modal-button-container{
-    margin-top: 50px;
+    margin-top: 100px;
     display: flex;
     flex-direction: row;
     gap: 20px;
@@ -69,5 +106,5 @@
 }
 .review-modal-button-container button:hover{
     cursor: pointer;
-    background-color: #f5cf9e;
+    background-color: var(--third-color);
 }

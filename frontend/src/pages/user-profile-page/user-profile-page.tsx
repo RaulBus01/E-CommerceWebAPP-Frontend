@@ -71,7 +71,6 @@ const UserProfilePage: React.FC = () => {
         <div className="user-profile-main-container">
             <div className="top-container">
                 <h2>Your account</h2>
-               
             </div>
             <div className="user-info-container">
               

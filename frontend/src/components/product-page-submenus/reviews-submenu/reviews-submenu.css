@@ -22,11 +22,13 @@
 }
 .product-reviews-header h1{
     float: left;
+    color: var(--info-color);
 }
 .product-reviews-header button{
     float: right;
 
     background-color: var(--primary-color);
+    color: var(--info-color);
     border: none;
     border-radius: 15px;
     width: 150px;
@@ -36,7 +38,7 @@
 }
 .product-reviews-header button:hover{
     cursor: pointer;
-    background-color: #97a764;
+    background-color: var(--third-color);
 }
 
 .review-cells-container{
