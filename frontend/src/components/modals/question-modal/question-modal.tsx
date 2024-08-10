@@ -24,8 +24,8 @@ const QuestionModal = ({onSubmit, isOpen, onClose}) => {
             </div>
             <div className="modal-body">
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group-modal">
-                        <div className="form-field-modal">
+                    <div className="form-group-modal-review">
+                        <div className="form-field">
                             <label>Your question</label>
                             <textarea id="content" placeholder="Your question..." value={content} onChange={(e) => setContent(e.target.value)} required maxLength={500}></textarea>
                         </div>

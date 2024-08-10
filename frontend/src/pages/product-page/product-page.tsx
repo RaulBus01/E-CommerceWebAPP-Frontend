@@ -67,7 +67,7 @@ const ProductPage = () => {
       }
     }, 0);
   }
-
+  console.log(product);
   if (loading || !product) {
     return(
       <div>
@@ -83,7 +83,13 @@ const ProductPage = () => {
           <div className="horizontal-data">
             <div className="image-container">
               <img src={product?.image[0] || "https://placehold.jp/150x150.png"} alt="selected-product-image" />
-              <div className="secondary-images"></div>
+              <div className="secondary-images">
+                {product?.image.map((img, index) => {
+                  if (index > 0) {
+                    return <img key={index} src={img} alt="selected-product-image" />;
+                  }
+                })}
+              </div>
             </div>
             <div className="buy-data">
               <h1>{product?.price} lei</h1>
