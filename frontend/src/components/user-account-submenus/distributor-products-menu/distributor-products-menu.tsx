@@ -51,12 +51,14 @@ const DistributorProductsMenu = ({user}:{user:userData}) => {
           <SearchIcon className="icon" />
         </div>
       </div>
-
+      
       <div className="add-container">
+        {user?.role === 'distributor' &&
         <span>  
          <h2>Add new product </h2>
-        <AddCircleOutline className="icon" onClick={() => navigate('add-product')} />
+        <AddCircleOutline className="icon" onClick={()=>navigate('/add-product')} />
         </span>
+        }
       </div>
 
       <div className="products-container">

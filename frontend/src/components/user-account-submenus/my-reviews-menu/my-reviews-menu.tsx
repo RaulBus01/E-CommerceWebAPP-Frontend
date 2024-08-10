@@ -8,7 +8,7 @@ import { userData } from "../../../types/UserType";
 
 const MyReviewsMenu = ({token,user}:{token:string,user?:userData | null}) => {
     const { reviews, loading: reviewsLoading,deleteReview,setReviews } =  useReview(token as string);
-   
+   console.log(reviews);
     if(reviewsLoading){
         return(
             <div className="my-orders-menu">

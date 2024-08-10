@@ -8,7 +8,8 @@ interface useQuestionResult{
     fetchQuestionsByProduct: (productId: string) => Promise<void>;
     createQuestion: (question: postQuestionData) => Promise<questionData | undefined>;
     deleteQuestion: (questionId: string) => Promise<questionData | undefined>;
-    setQuestions: React.Dispatch<React.SetStateAction<questionData[] | null>>;
+    setQuestions: React.Dispatch<React.SetStateAction<questionData[] | undefined>>;
+
 }
 
 const useQuestion = (token: string, userId?: string,productId?: string): useQuestionResult => {
@@ -32,7 +33,7 @@ const useQuestion = (token: string, userId?: string,productId?: string): useQues
     const fetchQuestionsByUser = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await _get(`/question/findUserQuestion/${userId ? userId : ''}}`, token);
+            const response = await _get(`/question/findUserQuestion/${userId ? userId : 'admin'}`, token);
             const res: questionData[] = response.questions;
            
             setQuestions(res);

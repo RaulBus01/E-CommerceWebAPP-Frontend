@@ -15,9 +15,7 @@ const OrderSummary = ({order}:{order:orderData}) => {
  
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
-    navigate(`order/${order?.orderNumber}`);
-  }
+
 
 
 
@@ -47,14 +45,14 @@ const OrderSummary = ({order}:{order:orderData}) => {
         </div>
       
         <span className="productStatus">Status: {order.status}</span>
-        {/* <img src="path-to-product-image.jpg" alt="Product" className="productImage" /> */}
+
       </div>
 
      
       
       <div className="orderFooter">
         
-        <button className="orderDetailsButton" onClick={handleNavigate}>
+        <button className="orderDetailsButton" onClick={() => navigate(`/order/${order.orderNumber}`)}>
         <KeyboardDoubleArrowDownIcon className="orderDetailsIcon"/>
           Order Details</button>
       </div>

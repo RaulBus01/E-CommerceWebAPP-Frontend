@@ -26,21 +26,23 @@ const OrderDetails: React.FC = () => {
     }
   }, [orderId]);
 
-  const handleEditOrderStatus = useCallback(() => {
-    const confirmShipment = window.confirm('Are you sure you want to confirm shipment of this order?');
-    if (!confirmShipment) {
+  const handleEditOrderStatus = useCallback((newStatus) => {
+    const confirmEdit = window.confirm(`Are you sure you want to change the order status to ${newStatus}?`);
+    if (!confirmEdit) {
       return;
     }
-    editOrderStatus(orderId as string, 'Shipped').then((response) => {
+    editOrderStatus(orderId as string, newStatus).then((response) => {
       if (response) {
         toast.success('Order shipped successfully.');
         setOrder(prevOrder => ({
           ...prevOrder!,
-          status: 'Shipped'
-        }));
+          status: newStatus}));
+        
+
       } else {
         toast.error('Error shipping order. Please try again.');
       }
+    
     });
   }, []);
 
@@ -74,6 +76,38 @@ const OrderDetails: React.FC = () => {
       </div>
     );
   }
+  const renderButtons = () => {
+    const isPending = order?.status === 'Pending';
+    const isDistributor = user?.role === 'distributor';
+    const isAdmin = user?.role === 'admin';
+  
+    return (
+      <>
+        {isPending && (isDistributor || isAdmin ) && (
+          <button className="btn-confirm" onClick={()=>handleEditOrderStatus('Shipped')}>
+            <h3></h3>
+            Confirm Shipment from Distributor
+          </button>
+        )}
+        {isPending && (
+          <button className="btn-cancel" onClick={handleCancelOrder}>
+            Cancel Order
+          </button>
+        )}
+        {order?.status === 'Shipped' && isAdmin && (
+          <>
+          <button className="btn-confirm" onClick={()=>handleEditOrderStatus('Delivered')}>
+            Confim Delivery
+          </button>
+          <button className="btn-cancel" onClick={handleCancelOrder}>
+            Cancel Delivery
+          </button>
+          </>
+        )}
+
+      </>
+    );
+  };
 
   return (
     <div className="order-container">
@@ -118,9 +152,7 @@ const OrderDetails: React.FC = () => {
               </p>
               <p><strong>Order Status:</strong>{order?.status}</p> 
               <div className="order-actions">
-              {order?.status === 'Pending' && user?.role ==='distributor' && <button className="btn-confirm"onClick={handleEditOrderStatus}><h3>
-                </h3>Confirm Shipment from Distributor</button>}
-              {order?.status === 'Pending' && <button className="btn-cancel" onClick={handleCancelOrder}>Cancel Order</button>}
+                {renderButtons()}
               </div>
              
             </div>
