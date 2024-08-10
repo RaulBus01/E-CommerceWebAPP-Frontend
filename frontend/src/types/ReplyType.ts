@@ -1,7 +1,7 @@
 import { reviewUserData } from "./UserType";
 
 interface replyData{
-    _id: string;
+    id: string;
     user: reviewUserData;
     content: string;
     questionId: string;

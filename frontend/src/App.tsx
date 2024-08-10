@@ -27,11 +27,6 @@ const App = () => {
   const location = useLocation();
   const disableNavPaths = ['/login', '/register/customer', '/register/distributor', '/admin/login'];
   const showNav = !disableNavPaths.includes(location.pathname);
-  // const showNav = !disableNavPaths.some(path => {
-  //   const regexPath = path.replace(/:\w+/g, '[^/]+');
-  //   const regex = new RegExp(`^${regexPath}$`);
-  //   return regex.test(location.pathname);
-  // });
   return (
     <>
          <AuthProvider>
@@ -53,6 +48,7 @@ const App = () => {
               <Route path="/favorites" element={<FavoritePage />} />
               <Route path="/distributor-dashboard/:id" element={<DistributorProfilePage />} />
               <Route path='/user-dashboard/:id' element={<UserProfilePage />} />
+              <Route path='/admin-dashboard' element={<UserProfilePage />} />
               <Route path="/distributor-dashboard/:id/add-product" element={<DistributorProductPage type="add-product" />} />
               <Route path="edit-product/:productId" element={<DistributorProductPage type="edit-product" />} />
               <Route path="/distributor-dashboard/:id/order/:orderId" element={<Order />} />

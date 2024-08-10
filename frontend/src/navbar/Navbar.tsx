@@ -28,7 +28,7 @@ const Navbar = () => {
           <li className="nav-icons">
             <NavLink
               className="nav-link"
-              to={token ? `/user-dashboard/${user?.id}` : "/login" }
+              to={user?.role === 'admin' ? '/admin-dashboard' : token ? `/user-dashboard/${user?.id}` : "/login" }
             >
               <AccountCircleIcon />
               <span className="nav-text">Account</span>

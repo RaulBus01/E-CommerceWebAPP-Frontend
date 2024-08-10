@@ -37,6 +37,7 @@ interface DataDistributor {
 type userRole = 'customer' | 'distributor' | 'admin';
 
 interface userData{
+    _id: string;
     id: string;
     name: string;
     email: string;

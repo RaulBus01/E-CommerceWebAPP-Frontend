@@ -1,15 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import { postReviewData, reviewData } from "../types/ReviewType";
-import { _get, _post } from "../utils/api";
+import { _get, _post,_delete } from "../utils/api";
 
 interface UseReviewResult{
     reviews: reviewData[] | null;
     loading: boolean;
     fetchReviewsByProduct: (productId: string) => Promise<void>;
     createReview: (review: postReviewData) => Promise<reviewData | undefined>;
+    deleteReview: (reviewId: string) => Promise<void>;
+    setReviews: React.Dispatch<React.SetStateAction<reviewData[] | null>>;
 }
 
-const useReview = (token: string, productId: string): UseReviewResult => {
+const useReview = (token: string, productId?: string): UseReviewResult => {
     const [reviews, setReviews] = useState<reviewData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -52,6 +54,18 @@ const useReview = (token: string, productId: string): UseReviewResult => {
             setLoading(false);
         }
     }, [token]);
+    const deleteReview = useCallback(async (reviewId: string) => {
+        setLoading(true);
+        try{
+            const response = await _delete(`/reviews/deleteReview`, {reviewId}, token);
+            return response;
+        }catch(error:any){
+            console.log(error);
+        }finally{
+            setLoading(false);
+        }
+    }, [token]);
+
 
     useEffect(() => {
         
@@ -65,7 +79,7 @@ const useReview = (token: string, productId: string): UseReviewResult => {
         }
     }, [token, fetchReviewsByUser]);
 
-    return {reviews, loading, fetchReviewsByProduct, createReview};
+    return {reviews, loading, fetchReviewsByProduct, createReview, deleteReview,setReviews};
 }
 
 export default useReview;
