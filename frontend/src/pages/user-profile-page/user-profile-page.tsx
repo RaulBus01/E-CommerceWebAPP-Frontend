@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 import { useParams } from "react-router-dom";
+import DistributorProductsMenu from "../../components/user-account-submenus/distributor-products-menu/distributor-products-menu";
 
 const UserProfilePage: React.FC = () => {
 
@@ -65,7 +66,7 @@ const UserProfilePage: React.FC = () => {
             case "Users":
                 return <UsersMenu />;
             case "Products":
-                return <UsersMenu />; 
+                return <DistributorProductsMenu user={user} />;
             case "Orders":
                 return <MyOrdersMenu token={token}/>;
             case "Reviews":

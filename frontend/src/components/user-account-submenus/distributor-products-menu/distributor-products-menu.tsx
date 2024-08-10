@@ -7,24 +7,29 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 import useProduct from '../../../hooks/useProduct';
 import { productData } from '../../../types/ProductType';
+import { userData } from '../../../types/UserType';
 
-const DistributorProductsMenu = () => {
-  const { distributorProducts,loading,setDistributorProducts,deleteProduct } = useProduct();
+const DistributorProductsMenu = ({user}:{user:userData}) => {
+  const { loading,deleteProduct } = useProduct();
+  const {distributorProducts,setDistributorProducts} = user?.role === 'distributor' ? useProduct() : {distributorProducts:null,setDistributorProducts:null};
+  const {products,setProducts } = user?.role === 'admin' ? useProduct() : {products:null,setProducts:null};
   const [filteredProducts, setFilteredProducts] = useState<productData[] | null>(null);
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
-    setFilteredProducts(distributorProducts);
-  }, [distributorProducts]);
-
+    setFilteredProducts(user?.role === 'distributor' ? distributorProducts : products);
+  }, [distributorProducts,products,user?.role]);
 
 
   const searchProducts = (e) => {
+
     const searchValue = e.target.value.toLowerCase();
-    const filtered = distributorProducts?.filter(product =>
-      product.name.toLowerCase().includes(searchValue)
-    );
+    const productsArray = user?.role === 'distributor' ? distributorProducts : products;
+    const filtered = productsArray?.filter((product) => {
+      return product.name.toLowerCase().includes(searchValue);
+    });
     setFilteredProducts(filtered);
+    
   };
 
  
@@ -62,7 +67,7 @@ const DistributorProductsMenu = () => {
               product={product}
               loading={false}
               products={distributorProducts}
-              setProducts={setDistributorProducts}
+              setProducts={user?.role === 'distributor' ? setDistributorProducts : setProducts}
               deleteProduct={deleteProduct}
 
             />
