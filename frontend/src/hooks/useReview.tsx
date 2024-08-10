@@ -6,6 +6,7 @@ interface UseReviewResult{
     reviews: reviewData[] | null;
     loading: boolean;
     fetchReviewsByProduct: (productId: string) => Promise<void>;
+    fetchReviewsByUser: (token: string) => Promise<void>;
     createReview: (review: postReviewData) => Promise<reviewData | undefined>;
     deleteReview: (reviewId: string) => Promise<void>;
     setReviews: React.Dispatch<React.SetStateAction<reviewData[] | null>>;
@@ -26,7 +27,7 @@ const useReview = (token: string, productId?: string): UseReviewResult => {
         }finally{
             setLoading(false);
         }
-    }, [productId]);
+    }, []);
 
     const fetchReviewsByUser = useCallback(async (token: string) => {
         setLoading(true);
@@ -79,7 +80,7 @@ const useReview = (token: string, productId?: string): UseReviewResult => {
         }
     }, [token, fetchReviewsByUser]);
 
-    return {reviews, loading, fetchReviewsByProduct, createReview, deleteReview,setReviews};
+    return {reviews, loading, fetchReviewsByProduct, createReview, deleteReview, setReviews, fetchReviewsByUser};
 }
 
 export default useReview;

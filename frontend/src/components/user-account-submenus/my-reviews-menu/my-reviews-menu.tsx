@@ -5,9 +5,13 @@ import  {formatDateTime}  from "../../../utils/formatDataTime";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useReview from "../../../hooks/useReview";
 import { userData } from "../../../types/UserType";
+import { useNavigate } from "react-router";
 
 const MyReviewsMenu = ({token,user}:{token:string,user?:userData | null}) => {
     const { reviews, loading: reviewsLoading,deleteReview,setReviews } =  useReview(token as string)
+    console.log(reviews);
+    const navigate = useNavigate();
+
     if(reviewsLoading){
         return(
             <div className="my-orders-menu">
@@ -25,6 +29,10 @@ const MyReviewsMenu = ({token,user}:{token:string,user?:userData | null}) => {
 
     };
 
+    const handleImageClick = (productId: string) => {
+        navigate(`/product/${productId}`);
+    }
+
     return (
         <>
             <div className="my-orders-menu">
@@ -33,13 +41,17 @@ const MyReviewsMenu = ({token,user}:{token:string,user?:userData | null}) => {
                     <div className="orders-container">
                         {reviews.map((review) => (
                             <div key={review._id} className="order-item">
-                                <p>{review.product.name}</p>
-                                <p><strong>on:</strong> {formatDateTime(review.createdAt)}</p>
-                                <p><strong>{review.title}</strong></p> 
-                                
-                                <p><strong>Rating:</strong> {review.rating}</p>
-                                <p>{review.content}</p>
-                             
+                                <div className="review-data">
+                                    <p><strong>Product:</strong> {review.product.name}</p>
+                                    <p><strong>Reviewed on:</strong> {formatDateTime(review.createdAt)}</p>
+                                    <p><strong>Review title: </strong>{review.title}</p> 
+                                    
+                                    <p><strong>Rating:</strong> {review.rating}</p>
+                                    <p><strong>Review message:</strong> {review.content}</p>
+                                </div>
+                                <div>
+                                    <img src={review.product.image[0]} onClick={() => handleImageClick(review.product._id)}></img>
+                                </div>
                                 {user?.role === 'admin' && (
                                 <span>
                                     <DeleteIcon onClick={() => handleDeleteReview(review._id)} />

@@ -9,7 +9,7 @@
   align-items: center;
   height: 40px;
   width: 55%;
-  background-color: var(--secondary-color);
+  background-color: var(--info-color);
   border: 1px solid #ccc;
   border-radius: 25px;
   padding-left: 10px;
@@ -30,7 +30,7 @@
   padding: 5px;
   font-size: 14px;
   border-radius: 25px;
-  background-color: var(--secondary-color);
+  background-color: var(--info-color);
 }
 
 .search-icon {

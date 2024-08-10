@@ -21,7 +21,7 @@ interface ProductCardProps {
   deleteProduct?: (productId: string) => Promise<boolean>;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavorite,setProducts,products,deleteProduct }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, loading, onRemoveFavorite,setProducts,products,deleteProduct }) => {
  
   const { token, user } = useAuth();
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
   const { addToFavourite, removeFavourite, isProductFavourite } = isCustomer ? useFavourite(token as string) : { addToFavourite: () => {}, removeFavourite: () => {}, isProductFavourite: () => false };
   const { addProductToCart } = isCustomer ? useCart(token as string) : { addProductToCart: () => {} };
   
-  const isFavorite = user?.role === "customer" ? isProductFavourite(product._id) : false;
+  const isFavorite = isCustomer ? isProductFavourite(product._id) : false;
   const isDistributorAssigned = user?.role === "distributor" && product.distributor._id === user.id;
   const isAdmin = user?.role === "admin";
 
@@ -69,9 +69,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
         if (setProducts) {
           setProducts(updatedProducts || []);
         }
-
-    
-       
+     
       } catch (error) {
         console.error("Failed to delete product:", error);
       }
@@ -111,7 +109,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
             <AddShoppingCartIcon />
           </button>
           <button onClick={handleFavorite} className="favorite-button">
-            <FavoriteIcon style={{ color: isFavorite ? "red" : "white" }} />
+            <FavoriteIcon style={{ color: isFavorite ? "var(--third-color)" : "white" }} />
           </button>
           </>
           : isDistributorAssigned || isAdmin ?

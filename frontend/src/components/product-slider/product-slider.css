@@ -37,7 +37,7 @@
 }
 
 .product-slider-button{
-    background-color: var(--primary-color);
+    background-color: var(--third-color);
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -48,12 +48,14 @@
 }
 
 .button-icon{
-   color: var(--dark-color);
+   color: var(--info-color);
 }
-
 .product-slider-button:hover{
     cursor: pointer;
-    background-color: #a7be5a;
+    background-color: var(--info-color);
+}
+.button-icon:hover{
+    color: var(--third-color);
 }
 
 .left{

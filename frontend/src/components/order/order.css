@@ -1,8 +1,9 @@
 .orderSummary {
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--third-color);
     border-radius: 5px;
     margin: 20px 0;
+    color: var(--info-color);
   }
   
   .orderHeader {
@@ -30,7 +31,7 @@
   }
   
   .orderItem {
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--third-color);
     padding-top: 20px;
     margin-top: 20px;
   }
@@ -66,22 +67,23 @@
   }
   
   .orderDetailsLink {
-    color: #007bff;
+    color: var(--success-color);
     text-decoration: none;
   }
   .orderDetailsButton{
     background-color: transparent;
-    color: #007bff;
+    color: var(--success-color);
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: medium;
    
     cursor: pointer;
     border-radius: 5px;
   }
   .orderDetailsButton:hover{
     background-color: transparent;
-    color: #0056b3;
+    color: var(--third-color);
   }
   
