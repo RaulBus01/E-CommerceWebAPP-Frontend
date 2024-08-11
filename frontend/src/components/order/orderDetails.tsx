@@ -159,10 +159,10 @@ const OrderDetails: React.FC = () => {
           </div>
           {order?.products.map((p, index) => (
             <div key={index} className="product-item">
-              <img src={p?.product.image[0]} alt="Product" />
+              <img src={p?.product?.images[0]} alt="Product" />
               <div className="product-description">
-                <p className="product-name">{p?.product.name}</p>
-                <p className="product-price">{p?.product.price}<sup> Lei</sup></p>
+                <p className="product-name">{p?.product?.name}</p>
+                <p className="product-price">{p?.product?.price}<sup> Lei</sup></p>
                 <p className="product-quantity">{p?.quantity} buc</p>
               </div>
             </div>

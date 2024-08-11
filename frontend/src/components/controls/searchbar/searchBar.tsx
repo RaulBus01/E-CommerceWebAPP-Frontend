@@ -33,10 +33,10 @@ const SearchBar = () => {
             </div>
           ))}
           {suggestions?.products.map((product) => (
-            <div key={product._id} onClick={() => handleSuggestionClick(product)} className="search-dropdown-item">
-              <img src={ product.image[0] }
-                alt={product.name} className='search-dropdown-item-image' />
-               <span className='search-dropdown-item-name'>{product.name}</span>
+            <div key={product?._id} onClick={() => handleSuggestionClick(product)} className="search-dropdown-item">
+              <img src={ product?.images[0] }
+                alt={product?.name} className='search-dropdown-item-image' />
+               <span className='search-dropdown-item-name'>{product?.name}</span>
 
             </div>
           ))}

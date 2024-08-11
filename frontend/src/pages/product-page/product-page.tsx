@@ -81,7 +81,7 @@ const ProductPage = () => {
         <div className="product-data-container">
           <div className="horizontal-data">
             <div className="image-container">
-              <img src={product.image[0] || "https://placehold.jp/150x150.png"} alt="selected-product-image" />
+              <img src={product?.images[0] || "https://placehold.jp/150x150.png"} alt="selected-product-image" />
               <div className="secondary-images"></div>
             </div>
             <div className="buy-data">

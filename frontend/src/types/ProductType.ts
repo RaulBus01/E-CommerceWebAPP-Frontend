@@ -11,7 +11,7 @@ interface productData {
     price: number;
     categories: string[];
     description: string;
-    image: string;
+    images: string;
     stock: number;
     distributor: {
         _id: string;

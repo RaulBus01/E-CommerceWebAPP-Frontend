@@ -92,16 +92,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
 
   return (
     <div className="card-container">
-      <img  src={product.image[0]} alt="product" onClick={handleProductPage} />
+      <img  src={product?.images[0]} alt="product" onClick={handleProductPage} />
       <div className="information-container">
         
-        {<p onClick={handleProductPage} className="product-name">{product.name}</p>}
-        <h2>{product.price} lei</h2>
+        {<p onClick={handleProductPage} className="product-name">{product?.name}</p>}
+        <h2>{product?.price} lei</h2>
       </div>
       <div className="rating-container">
         <StarIcon style={{ color: "yellow" }} />
         <p>
-          {product.ratingProduct || "N/A"} ({product.numberOfReviews || 0})
+          {product?.ratingProduct || "N/A"} ({product?.numberOfReviews || 0})
         </p>
       </div>
       <div className="button-container">

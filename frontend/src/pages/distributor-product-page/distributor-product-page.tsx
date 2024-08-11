@@ -1,19 +1,17 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from '../../components/controls/form/form';
-
 import { useAuth } from '../../hooks/useAuth';
-import { useParams, useNavigate } from 'react-router-dom';
-
+import { useParams } from 'react-router-dom';
 import useProduct from '../../hooks/useProduct';
-import { _post } from '../../utils/api';
 import './distributor-product-page.css';
 import { Category } from '../../types/CategoryType';
+
 interface Product {
   _id: string;
   name: string;
   description: string;
   price: number;
-  images: File[];
+  images: (string | File)[];
   stock: number;
   brand: string;
   categories: Category[];
@@ -21,103 +19,84 @@ interface Product {
   isActive?: boolean;
 }
 
-const DistributorProductPage = ({type}:{type:string}) => {
-  const { user,token } = useAuth();
+const DistributorProductPage = ({type}: {type: string}) => {
+  const { user } = useAuth();
   const { productId } = type === 'edit-product' ? useParams() : {productId: ''};
-  const {  addProduct } = useProduct();
-  const { fetchProduct,editProduct } = type === 'edit-product' ? useProduct() : {fetchProduct: () => {},editProduct: () => {}};
-
-
+  const { addProduct, fetchProduct, editProduct } = useProduct();
 
   const [formData, setFormData] = useState<Product>({} as Product);
-  console.log('Form data:', formData);
-  useEffect(() => {
-    if (type === 'add-product') {
-      return;
-    }
-    
-    fetchProduct(productId as string).then((product) => {
-      console.log('Product:', product );
-      if (product) {
-        setFormData({
-          _id: product._id,
-          name: product.name,
-          description: product.description,
-          price: product.price,
-          images: product.image,
-          stock: product.stock,
-          brand: product.brand,
-          categories: product.categories,
-          isActive: product.isActive,
-        });
-      }
-    });
-  }, [productId]);
 
-  const handleSubmit = async (e) => {
+  useEffect(() => {
+    if (type === 'edit-product' && productId) {
+      fetchProduct(productId).then((product) => {
+        if (product) {
+          setFormData({
+            ...product,
+            images: product?.images || [],
+          });
+        }
+      });
+    }
+  }, [type, productId]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    console.log('Form data:', formData);
     const formDataToSend = new FormData();
-    
 
-    Object.keys(formData).forEach(key => {
+    Object.entries(formData).forEach(([key, value]) => {
       if (key === 'images') {
-        console.log('Images:', formData.images);
-        if (formData.images.length === 0) {
-          return;
-        }
-        if (formData.images.length > 1) {
-          formData.images.forEach((image: File) => {
-            formDataToSend.append('images', image);
-          });
-          return;
-        }
-        formDataToSend.append('images', formData.images[0]);
+        // Handle existing image URLs
+        const existingImages = value.filter((img): img is string => typeof img === 'string');
+        existingImages.forEach(imgUrl => formDataToSend.append('images', imgUrl));
+
+        // Handle new file uploads
+        const newImages = value.filter((img): img is File => img instanceof File);
+        newImages.forEach(file => formDataToSend.append('images', file));
       } else if (key === 'categories') {
-        const categoryIds = formData.categories.map((category: { _id: string }) => category._id).join(',');
+        const categoryIds = (value as Category[]).map(category => category._id).join(',');
         formDataToSend.append('categories', categoryIds);
       } else {
-        formDataToSend.append(key, formData[key]);
+        formDataToSend.append(key, value as string | Blob);
       }
     });
 
     try {
-     
-      const response =  type === 'edit-product' ? await editProduct(formData._id,formDataToSend)  : await addProduct(formDataToSend);
+      const response = type === 'edit-product' 
+        ? await editProduct(formData._id, formDataToSend)
+        : await addProduct(formDataToSend);
       console.log('Response:', response);
-
-    
     } catch (error) {
-      console.error('Error adding product:', error);
-
+      console.error('Error handling product:', error);
     }
   };
-  console.log(formData);
 
   return (
     <div className="add-product-container">
       <header>
-        <h1>{user?.role === 'distributor' ? type === 'add-product' ? 'Add Product' : 'Edit Product' : 'Access Denied'}</h1>
-
+        <h1>
+          {user?.role === 'distributor' 
+            ? type === 'add-product' ? 'Add Product' : 'Edit Product' 
+            : 'Access Denied'}
+        </h1>
       </header>
       <main>
-      <Form
-        fieldList={[
-          { id: 'name', label: 'Product Name', type: 'text', placeholder: 'Enter product name', icon: 'product' },
-          { id: 'description', label: 'Description', type: 'textarea', placeholder: 'Enter product description', icon: 'description' },
-          { id: 'categories', label: 'Category', type: 'category', placeholder: 'Enter category', icon: 'category' },
-          { id: 'brand', label: 'Brand', type: 'text', placeholder: 'Enter brand', icon: 'brand' },
-          { id: 'price', label: 'Price', type: 'number', placeholder: 'Enter price', icon: 'price' },
-          { id: 'images', label: 'Images', type: 'file', placeholder: 'Select images', icon: 'image' }, 
-          { id: 'stock', label: 'Stock', type: 'number', placeholder: 'Enter stock', icon: 'stock' },
-          type === 'edit-product' ? { id: 'isActive', label: 'Active', type: 'checkbox', placeholder: 'Enter product status', icon: 'status' } : null
-        ]}
-        formData={formData}
-        setFormData={setFormData}
-        onSubmit={handleSubmit}
-        type={type}
-      />
+        <Form
+          fieldList={[
+            { id: 'name', label: 'Product Name', type: 'text', placeholder: 'Enter product name', icon: 'product' },
+            { id: 'description', label: 'Description', type: 'textarea', placeholder: 'Enter product description', icon: 'description' },
+            { id: 'categories', label: 'Category', type: 'category', placeholder: 'Enter category', icon: 'category' },
+            { id: 'brand', label: 'Brand', type: 'text', placeholder: 'Enter brand', icon: 'brand' },
+            { id: 'price', label: 'Price', type: 'number', placeholder: 'Enter price', icon: 'price' },
+            { id: 'images', label: 'Images', type: 'file', placeholder: 'Select images', icon: 'image' }, 
+            { id: 'stock', label: 'Stock', type: 'number', placeholder: 'Enter stock', icon: 'stock' },
+            type === 'edit-product' ? { id: 'isActive', label: 'Active', type: 'checkbox', placeholder: 'Enter product status', icon: 'status' } : null
+          ].filter(Boolean)}
+          formData={formData}
+          setFormData={setFormData}
+          onSubmit={handleSubmit}
+          type={type}
+        />
       </main>
     </div>
   );
