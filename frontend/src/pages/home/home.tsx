@@ -4,14 +4,19 @@ import useProduct from '../../hooks/useProduct';
 import ProductCard from '../../components/product-card/product-card';
 import ProductSlider from "../../components/product-slider/product-slider";
 import { productData } from "../../types/ProductType";
+import Spinner from "../../components/spinner/spinner";
 
 
 const Home = () => {
-  const { products,loading } = useProduct();
+  const { products, loading } = useProduct();
 
 
   if (loading) {
-    return <div>Loading...</div>;
+    return(
+      <div className="home">
+        <Spinner />
+      </div>
+    );
   }
 
   return (

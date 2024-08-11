@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, useLocation} from 'react-router-dom';
 import Home from './pages/home/home';
-import CategoryPage from './pages/category-page/category-page';
+import CategoryPage from './pages/category-page/CategoryPage';
 import RegisterPage from './pages/authentication-page/register';
 import LoginPage from './pages/authentication-page/login';
 import Navbar from './navbar/Navbar';
@@ -30,7 +30,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path='/product/:productId' element={<ProductPage />} />
-            <Route path="/category" element={<CategoryPage />} />
+            <Route path="/category/:categoryId" element={<CategoryPage />} />
             <Route element={<PublicRoute/>}>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register/:userRole" element={<RegisterPage />} />

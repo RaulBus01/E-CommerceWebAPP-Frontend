@@ -1,124 +1,70 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import useCategory from "../../hooks/useCategory";
 import "./dropdown.css";
 
 const Dropdown = () => {
-  const [openDropdowns, setOpenDropdowns] = useState<string[]>([]);
-  const [clickedDropdowns, setClickedDropdowns] = useState<string[]>([]);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { categories, loading } = useCategory();
   const navigate = useNavigate();
   
-  const { categories, loading } = useCategory();
+  let timeoutId: NodeJS.Timeout;
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setOpenDropdowns([]);
-        setClickedDropdowns([]);
-      }
-    };
+  const handleMouseEnter = (key: string) => {
+    clearTimeout(timeoutId);
+    setOpenDropdown(key);
+  };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const handleMouseLeave = () => {
+    timeoutId = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 300);
+  };
 
   const handleOptionClick = (option: string) => {
     navigate(`/category/${option.replace(/ /g, "-")}`);
-  };
-
-  const handleDropdownToggle = (key: string, event: React.MouseEvent) => {
-    event.stopPropagation();
-    setClickedDropdowns(prev => 
-      prev.includes(key) ? prev.filter(id => id !== key) : [...prev, key]
-    );
-    setOpenDropdowns(prev => 
-      prev.includes(key) ? prev.filter(id => id !== key) : [...prev, key]
-    );
-  };
-
-  const handleMouseEnter = (key: string) => {
-    if (!clickedDropdowns.includes(key)) {
-      setOpenDropdowns(prev => [...prev, key]);
-    }
-  };
-
-  const handleMouseLeave = (key: string) => {
-    if (!clickedDropdowns.includes(key)) {
-      setOpenDropdowns(prev => prev.filter(id => id !== key));
-    }
+    setOpenDropdown(null);
+    console.log(openDropdown);
   };
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  const renderSubcategories = (subcategories: any[], parentId: string) => {
+  const renderSubcategories = (subcategories: any[]) => {
     return subcategories.map((subCategory) => (
-      <div 
-        key={subCategory._id}
-        className="dropdown-subcategory"
-        onMouseEnter={() => handleMouseEnter(subCategory._id)}
-        onMouseLeave={() => handleMouseLeave(subCategory._id)}
-      >
+      <div key={subCategory._id} className="dropdown-subcategory">
         <div
           className="dropdown-item"
-          onClick={(e) => {
-            e.stopPropagation();
-            if (subCategory.children && subCategory.children.length > 0) {
-              handleDropdownToggle(subCategory._id, e);
-            } else {
-              handleOptionClick(subCategory.name);
-            }
-          }}
+          onClick={() => handleOptionClick(subCategory.name)}
           role="button"
           tabIndex={0}
         >
           {subCategory.name}
         </div>
-        {subCategory.children && subCategory.children.length > 0 && (
-          <div 
-            className={`nested-dropdown ${
-              openDropdowns.includes(subCategory._id) || clickedDropdowns.includes(subCategory._id) ? 'show' : ''
-            }`}
-          >
-            {renderSubcategories(subCategory.children, subCategory._id)}
-          </div>
-        )}
       </div>
     ));
   };
 
   return (
-    <div className="book-categories" ref={dropdownRef}>
+    <div className="sweet-categories" ref={dropdownRef}>
       <div className="categories-container">
         {categories?.map((category) => (
           <div
             key={category._id}
             className="dropdown-category"
             onMouseEnter={() => handleMouseEnter(category._id)}
-            onMouseLeave={() => handleMouseLeave(category._id)}
+            onMouseLeave={handleMouseLeave}
           >
-            <div 
-              className="dropdown-toggle" 
-              role="button" 
-              tabIndex={0}
-              onClick={(e) => handleDropdownToggle(category._id, e)}
-            >
-              {category.name}
-            </div>
+            <div className="dropdown-toggle">{category.name}</div>
             {category.children && (
               <div
                 className={`dropdown-menu ${
-                  openDropdowns.includes(category._id) || clickedDropdowns.includes(category._id) ? "show" : ""
+                  openDropdown === category._id ? "show" : ""
                 }`}
               >
-                {renderSubcategories(category.children, category._id)}
+                {renderSubcategories(category.children)}
               </div>
             )}
           </div>

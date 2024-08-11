@@ -4,9 +4,6 @@ import './sideMenu.css'
 const SideMenu = ({setSelectedMenu,name,sectionList,logout}) => {
     const [selected, setSelected] = useState<string>(sectionList[0]);
 
-  
-
-
     const handleSelectedButton = (buttonName: string) => {
         setSelected(buttonName);
         setSelectedMenu(buttonName);

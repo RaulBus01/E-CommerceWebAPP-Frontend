@@ -10,6 +10,10 @@
     box-shadow: 2px 2px 2px var(--gray-color);
     border-radius: 20px;
     background-color: var(--primary-color);
+    color: var(--info-color);
+}
+.info-cell h2{
+    color: var(--third-color);
 }
 
 .info-cell-content{
@@ -31,6 +35,10 @@
     box-shadow: 2px 2px 2px var(--gray-color);
     border-radius: 20px;
     background-color: var(--primary-color);
+    color: var(--info-color);
+}
+.info-cell-big h2{
+    color: var(--third-color);
 }
 
 .edit-info-button{

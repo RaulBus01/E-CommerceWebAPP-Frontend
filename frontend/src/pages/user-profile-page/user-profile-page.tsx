@@ -16,11 +16,6 @@ import DistributorProductsMenu from "../../components/user-account-submenus/prod
 import { userData } from "../../types/UserType";
 
 const UserProfilePage: React.FC = () => {
-
-  
-
-    
-
     const { token,user, logout } = useAuth();
     const { id: userIdPath } = useParams<{ id: string }>();
     if(!user){
@@ -31,11 +26,9 @@ const UserProfilePage: React.FC = () => {
         admin: ['Users', 'Products', 'Orders', 'Reviews', 'Questions'],
         distributor: ['Personal Information', 'Products', 'Orders'],
     };
-  
 
     const [selectedMenu, setSelectedMenu] = useState<string>(sectionList[user?.role][0]);
     const navigate = useNavigate();
-
 
 
     const loadSelectedMenu = () => {
@@ -64,14 +57,9 @@ const UserProfilePage: React.FC = () => {
                }
                 else if(user?.role === 'admin'){
                  return <UsersMenu />;
-                }
-               
-                
-           
+                }  
         }
     }
-
-
 
     const handleLogOut = () => {
         logout();
@@ -83,7 +71,6 @@ const UserProfilePage: React.FC = () => {
         <div className="user-profile-main-container">
             <div className="top-container">
                 <h2>Your account</h2>
-               
             </div>
             <div className="user-info-container">
               

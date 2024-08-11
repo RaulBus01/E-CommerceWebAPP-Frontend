@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./review-modal.css";
-import StarIcon from "@mui/icons-material/Star";
+import StarRating from "../../start-rating/star-rating";
 
 const ReviewModal = ({onsubmit, isOpen, onClose}) => {
     const [title, setTitle] = useState("");
@@ -29,7 +29,7 @@ const ReviewModal = ({onsubmit, isOpen, onClose}) => {
             </div>
             <div className="modal-body">
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group">
+                    <div className="form-group-modal-review">
                         <div className="form-field">
                             <label>Title</label>
                             <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} required placeholder="Review title">
@@ -39,46 +39,9 @@ const ReviewModal = ({onsubmit, isOpen, onClose}) => {
                             <label>Your message(optional, max. 500 characters)</label>
                             <textarea id="content" placeholder="Your message..." value={content} onChange={(e) => setContent(e.target.value)} maxLength={500}></textarea>
                         </div>
-                        <div className="form-field">
+                        <div className="form-field-star">
                             <label>Your rating</label>
-                            <select id="rating" value={rating} required onChange={(e) => setRating(parseInt(e.target.value))}>
-                                <option value={0} disabled>Select a rating</option>
-                                <option value={1}>
-                                    <div className="stars-container">
-                                        <StarIcon style={{ color: "yellow" }}></StarIcon>
-                                    </div>
-                                </option>
-                                <option value={2}>
-                                    <div className="stars-container">
-                                        <StarIcon style={{ color: "yellow" }}></StarIcon>
-                                        <StarIcon style={{ color: "yellow" }}></StarIcon>
-                                    </div>
-                                </option>
-                                <option value={3}>
-                                    <div className="stars-container">
-                                        <StarIcon style={{ color: "yellow" }}></StarIcon>
-                                        <StarIcon style={{ color: "yellow" }}></StarIcon>
-                                        <StarIcon style={{ color: "yellow" }}></StarIcon>
-                                    </div>
-                                </option>
-                                <option value={4}>
-                                    <div className="stars-container">
-                                        <StarIcon style={{ color: "yellow" }}></StarIcon>
-                                        <StarIcon style={{ color: "yellow" }}></StarIcon>
-                                        <StarIcon style={{ color: "yellow" }}></StarIcon>
-                                        <StarIcon style={{ color: "yellow" }}></StarIcon>
-                                    </div>
-                                </option>
-                                <option value={5}>
-                                    <div className="stars-container">
-                                        <StarIcon style={{ color: "yellow" }}></StarIcon>
-                                        <StarIcon style={{ color: "yellow" }}></StarIcon>
-                                        <StarIcon style={{ color: "yellow" }}></StarIcon>
-                                        <StarIcon style={{ color: "yellow" }}></StarIcon>
-                                        <StarIcon style={{ color: "yellow" }}></StarIcon>
-                                    </div>
-                                </option>
-                            </select>
+                            <StarRating rating={rating} setRating={setRating} />
                         </div>
                     </div>
                     <div className="review-modal-button-container">
