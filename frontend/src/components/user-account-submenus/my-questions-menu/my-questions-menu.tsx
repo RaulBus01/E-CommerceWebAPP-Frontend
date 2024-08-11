@@ -16,8 +16,11 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
 
     const {deleteReply} = useReply(token);
 
- 
-   
+    useEffect(() => {
+        if (userId) {
+            fetchQuestionsByUser();
+        }
+    }, [userId, fetchQuestionsByUser]);
    
     const handleDeleteReply = async (replyId) => {
 

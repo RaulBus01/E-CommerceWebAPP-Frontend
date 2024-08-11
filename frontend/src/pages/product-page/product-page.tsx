@@ -89,8 +89,17 @@ const ProductPage = () => {
         <div className="product-data-container">
           <div className="horizontal-data">
             <div className="image-container">
-              <img src={product?.images[0] || "https://placehold.jp/150x150.png"} alt="selected-product-image" />
-              <div className="secondary-images"></div>
+              <img src={selectedImage || "https://placehold.jp/150x150.png"} alt="selected-product-image" />
+              <div className="secondary-images">
+                {product?.images?.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt="selected-product-image"
+                    onClick={() => handleImageClick(image)}
+                  />
+                ))}
+              </div>
             </div>
             <div className="buy-data">
               <h1>{product?.price} lei</h1>

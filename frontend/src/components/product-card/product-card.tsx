@@ -100,7 +100,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading, isFavourite
           </>
           : isDistributorAssigned || isAdmin ?
           <>
-          <button className="edit-button" onClick={() => navigate(`/edit-product/${product._id}`)}>
+          <button className="edit-button" onClick={() => navigate(`/edit-product/${product?._id}`)}>
             <EditIcon /> Edit
           </button>
 

@@ -69,16 +69,8 @@ const useReview = (token: string, productId?: string): UseReviewResult => {
 
 
     useEffect(() => {
-        
         fetchReviewsByProduct(productId);
-        
     },[productId, fetchReviewsByProduct]);
-
-    useEffect(() => { 
-        if(token){
-            fetchReviewsByUser(token);
-        }
-    }, [token, fetchReviewsByUser]);
 
     return {reviews, loading, fetchReviewsByProduct, createReview, deleteReview, setReviews, fetchReviewsByUser};
 }

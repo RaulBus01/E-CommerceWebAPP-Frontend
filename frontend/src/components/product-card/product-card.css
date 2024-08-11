@@ -1,8 +1,6 @@
 .card-container{
-    border: 1px solid var(--third-color);
     border-radius: 10px;
-    box-shadow: 2px 2px 2px rgb#98ac55;
-    background-color: var(--primary-color);
+    background: linear-gradient(38deg, rgba(54,79,104,1) 0%, rgba(95,93,156,1) 53%, rgba(63,193,201,1) 100%);
     display: flex;
     flex-direction: column;
   
@@ -18,7 +16,7 @@
 .card-container img{
 
     border-radius: 10px 10px 0 0;
-    width: 200px;
+    width: 230px;
     height: 200px;
     align-self: center;
 }

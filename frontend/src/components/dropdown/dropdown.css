@@ -1,4 +1,4 @@
-.book-categories {
+.sweet-categories {
   width: 100%;
   padding: 0 40px;
 }
@@ -11,13 +11,14 @@
 
 .dropdown-category {
   position: relative;
-  width: auto;
 }
 
 .dropdown-toggle {
+  display: flex;
+  align-items: center;
   background: none;
   border: none;
-  color: var(--info-color);;
+  color: var(--info-color);
   font-size: large;
   cursor: pointer;
   padding: 10px;
@@ -25,26 +26,31 @@
   font-weight: bold;
 }
 
-.dropdown-toggle:hover {
-  cursor: pointer;
+.dropdown-toggle::after {
+  content: '\25BC';
+  margin-left: 5px;
+  font-size: 0.7em;
 }
 
 .dropdown-menu {
   position: absolute;
+  left: 0;
+  min-width: 200px;
   display: none;
   z-index: 1000;
   background-color: var(--primary-color);
-  border: 1px solid #ccc;
+  border: solid var(--third-color);
+  border-width: 0px 2px 2px 2px;
   border-radius: 0px 0px 10px 10px;
-  box-shadow: 0 4px 2px rgba(0,0,0,.175);
+  box-shadow: 0 4px 2px rgba(0, 0, 0, 0.175);
+  margin-top: 10px;
 }
 
 .dropdown-menu.show {
-  display: block; /* Show dropdown when the 'show' class is added */
+  display: block;
 }
 
 .dropdown-item {
-  width: 200px;
   padding: 8px 20px;
   font-weight: 400;
   color: var(--info-color);
@@ -53,15 +59,9 @@
 
 .dropdown-item:hover {
   background-color: var(--success-color);
-  border-radius: 0px;
 }
 
-.dropdown-item:hover:last-child {
+.dropdown-subcategory:last-child .dropdown-item:hover {
   background-color: var(--success-color);
   border-radius: 0px 0px 10px 10px;
 }
-
-.dropdown-category:hover .dropdown-menu {
-  display: block;
-}
-
