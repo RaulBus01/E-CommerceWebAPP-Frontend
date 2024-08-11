@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import './personal-information-menu.css';
-import Spinner from "../../spinner/spinner";
 import { formatDateTime, getNumberOfDays } from "../../../utils/formatDataTime";
 import InfoCell from "../../info-cell/info-cell";
 import useUser from "../../../hooks/useUser";
@@ -30,6 +29,7 @@ const PersonalInformationMenu = ({ user, title = "Personal Information" }) => {
   
 
   const handleEdit = (fieldName: string) => {
+  
     setEditingField(fieldName);
     setFormData(prev => ({
       ...prev,
@@ -37,11 +37,13 @@ const PersonalInformationMenu = ({ user, title = "Personal Information" }) => {
         ? { ...defaultAddress, ...(user.customerInfo?.address || user.distributorInfo?.address || {}) }
         : user[fieldName] || ""
     }));
+    console.log(formData);
   
 
   };
 
   const handleInputChange = (field, value) => {
+    console.log(field, value);
     setFormData(prev => 
       field === 'address' 
         ? { ...prev, address: { ...prev.address, ...value } }

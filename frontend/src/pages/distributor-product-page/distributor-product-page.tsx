@@ -15,6 +15,7 @@ interface Product {
   price: number;
   images: File[];
   stock: number;
+  brand: string;
   categories: Category[];
   distributor?: string;
   isActive?: boolean;
@@ -29,11 +30,14 @@ const DistributorProductPage = ({type}:{type:string}) => {
 
 
   const [formData, setFormData] = useState<Product>({} as Product);
+  console.log('Form data:', formData);
   useEffect(() => {
     if (type === 'add-product') {
       return;
     }
+    
     fetchProduct(productId as string).then((product) => {
+      console.log('Product:', product );
       if (product) {
         setFormData({
           _id: product._id,
@@ -42,7 +46,8 @@ const DistributorProductPage = ({type}:{type:string}) => {
           price: product.price,
           images: product.image,
           stock: product.stock,
-          categories: product.categories[0].name,
+          brand: product.brand,
+          categories: product.categories,
           isActive: product.isActive,
         });
       }
@@ -102,6 +107,7 @@ const DistributorProductPage = ({type}:{type:string}) => {
           { id: 'name', label: 'Product Name', type: 'text', placeholder: 'Enter product name', icon: 'product' },
           { id: 'description', label: 'Description', type: 'textarea', placeholder: 'Enter product description', icon: 'description' },
           { id: 'categories', label: 'Category', type: 'category', placeholder: 'Enter category', icon: 'category' },
+          { id: 'brand', label: 'Brand', type: 'text', placeholder: 'Enter brand', icon: 'brand' },
           { id: 'price', label: 'Price', type: 'number', placeholder: 'Enter price', icon: 'price' },
           { id: 'images', label: 'Images', type: 'file', placeholder: 'Select images', icon: 'image' }, 
           { id: 'stock', label: 'Stock', type: 'number', placeholder: 'Enter stock', icon: 'stock' },
@@ -110,7 +116,7 @@ const DistributorProductPage = ({type}:{type:string}) => {
         formData={formData}
         setFormData={setFormData}
         onSubmit={handleSubmit}
-        type="add-product"
+        type={type}
       />
       </main>
     </div>

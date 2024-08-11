@@ -17,6 +17,7 @@ import { Toaster } from 'react-hot-toast';
 import UserProfilePage from './pages/user-profile-page/user-profile-page'
 import FavoritePage from './pages/favorite-page/favorite-page'
 import PublicRoute from './pages/authentication-page/publicRoute';
+import AdminRoute from './pages/authentication-page/adminRoute';
 import DistributorProductPage from './pages/distributor-product-page/distributor-product-page';
 import Order from './pages/order-page/order';
 import ProductPage from './pages/product-page/product-page';
@@ -38,6 +39,9 @@ const App = () => {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register/:userRole" element={<RegisterPage />} />
             </Route>
+            <Route element={<AdminRoute />}>
+              <Route path='/admin-dashboard' element={<UserProfilePage />} />
+            </Route>
             <Route element={<ProtectedRoute />}>
               
               <Route path="/cart" element={<CartPage />} />
@@ -46,7 +50,7 @@ const App = () => {
               <Route path="/favorites" element={<FavoritePage />} />
               <Route path="/distributor-dashboard/:id" element={<UserProfilePage />} />
               <Route path='/user-dashboard/:id' element={<UserProfilePage />} />
-              <Route path='/admin-dashboard' element={<UserProfilePage />} />
+             
               <Route path="/add-product" element={<DistributorProductPage type="add-product" />} />
               <Route path="edit-product/:productId" element={<DistributorProductPage type="edit-product" />} />
               <Route path="/order/:orderId" element={<Order />} />

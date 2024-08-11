@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './products-menu.css';
-import Spinner from '../../spinner/spinner';
+
 import ProductCard from '../../product-card/product-card';
 import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 import SearchIcon from '@mui/icons-material/Search';
@@ -31,13 +31,16 @@ const ProductsMenu = ({user}:{user:userData}) => {
     setFilteredProducts(filtered);
     
   };
+  if (loading) {
+    return <div>
+      loading...
+    </div>
+  }
 
  
 
   return (
-    loading ? (
-      <Spinner />
-    ) : (
+   
     <div className="distributor-products-menu">
       <div className="top-container-search">
         <h2>Search your product list</h2>
@@ -79,7 +82,6 @@ const ProductsMenu = ({user}:{user:userData}) => {
         )}
       </div>
     </div>
-    )
   );
 };
 

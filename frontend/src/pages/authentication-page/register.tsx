@@ -24,7 +24,7 @@ const RegisterPage: React.FC = () => {
       if(result)
       {
         toast.success('Registration successful')
-        navigate('/login')
+        navigate('/')
       }
       else{
       toast.error('Registration failed')

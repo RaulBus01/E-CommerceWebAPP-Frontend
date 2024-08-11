@@ -1,6 +1,6 @@
 import React from "react";
 import '../my-orders-menu/my-orders-menu.css'
-import Spinner from "../../spinner/spinner";
+
 import  {formatDateTime}  from "../../../utils/formatDataTime";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useReview from "../../../hooks/useReview";
@@ -11,7 +11,8 @@ const MyReviewsMenu = ({token,user}:{token:string,user?:userData | null}) => {
     if(reviewsLoading){
         return(
             <div className="my-orders-menu">
-                <Spinner/>
+                <h2>My Reviews</h2>
+                <p>Loading...</p>
             </div>
         );
     }

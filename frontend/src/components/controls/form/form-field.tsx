@@ -21,7 +21,7 @@ import TitleIcon from '@mui/icons-material/Title';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Delete, Remove } from '@mui/icons-material';
+import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
 import './form.css';
 import { Category } from '../../../types/CategoryType';
 import MultiSelect from './multiSelect';
@@ -36,6 +36,7 @@ interface FormFieldProps {
   icon?: string;
   showVisibilityIcon?: boolean;
   categories?: Category[];
+  initialSelections?: Category[];
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -47,9 +48,11 @@ const FormField: React.FC<FormFieldProps> = ({
   icon,
   showVisibilityIcon,
   categories,
+  initialSelections,
 }) => {
+  
   const [showPassword, setShowPassword] = useState(false);
-  console.log(type, value);
+
   const [selectedFiles, setSelectedFiles] = useState<(File | string)[]>(
     Array.isArray(value) ? value : [],
   );
@@ -76,6 +79,7 @@ const FormField: React.FC<FormFieldProps> = ({
       case 'stock': return <InventoryIcon className='icon' />;
       case 'product': return <TitleIcon className='icon' />;
       case  'storefront': return <AddBusinessIcon className='icon' />;
+      case 'brand': return <BrandingWatermarkIcon className='icon' />;
       default: return null;
     }
   };
@@ -173,7 +177,7 @@ const FormField: React.FC<FormFieldProps> = ({
           </div>
         )  : type === 'category' ? (
           <div className="category-selects">
-            <MultiSelect categories={categories} onCategoriesSelected={handleCategoryChange}  />
+            <MultiSelect categories={categories} onCategoriesSelected={handleCategoryChange}  initialSelections={initialSelections}/>
           </div>
         ) : (
           <input

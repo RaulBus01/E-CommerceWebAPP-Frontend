@@ -27,12 +27,14 @@ interface loginData {
     address: addressData;
     paymentMethod: string;
     isVerified: boolean;
+    createdAt: string;
   }
 interface DataDistributor {
     id: string;
     address: addressData;
     CUI: string;
     isAuthorized: boolean;
+    createdAt: string;
   }
 type userRole = 'customer' | 'distributor' | 'admin';
 

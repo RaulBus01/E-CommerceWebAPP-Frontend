@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import '../my-orders-menu/my-orders-menu.css'
-import Spinner from "../../spinner/spinner";
+
 import {formatDateTime} from "../../../utils/formatDataTime";
 import useQuestion from "../../../hooks/useQuestion";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -19,7 +19,8 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
     if(questionLoading){
         return(
             <div className="my-orders-menu">
-                <Spinner/>
+                <h2>My Questions</h2>
+                <p>Loading...</p>
             </div>
         );
     }

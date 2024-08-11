@@ -6,7 +6,7 @@ import { Category } from '../../../types/CategoryType';
 
 const Form = ({ fieldList, formData, setFormData, onSubmit, type }) => {
   const { categories, loading } = useCategory();
-
+  console.log(type);
   const handleChange = (id) => (value) => {
     setFormData({ ...formData, [id]: value });
   };
@@ -14,11 +14,15 @@ const Form = ({ fieldList, formData, setFormData, onSubmit, type }) => {
   if (loading) {
     return <p>Loading...</p>
   }
-  console.log(formData);
+  const initialCategoriesIds = formData.categories;
+  const initialCategories = categories?.filter((category) => initialCategoriesIds?.includes(category._id));
+
+    
 
   return (
     <form onSubmit={onSubmit} className="form-container">
       {fieldList.map((field) => (
+        
         field &&
         <FormField
           key={field?.id}
@@ -28,11 +32,12 @@ const Form = ({ fieldList, formData, setFormData, onSubmit, type }) => {
           value={formData[field?.id]}
           onChange={handleChange(field?.id)}
           icon={field?.icon}
-          categories={field?.type === 'category' ? categories as Category[] : undefined}
+          categories={categories as Category[]}
+          initialSelections={type === 'edit-product' ? initialCategories : []}
         />
       ))}
       <button className="btn" type="submit">
-        {type === 'edit' ? 'Update Product' : 'Submit'}
+        {type === 'edit-product' ? 'Update Product' : 'Submit'}
       </button>
     </form>
   );

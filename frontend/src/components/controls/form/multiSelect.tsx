@@ -1,7 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
 
 const MultiSelect = ({ categories, onCategoriesSelected, initialSelections }) => {
-  const [selections, setSelections] = useState<Array<string>>(initialSelections || []);
+  console.log(initialSelections);
+  const [selections, setSelections] = useState<Array<string>>([]);
+ 
   const [options, setOptions] = useState([categories]);
 
   const findCategoryById = useCallback((categories, id) => {
@@ -14,6 +16,19 @@ const MultiSelect = ({ categories, onCategoriesSelected, initialSelections }) =>
     }
     return null;
   }, []);
+  useEffect(() => {
+    if (initialSelections.length) {
+      const initialSelectionIds = initialSelections.map((category) => category._id);
+      setSelections(initialSelectionIds);
+      const newOptions = [categories];
+      initialSelections.forEach((category, index) => {
+        if (category.children) {
+          newOptions.push(category.children);
+        }
+      });
+      setOptions(newOptions);
+    }
+  }, [initialSelections, categories]);
 
   const handleSelectionChange = useCallback((level, selectedId) => {
     const newSelections = [...selections];
@@ -34,18 +49,7 @@ const MultiSelect = ({ categories, onCategoriesSelected, initialSelections }) =>
     onCategoriesSelected(selectedCategories);
   }, [selections, options, categories, findCategoryById, onCategoriesSelected]);
 
-  useEffect(() => {
-    if (initialSelections && initialSelections.length > 0) {
-      const newOptions = [categories];
-      initialSelections.forEach((id, level) => {
-        const selectedCategory = findCategoryById(categories, id);
-        if (selectedCategory && selectedCategory.children) {
-          newOptions.push(selectedCategory.children);
-        }
-      });
-      setOptions(newOptions);
-    }
-  }, [initialSelections, categories, findCategoryById]);
+
 
   return (
     <div>

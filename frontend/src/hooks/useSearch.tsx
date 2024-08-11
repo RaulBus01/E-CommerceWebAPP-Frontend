@@ -55,7 +55,8 @@ const useSearch = (): useSearchResult => {
        
         setSearchInput('');
         setShowDropdown(false);
-        if ('category' in suggestion) {
+        console.log(suggestion);
+        if ('categories' in suggestion) {
             navigate(`/product/${suggestion._id}`);
             return;
         }
