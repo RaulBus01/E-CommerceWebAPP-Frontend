@@ -26,13 +26,14 @@ const DistributorProductPage = ({type}: {type: string}) => {
   const { addProduct, fetchProduct, editProduct } = useProduct();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<Product>({} as Product);
-
+  
   useEffect(() => {
     if (type === 'edit-product' && productId) {
       fetchProduct(productId).then((product) => {
         if (product) {
+          const { createdAt, updatedAt, ratingProduct, numberOfReviews, reviews, questions, ...rest } = product;
           setFormData({
-            ...product,
+            ...rest,
             images: product?.images || [],
           });
         }

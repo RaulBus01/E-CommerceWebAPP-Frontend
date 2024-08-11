@@ -13,6 +13,7 @@ interface productData {
     description: string;
     images: string;
     stock: number;
+    brand: string;
     distributor: {
         _id: string;
         name: string
