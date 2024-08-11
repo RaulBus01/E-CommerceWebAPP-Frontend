@@ -1,0 +1,33 @@
+.create-order{
+    height: 100vh;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 200px;
+
+    background-color: var(--test-color);
+}
+
+button{
+    border: none;
+    border-radius: 15px;
+    width: 150px;
+    height: 30px;
+
+    color: var(--info-color);
+    background-color: var(--primary-color);
+}
+button:hover{
+    background-color: var(--third-color);
+    cursor: pointer;
+}
+
+.stripe-form {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }

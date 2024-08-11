@@ -9,7 +9,10 @@
   --warning-color: #F4A261;
   --light-color: #F4A261;
   --dark-color: #1D3557;
+<<<<<<< HEAD
   --test-color: #faebd0;
+=======
+>>>>>>> Stripe-Payment
 }
 * {
   margin: 0;

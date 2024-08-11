@@ -64,7 +64,16 @@ const useCart = (token:string) => {
     }
   };
 
-  return { cart, setCart, editProductQuantity, removeProduct, addProductToCart };
+  const emptyCart = async () => {
+    try{
+      const res = await _delete(`/cart/deleteAll`, {}, token);
+      setCart({ products: [] });
+    }catch(err){
+      console.error('Failed to empty cart:', err);
+    }
+  }
+
+  return { cart, setCart, editProductQuantity, removeProduct, addProductToCart, emptyCart };
 };
 
 export default useCart;
