@@ -15,9 +15,14 @@ const Home = () => {
   const { addToFavourite, removeFavourite, isProductFavourite } = useFavourite(token as string);
 
   const [favouriteProducts, setFavouriteProducts] = useState<string[]>(products?.filter(product => isProductFavourite(product._id)).map(product => product._id) || []);
-
+  const [mostRecentProducts, setMostRecentProducts] = useState<productData[]>([]);
+  
   useEffect(() => {
     if (products) {
+      const newProducts = [...products].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      const mostRecentProducts = newProducts.slice(0, 8);
+      setMostRecentProducts(mostRecentProducts);
+
       const favProducts = products.filter(product => isProductFavourite(product._id)).map(product => product._id);
       setFavouriteProducts(favProducts);
     }
@@ -45,8 +50,8 @@ const Home = () => {
 
     <div className="home">
       <div className="product-slider-container">
-        <h1>Today's offers</h1>
-        <ProductSlider products={products as productData[]} favouriteProducts={favouriteProducts} onFavouriteToggle={handleFavoriteToggle}/>
+        <h1>New arrivals</h1>
+        <ProductSlider products={mostRecentProducts as productData[]} favouriteProducts={favouriteProducts} onFavouriteToggle={handleFavoriteToggle}/>
       </div>
       <div className="all-products-container">
         {products?.map((product) => (

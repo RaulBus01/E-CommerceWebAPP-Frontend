@@ -16,8 +16,10 @@ const ProductPage = () => {
   const { loading, product, fetchProductById } = useProduct();
   const { user, token } = useAuth();
   const { addToFavourite, removeFavourite, isProductFavourite } = useFavourite(token);
+  
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [selectedMenu, setSelectedMenu] = useState<string>("Reviews");
+  const [selectedImage, setSelectedImage] = useState<string>(product?.image[0] || "");
 
   const reviewRef = useRef<HTMLDivElement>(null);
   
@@ -41,6 +43,7 @@ const ProductPage = () => {
     if (product && productId) {
       const isFav = isProductFavourite(productId);
       setIsFavourite(isFav);
+      setSelectedImage(product.image[0]);
     }
   }, [productId, product, isProductFavourite]);
 
@@ -67,7 +70,11 @@ const ProductPage = () => {
       }
     }, 0);
   }
-  console.log(product);
+  
+  const handleImageClick = (image: string) => {
+    setSelectedImage(image);
+  }
+
   if (loading || !product) {
     return(
       <div>
@@ -82,11 +89,11 @@ const ProductPage = () => {
         <div className="product-data-container">
           <div className="horizontal-data">
             <div className="image-container">
-              <img src={product?.image[0] || "https://placehold.jp/150x150.png"} alt="selected-product-image" />
+              <img src={selectedImage || "https://placehold.jp/150x150.png"} alt="selected-product-image" />
               <div className="secondary-images">
                 {product?.image.map((img, index) => {
-                  if (index > 0) {
-                    return <img key={index} src={img} alt="selected-product-image" />;
+                  if (index > -1) {
+                    return <img onClick={() => handleImageClick(img)} key={index} src={img} alt="selected-product-image" className={img === selectedImage ? "selected-image" : ""} />;
                   }
                 })}
               </div>

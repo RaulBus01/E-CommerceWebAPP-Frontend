@@ -11,7 +11,7 @@ const ReviewsSubmenu = ({productId, token, reviewRef, user}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const {reviews, loading, fetchReviewsByProduct, createReview} = useReview(token, productId);
-    console.log(reviews);
+    
     useEffect(() => {
       fetchReviewsByProduct(productId);
     }, [fetchReviewsByProduct, productId]);
