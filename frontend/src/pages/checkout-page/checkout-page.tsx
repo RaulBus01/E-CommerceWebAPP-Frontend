@@ -12,6 +12,7 @@ const CheckoutPage = () => {
     const [number, setNumber] = useState("");
     const [zip, setZip] = useState("");
     const [payment, setPayment] = useState("Cash On Delivery");
+    const [phoneNumber, setPhoneNumber] = useState("");
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -24,20 +25,26 @@ const CheckoutPage = () => {
     const { emptyCart } = useCart(token);
     const { createOrder } = useOrder(token);
 
+    const productsPrice = () => {
+        return cart.products.reduce((acc, product) => acc + product.product.price * product.quantity, 0);
+    }
+
+    const orderTotal = productsPrice() > 100 ? productsPrice() : productsPrice() + shipping;
+
     const handleSendOrder = async (event:FormEvent) => {
         event.preventDefault();
         const newOrder = {
             address: {country, county, city, street, number, zip},
             products: cart.products.map((product) => ({productId: product.product._id, quantity: product.quantity})),
             name: user.name,
-            phoneNumber: user.phoneNumber,
+            phoneNumber: phoneNumber,
             paymentMethod: payment
         };
         try{
             await createOrder(newOrder);
             await emptyCart();
             if(payment === "Credit Card") {
-                navigate('/order/pay', {state: {cart, token, user}});
+                navigate('/order/pay', {state: {orderTotal}});
             }else{
                 navigate('/order/summary', {state: {newOrder}});
             }
@@ -48,11 +55,7 @@ const CheckoutPage = () => {
 
     const handleGoBack = () => {
         navigate('/cart');
-    }
-
-    const productsPrice = () => {
-        return cart.products.reduce((acc, product) => acc + product.product.price * product.quantity, 0);
-    }
+    };
 
     return(
         <div className="checkout-data-main-container">
@@ -91,13 +94,19 @@ const CheckoutPage = () => {
                         </div>
                         <div className="payment-data">
                             <h2>2. Payment method</h2>
-                            <div className="form-field">
-                                <label>Payment method</label>
-                                <select id="payment" value={payment} required onChange={(e) => setPayment(e.target.value)}>
-                                    <option disabled>Select an option</option>
-                                    <option>Cash On Delivery</option>
-                                    <option>Credit Card</option>
-                                </select>
+                            <div className="payment-data-fields">
+                                <div className="form-field">
+                                    <label>Payment method</label>
+                                    <select id="payment" value={payment} required onChange={(e) => setPayment(e.target.value)}>
+                                        <option disabled>Select an option</option>
+                                        <option>Cash On Delivery</option>
+                                        <option>Credit Card</option>
+                                    </select>
+                                </div>
+                                <div className="form-field">
+                                    <label>Phone number</label>
+                                    <input type="tel" id="phone" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required placeholder="Phone number"></input>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -106,7 +115,7 @@ const CheckoutPage = () => {
                         <div>
                             <h3>Products: {productsPrice().toFixed(2)} lei</h3>
                             {productsPrice().toFixed(2) > 100 ? <h3>Free shipping</h3> : <h3>Shipping: {shipping} lei</h3>}
-                            <h2>Order total: {productsPrice().toFixed(2) > 100 ? productsPrice().toFixed(2) : (productsPrice() + shipping).toFixed(2)}</h2>
+                            <h2>Order total: {orderTotal.toFixed(2)}</h2>
                         </div>
                     </div>
                     <div className="checkout-button-container">
