@@ -7,6 +7,7 @@ interface UseFavouriteResult {
     loading: boolean;
     addToFavourite: (productId: string) => Promise<string>;
     removeFavourite: (productId: string) => Promise<true | undefined>;
+    removeAllFavourites: () => Promise<void>;
     isProductFavourite: (productId: string) => boolean;
     setFavourites:React.Dispatch<React.SetStateAction<favouriteItem[] | null>>;
 }
@@ -26,7 +27,6 @@ const useFavourite = (token:string | null): UseFavouriteResult => {
         const fetchFavouritesByUser = async () => {
             setLoading(true);
             try {
-                
                 const data = await _get(`/favourites/find`, token, {});
            
                 if (!data || !Array.isArray(data.favourites.products)) {
@@ -52,7 +52,6 @@ const useFavourite = (token:string | null): UseFavouriteResult => {
 
     const addToFavourite = async (productId: string) => {
         try {
-            
             const response = await _put(`/favourites/add`,{ productId }, token, {});
             const newFavourite = response.result;
             setFavouriteSet((prevSet) => new Set(prevSet).add(productId));
@@ -84,7 +83,20 @@ const useFavourite = (token:string | null): UseFavouriteResult => {
         }
     };
 
-    return { favourites, loading, addToFavourite, removeFavourite, isProductFavourite,setFavourites };
+    const removeAllFavourites = async () => {
+        try {
+            const response = await _delete(`/favourites/deleteAll`,{}, token);
+            if (!response) {
+                throw new Error("Unexpected API response format.");
+            }
+            setFavouriteSet(new Set());
+            setFavourites(null);
+        } catch (error: any) {
+            console.log("Error removing all favourites:", error);
+        }
+    }
+
+    return { favourites, loading, addToFavourite, removeFavourite, isProductFavourite, setFavourites, removeAllFavourites };
 };
 
 export default useFavourite;

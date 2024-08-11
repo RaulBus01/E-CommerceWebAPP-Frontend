@@ -68,10 +68,12 @@ const CartPage = () => {
 
   return (
     <div className="cart-page">
-      <h1 className="cart-page-title">Cart Page</h1>
+      <div className="cart-page-title-container">
+        <h1 className="cart-page-title">Cart Page</h1>
+      </div>
       <div className="cart-items">
         {cart.products && cart.products.length > 0 ? (
-          cart.products.map((product, index) => (
+          cart.products.map((product) => (
             <div className="cart-item" key={product.product._id}>
               <div className="cart-item-details">
                 <h2 className="cart-item-title">{product.product.name}</h2>
