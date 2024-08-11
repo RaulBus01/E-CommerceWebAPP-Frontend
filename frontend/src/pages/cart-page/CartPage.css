@@ -153,6 +153,20 @@
   cursor: pointer;
 }
 
+.checkout-button-container button{
+  width: 100px;
+  height: 30px;
+  border-radius: 15px;
+  border: none;
+  padding: 10px;
+
+  background-color: var(--primary-color);
+  color: var(--info-color);
+}
+.checkout-button-container button:hover{
+  cursor: pointer;
+  background-color: var(--third-color);
+}
 /* Larger screens adjustments */
 
 /* Smartphones, iPhone, portrait 480x320 phones */

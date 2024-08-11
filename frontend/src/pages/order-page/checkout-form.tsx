@@ -2,7 +2,7 @@ import React from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import './order.css';
 
-const CheckoutForm = ({ clientSecret }) => {
+const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -27,9 +27,29 @@ const CheckoutForm = ({ clientSecret }) => {
     }
   };
 
+  const paymentElementOptions = {
+    style: {
+      base: {
+        color: '#32325d',          
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#aab7c4',
+        },
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a',
+      },
+      complete: {
+        color: '#4caf50',
+        iconColor: '#4caf50',
+      },
+    },
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <PaymentElement />
+    <form className="stripe-form" onSubmit={handleSubmit}>
+      <PaymentElement options={paymentElementOptions} />
       <button type="submit" disabled={!stripe}>
         Pay
       </button>

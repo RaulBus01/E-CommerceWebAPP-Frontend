@@ -25,7 +25,7 @@ const CreateOrder = () => {
     <div className="create-order">
       {stripePromise && clientSecret && (
         <Elements stripe={stripePromise} options={{ clientSecret }}>
-          <CheckoutForm clientSecret={clientSecret} />
+          <CheckoutForm />
         </Elements>
       )}
     </div>

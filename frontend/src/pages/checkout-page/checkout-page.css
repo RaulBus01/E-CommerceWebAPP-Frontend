@@ -22,6 +22,10 @@
     background-color: #5F5D9C;
 }
 
+.checkout-data-container h2, h3{
+    color: var(--info-color);
+}
+
 .shipment-info{
     width: 100%;
     height: auto;
@@ -32,10 +36,30 @@
 .shipment-info, h2{
     margin: 10px 0 0 0;
 }
+.shipment-info label{
+    color: var(--info-color);
+}
+.shipment-info input{
+    border-radius: 15px;
+    height: 40px;
+    width: 200px;
+    padding: 10px;
+}
 
 .order-price-info{
     display: flex;
     flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+.order-total-text {
+    color: var(--third-color) !important;
+}
+
+.order-price-fields{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     align-items: center;
 }
 
@@ -56,6 +80,12 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px 30px;
+}
+.payment-data-fields select{
+    border-radius: 15px;
+    height: 40px;
+    width: 200px;
+    padding: 10px;
 }
 
 .ship-address-container{

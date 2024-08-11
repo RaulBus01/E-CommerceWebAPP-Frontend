@@ -27,19 +27,19 @@ const OrderSummaryPage = () => {
                         <div className="personal-data-container">
                             <h2>Personal information</h2>
                             <div className="personal-data-wrapper">
-                                <p>Name: {order.name}</p>
-                                <p>Phone number: {order.phoneNumber}</p>
-                                <p>Payment: {order.paymentMethod} - {paymentStatus}</p>
+                                <p><strong>Name:</strong> {order.name}</p>
+                                <p><strong>Phone number:</strong> {order.phoneNumber}</p>
+                                <p><strong>Payment:</strong> {order.paymentMethod}</p>
                             </div>
                             <div className="address-container">
                                 <h2>Delivery address</h2>
                                 <div className="address-info-wrapper">
-                                    <p>Country: {order.address.country}</p>
-                                    <p>County: {order.address.county}</p>
-                                    <p>City: {order.address.city}</p>
-                                    <p>Street: {order.address.street}</p>
-                                    <p>Number: {order.address.number}</p>
-                                    <p>Zip code: {order.address.zip}</p>
+                                    <p><strong>Country:</strong> {order.address.country}</p>
+                                    <p><strong>County:</strong> {order.address.county}</p>
+                                    <p><strong>City:</strong> {order.address.city}</p>
+                                    <p><strong>Street:</strong> {order.address.street}</p>
+                                    <p><strong>Number:</strong> {order.address.number}</p>
+                                    <p><strong>Zip code:</strong> {order.address.zip}</p>
                                 </div>
                             </div>
                         </div>
