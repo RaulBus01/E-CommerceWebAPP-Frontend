@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, useLocation} from 'react-router-dom';
 import Home from './pages/home/home';
-import CategoryPage from './pages/category-page/category-page';
+import CategoryPage from './pages/category-page/CategoryPage';
 import RegisterPage from './pages/authentication-page/register';
 import LoginPage from './pages/authentication-page/login';
 import Navbar from './navbar/Navbar';
@@ -9,8 +9,7 @@ import Footer from './footer/Footer';
 import AuthProvider from './hooks/useAuth';
 import ProtectedRoute from './pages/authentication-page/protectedRoute';
 import CartPage from './pages/cart-page/CartPage';
-import SubCategoryPage from './pages/subcategory-page/SubcategoryPage';
-
+import PaymentCheckoutPage from './pages/payment-checkout-page/PaymentCheckoutPage';
 import { Toaster } from 'react-hot-toast';
 
 import UserProfilePage from './pages/user-profile-page/user-profile-page'
@@ -37,7 +36,6 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path='/product/:productId' element={<ProductPage />} />
             <Route path="/category/:categoryId" element={<CategoryPage />} />
-            <Route path="/category/:subcategory" element={<SubCategoryPage />} />
             <Route element={<PublicRoute/>}>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register/:userRole" element={<RegisterPage />} />

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 import SearchBar from "../components/controls/searchbar/searchBar";
@@ -9,7 +9,6 @@ import { useAuth } from "../hooks/useAuth";
 import Dropdown from "../components/dropdown/dropdown";
 import useFavourite from "../hooks/useFavourite";
 import useCart from "../hooks/useCart";
-
 
 const Navbar = () => {
   const { token, user } = useAuth();
@@ -22,7 +21,7 @@ const Navbar = () => {
         <ul>
           <li>
             <NavLink to="/" className="nav-link">
-              <img className="logo" src="src\assets\Logo.png" alt="logo" />
+              <img className="logo" src="src/assets/Logo.png" alt="logo" />
             </NavLink>
           </li>
           <li className="search-bar-container">
@@ -72,6 +71,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-//☰

@@ -2,7 +2,7 @@
 :root{
   --primary-color: #364f68;
   --secondary-color: #5F5D9C;
-  --third-color:  #ff84a9;
+  --third-color:  #f87099;
   --info-color: #F5F5F5;
   --danger-color: #D62828;
   --success-color: #2A9D8F;
@@ -21,7 +21,7 @@ html,body {
   padding: 0;
 
   font-family: 'Roboto', sans-serif;
-  font-size: large;
+  font-size: normal;
   height: 100%;
   margin: 0;
   display: flex;

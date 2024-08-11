@@ -2,42 +2,71 @@ import { useEffect, useState, useCallback } from "react";
 import { productData } from "../types/ProductType";
 import { _delete, _get,_post,_put } from "../utils/api";
 import { useAuth } from "./useAuth";
+import { useLocation } from "react-router";
 
 interface UseOrderResult {
-
+  fetchProducts: () => void;
   product: productData | null;
   fetchProductById: (productId: string) => Promise<void>;
   products: productData[] | null;
   setProducts: (products: productData[] | null) => void;
   loading: boolean;
+  setLoading: (loading: boolean) => void;
+  filterProducts: (filters: Filters) => void;
   deleteProduct: (productId: string) => Promise<string>;
   distributorProducts: productData[] | null;    
-    addProduct: (product: FormData) => Promise<string>;
-    fetchProduct: (productId: string) => Promise<productData | null>;
-    editProduct: (productId: string,product: FormData) => Promise<string>;
-    setDistributorProducts: (products: productData[] | null) => void;
+  addProduct: (product: FormData) => Promise<string>;
+  fetchProduct: (productId: string) => Promise<productData | null>;
+  editProduct: (productId: string,product: FormData) => Promise<string>;
+  setDistributorProducts: (products: productData[] | null) => void;   
 }
 
-const useProduct = (): UseOrderResult => {
+interface Filters {
+  availability: {
+    inStock: boolean;
+    outOfStock: boolean;
+  };
+  price: [number, number];
+  category: string;
+  brand: string[];
+}
+
+const useProduct = (byCategory = false): UseOrderResult => {
   const { token, user } = useAuth();
-  
   const [product, setProduct] = useState<productData | null>(null);
   const [products, setProducts] = useState<productData[] | null>(null);
   const [distributorProducts, setDistributorProducts] = useState<productData[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const location = useLocation();
+
 
   const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {
       const response = await _get(`/products/findAll`, {}, {});
       setProducts(response.products);
-    
+      console.log("fetch products!kjasndkfmasl");
     } catch (error: any) {
       console.error("Error fetching all products:", error);
     } finally {
       setLoading(false);
     }
   }, []);
+  
+  const fetchProductsByCategory = useCallback(async () => {
+    setLoading(true);
+    console.log(location.pathname);
+    try {
+      const category = location.pathname.split("/")[2].replace(/-/g, " ");
+      const response = await _get(`/products/findCategory/${category}`, {}, {});
+      console.log("response:",response);
+      setProducts(response);
+    } catch (error: any) {
+      console.error("Error fetching products by category:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [location.pathname]);
 
   const fetchProductById = useCallback(async (productId: string) => {
     setLoading(true);
@@ -67,9 +96,13 @@ const useProduct = (): UseOrderResult => {
   }, [user, token]);
 
   useEffect(() => {
-    fetchProducts();
+    if (byCategory) {
+      fetchProductsByCategory();
+    } else {
+      fetchProducts();
+    }
     fetchProductsDistributor();
-  }, []);
+  }, [location.pathname]);
 
   const fetchProduct = async (productId: string) => {
     try {
@@ -80,6 +113,8 @@ const useProduct = (): UseOrderResult => {
       return null;
     }
   }
+
+
 
   const deleteProduct = async (productId: string) => {
     try {
@@ -114,8 +149,18 @@ const useProduct = (): UseOrderResult => {
     }
   }
 
+  const filterProducts = async (filters: Filters) => {
+    try {
+   
+      const response = await _post(`/products/findFilter`, filters, token);
+      setProducts(response);
+    } catch (error: any) {
+      console.error(error);
+    }
+  }
 
-  return { fetchProductById,product,products, setProducts, loading, deleteProduct, distributorProducts, addProduct ,fetchProduct, editProduct,setDistributorProducts};
+
+  return { fetchProductById,product,products, setProducts, loading, setLoading, deleteProduct, distributorProducts, addProduct ,fetchProduct, editProduct,setDistributorProducts, fetchProducts, filterProducts };
 
 };
 
