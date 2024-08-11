@@ -6,11 +6,10 @@ import useCart from "../../hooks/useCart";
 import useFavourite from "../../hooks/useFavourite";
 import "./CartPage.css";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router";
 
 const CartPage = () => {
   const { token } = useAuth();
-  const { cart, setCart, editProductQuantity, removeProduct } = useCart(token);
+  const { cart, setCart, editProductQuantity, removeProduct } = useCart(token as string);
   const { addToFavourite, removeFavourite } = useFavourite(token);
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
