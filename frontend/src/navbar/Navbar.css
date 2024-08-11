@@ -57,7 +57,7 @@ li {
   width: 8rem;
   padding: 5px;
   gap:10px;
-  color: #FC5185;
+  color: var(--info-color);
 }
 .nav-link:hover{
   color: var(--info-color);

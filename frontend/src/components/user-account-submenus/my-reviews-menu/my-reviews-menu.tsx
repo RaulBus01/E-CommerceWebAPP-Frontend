@@ -1,8 +1,9 @@
 import React from "react";
-import '../my-orders-menu/my-orders-menu.css'
+import './my-reviews-menu.css';
 
 import  {formatDateTime}  from "../../../utils/formatDataTime";
 import DeleteIcon from '@mui/icons-material/Delete';
+import StarIcon from '@mui/icons-material/Star';
 import useReview from "../../../hooks/useReview";
 import { userData } from "../../../types/UserType";
 import { useNavigate } from "react-router";
@@ -36,27 +37,42 @@ const MyReviewsMenu = ({token,user}:{token:string,user?:userData | null}) => {
 
     return (
         <>
-            <div className="my-orders-menu">
-                <h2>My Reviews</h2>
+            <div className="my-reviews-menu">
+                <div className="my-reviews-header">
+                    <h2>My Reviews</h2>
+                </div>
                 {reviews && reviews.length > 0 ? (
-                    <div className="orders-container">
+                    <div className="reviews-container">
                         {reviews.map((review) => (
-                            <div key={review._id} className="order-item">
+                            <div key={review._id} className="review-item">
                                 <div className="review-data">
-                                    <p><strong>Product:</strong> {review.product.name}</p>
-                                    <p><strong>Reviewed on:</strong> {formatDateTime(review.createdAt)}</p>
-                                    <p><strong>Review title: </strong>{review.title}</p> 
+                                    <div className="review-product">
+                                        <img src={review.product.images[0]} onClick={() => handleImageClick(review.product._id)}></img>
+                                        <div className="product-name">{review.product.name}</div>
+                                    </div>
+                                    <div className="review-content">
+                                        <div className="review-info"> {review.user.name} </div>
+                                      
+                                        <p className="review-date">on: {formatDateTime(review.createdAt)}</p>
+                                        <div className="review-title">{review.title}</div> 
+                                        <div className="rating">
+                                        {review.rating && review.rating > 0 &&  Array.from({length: review.rating}, (_, i) => (
+                                            <StarIcon key={i} style={{ color: "yellow" }} />
+                                        ))}
+                                        </div>
+                                        <div className="review-content">
+                                            <p>{review.content}</p>
+                                        </div>
+
                                     
-                                    <p><strong>Rating:</strong> {review.rating}</p>
-                                    <p><strong>Review message:</strong> {review.content}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <img src={review.product.images[0]} onClick={() => handleImageClick(review.product._id)}></img>
-                                </div>
+                                
                                 {user?.role === 'admin' && (
-                                <span>
-                                    <DeleteIcon onClick={() => handleDeleteReview(review._id)} />
-                                </span>
+                                <div className="review-actions">
+                                    <DeleteIcon onClick={() => handleDeleteReview(review._id)}  />
+                                       
+                                </div>
                                 )}
                             </div>
                         ))}

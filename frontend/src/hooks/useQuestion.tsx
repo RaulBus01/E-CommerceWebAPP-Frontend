@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { _delete, _get, _post } from "../utils/api";
 import { postQuestionData, questionData } from "../types/QuestionType";
+import { userData } from "../types/UserType";
 
 interface useQuestionResult{
     questions: questionData[]| undefined;
@@ -10,7 +11,6 @@ interface useQuestionResult{
     createQuestion: (question: postQuestionData) => Promise<questionData | undefined>;
     deleteQuestion: (questionId: string) => Promise<questionData | undefined>;
     setQuestions: React.Dispatch<React.SetStateAction<questionData[] | undefined>>;
-
 }
 
 const useQuestion = (token: string, userId?: string,productId?: string): useQuestionResult => {
@@ -80,7 +80,8 @@ const useQuestion = (token: string, userId?: string,productId?: string): useQues
         }
     }, [productId, fetchQuestionsByProduct]);
     useEffect(() => {
-        if (userId) {
+     
+        if (userId || userId === "admin") {
             fetchQuestionsByUser();
         }
     }, [userId, fetchQuestionsByUser]);

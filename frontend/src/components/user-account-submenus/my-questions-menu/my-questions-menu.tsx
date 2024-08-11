@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../my-orders-menu/my-orders-menu.css'
+import './my-questions-menu.css';
 
 import {formatDateTime} from "../../../utils/formatDataTime";
 import useQuestion from "../../../hooks/useQuestion";
@@ -10,7 +10,7 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
     
     console.log(userId);
     const [visibleReplies, setVisibleReplies] = useState({});
-    const { questions, loading: questionLoading,setQuestions,deleteQuestion } = userId ? useQuestion(token,userId) : useQuestion(token);
+    const { questions, loading: questionLoading,setQuestions,deleteQuestion } = userId ? useQuestion(token,userId) : useQuestion(token,'admin');
 
     console.log(questions);
 
@@ -49,45 +49,70 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
     };
     console.log(questions);
     return (
-        <div className="my-orders-menu">
-            <h2>My Questions</h2>
+        <div className="my-questions-menu">
+            <div className="questions-header">
+                <h2>My Questions</h2>
+            </div>
             {questions && questions.length > 0 ? (
-                <div className="orders-container">
+                <div className="questions-container">
                     {questions.map((question) => (
-                        <div key={question.id} className="order-item">
-                            <p><strong>{question?.user?.name} asked:</strong></p>
-                            <p><strong>on:</strong> {formatDateTime(question.createdAt)}</p>
-                            <p>{question.content}</p>
-                            {user?.role === 'admin' && (
-                                <span>
-                                    <DeleteIcon onClick={() => handleDeleteQuestion(question.id)}/>
-                                </span>
-                            )}   
-                            <button 
-                                onClick={() => handleRepliesVisibility(question.id)} 
-                                className="btn btn-primary"
-                            >
-                               
-                                {question.replies?.length} Answers
-                            </button>
-                            {visibleReplies[question.id] && (
-                                <div className="replies-container">
-                                    {question.replies?.map((answer) => (
-                                        console.log(answer),
-                                        <div key={answer.id} className="reply-item">
-                                            <p><strong>{answer.user.name} replied:</strong></p>
-                                            <p><strong>on:</strong> {formatDateTime(answer.createdAt)}</p>
-                                            <p>{answer.content}</p>
-                                           {user?.role === 'admin' && (
-                                            <span>
-                                                <DeleteIcon onClick={() => handleDeleteReply(answer.id)}/>
-                                            </span>
-                                            )}
-                                        </div>
-                                    ))}
+                        <div key={question.id} className="question-item">
+                          <div className="question-data">
+                             <div className="question-product">
+                                        <img src={question?.product?.images[0]}></img>
+                                        <div className="product-name">{question?.product?.name}</div>
+                            </div>
+                            <div className="question-content">
+                                <div className="question-info"> {question?.user?.name} </div>
+                                <p className="question-date">on: {formatDateTime(question.createdAt)}</p>
+
+                                <div className="question-content">
+                                    <p>{question.content}</p>
                                 </div>
-                            )}
+                                <button onClick={() => handleRepliesVisibility(question.id)} className="btn btn-primary">
+                                
+                                {question.replies?.length} Answers
+                                </button>
+                                {
+                                visibleReplies[question.id] && (
+                                    <div className="question-replies-container">
+                                        {question.replies?.map((reply) => (
+                                            <div key={reply.id} className="reply-item">
+                                                <div className="reply-data">
+                                                    <div className="reply-info">{reply.user.name}</div>
+                                                    <p className="reply-date">on: {formatDateTime(reply.createdAt)}</p>
+                                                    <div className="reply-content">
+                                                        <p>{reply.content}</p>
+                                                    </div>
+                                                </div>
+                                               
+                                                    {user?.role === 'admin' && (
+                                                         <div className="reply-actions">
+                                                        <DeleteIcon onClick={() => handleDeleteReply(reply.id)}/>
+                                                        </div>
+                                                    )}
+                                              
+                                            </div>
+                                        ))}
+                                    </div>
+                                )
+                            }
+                            </div>
+                            
+                           
+                                    
+                               
+
                         </div>
+                            {user?.role === 'admin' && (
+                                <div className="questions-actions">
+                                    <DeleteIcon onClick={() => handleDeleteQuestion(question.id)}/>
+                                </div>
+                            )}   
+                          
+                            
+                        </div>
+                        
                     ))}
                 </div>
             ) : (

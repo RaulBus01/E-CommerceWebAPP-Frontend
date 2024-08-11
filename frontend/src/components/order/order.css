@@ -1,6 +1,7 @@
 .orderSummary {
     padding: 20px;
     border: 1px solid var(--third-color);
+    background-color: var(--primary-color);
     border-radius: 5px;
     margin: 20px 0;
     color: var(--info-color);
@@ -67,12 +68,12 @@
   }
   
   .orderDetailsLink {
-    color: var(--success-color);
+    color: var(--fourth-color); 
     text-decoration: none;
   }
   .orderDetailsButton{
     background-color: transparent;
-    color: var(--success-color);
+    color: var(--fourth-color);
     border: none;
     display: flex;
     align-items: center;

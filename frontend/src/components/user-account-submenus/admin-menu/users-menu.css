@@ -35,8 +35,8 @@
   }
   
   .users-menu-header button:hover {
-    background-color: var(--info-color);
-    color: var(--third-color);
+    background-color: var(--fourth-color);
+    color: var(--secondary-color);
   }
   
 
