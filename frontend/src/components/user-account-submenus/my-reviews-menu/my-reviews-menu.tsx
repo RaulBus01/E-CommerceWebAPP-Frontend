@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import '../my-orders-menu/my-orders-menu.css'
 
 import  {formatDateTime}  from "../../../utils/formatDataTime";
@@ -8,18 +8,16 @@ import { userData } from "../../../types/UserType";
 import { useNavigate } from "react-router";
 
 const MyReviewsMenu = ({token,user}:{token:string,user?:userData | null}) => {
-    const { reviews, loading: reviewsLoading,deleteReview,setReviews } =  useReview(token as string)
-    console.log(reviews);
+    const { reviews, loading: reviewsLoading, deleteReview, setReviews, fetchReviewsByUser } =  useReview(token as string)
+    
     const navigate = useNavigate();
 
-    if(reviewsLoading){
-        return(
-            <div className="my-orders-menu">
-                <h2>My Reviews</h2>
-                <p>Loading...</p>
-            </div>
-        );
-    }
+    useEffect(() => { 
+        if(token){
+            fetchReviewsByUser(token);
+        }
+    }, [token]);
+
     const handleDeleteReview = async (reviewId) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this review?");
         if(!confirmDelete) return;
@@ -32,6 +30,15 @@ const MyReviewsMenu = ({token,user}:{token:string,user?:userData | null}) => {
 
     const handleImageClick = (productId: string) => {
         navigate(`/product/${productId}`);
+    }
+
+    if(reviewsLoading){
+        return(
+            <div className="my-orders-menu">
+                <h2>My Reviews</h2>
+                <p>Loading...</p>
+            </div>
+        );
     }
 
     return (

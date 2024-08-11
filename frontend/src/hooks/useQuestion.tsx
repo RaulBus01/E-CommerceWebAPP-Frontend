@@ -79,11 +79,6 @@ const useQuestion = (token: string, userId?: string,productId?: string): useQues
             fetchQuestionsByProduct(productId);
         }
     }, [productId, fetchQuestionsByProduct]);
-    useEffect(() => {
-        if (userId) {
-            fetchQuestionsByUser();
-        }
-    }, [userId, fetchQuestionsByUser]);
 
     return {questions, setQuestions, loading, fetchQuestionsByProduct, fetchQuestionsByUser, createQuestion, deleteQuestion};
 }

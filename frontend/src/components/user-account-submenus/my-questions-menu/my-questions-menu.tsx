@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../my-orders-menu/my-orders-menu.css'
 
 import {formatDateTime} from "../../../utils/formatDataTime";
@@ -10,14 +10,15 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
     
     console.log(userId);
     const [visibleReplies, setVisibleReplies] = useState({});
-    const { questions, loading: questionLoading,setQuestions,deleteQuestion } = userId ? useQuestion(token,userId) : useQuestion(token);
-
-    console.log(questions);
+    const { questions, loading: questionLoading,setQuestions,deleteQuestion, fetchQuestionsByUser } = userId ? useQuestion(token,userId) : useQuestion(token);
 
     const {deleteReply} = useReply(token);
 
- 
-   
+    useEffect(() => {
+        if (userId) {
+            fetchQuestionsByUser();
+        }
+    }, [userId, fetchQuestionsByUser]);
    
     const handleDeleteReply = async (replyId) => {
 
@@ -56,31 +57,31 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
                     {questions.map((question) => (
                         <div key={question.id} className="order-item">
                             <p><strong>{question?.user?.name} asked:</strong></p>
-                            <p><strong>on:</strong> {formatDateTime(question.createdAt)}</p>
-                            <p>{question.content}</p>
+                            <p><strong>on:</strong> {formatDateTime(question?.createdAt)}</p>
+                            <p>{question?.content}</p>
                             {user?.role === 'admin' && (
                                 <span>
-                                    <DeleteIcon onClick={() => handleDeleteQuestion(question.id)}/>
+                                    <DeleteIcon onClick={() => handleDeleteQuestion(question?.id)}/>
                                 </span>
                             )}   
                             <button 
-                                onClick={() => handleRepliesVisibility(question.id)} 
+                                onClick={() => handleRepliesVisibility(question?.id)} 
                                 className="btn btn-primary"
                             >
                                
-                                {question.replies?.length} Answers
+                                {question?.replies?.length} Answers
                             </button>
-                            {visibleReplies[question.id] && (
+                            {visibleReplies[question?.id] && (
                                 <div className="replies-container">
-                                    {question.replies?.map((answer) => (
+                                    {question?.replies?.map((answer) => (
                                         console.log(answer),
-                                        <div key={answer.id} className="reply-item">
-                                            <p><strong>{answer.user.name} replied:</strong></p>
-                                            <p><strong>on:</strong> {formatDateTime(answer.createdAt)}</p>
-                                            <p>{answer.content}</p>
+                                        <div key={answer?.id} className="reply-item">
+                                            <p><strong>{answer?.user.name} replied:</strong></p>
+                                            <p><strong>on:</strong> {formatDateTime(answer?.createdAt)}</p>
+                                            <p>{answer?.content}</p>
                                            {user?.role === 'admin' && (
                                             <span>
-                                                <DeleteIcon onClick={() => handleDeleteReply(answer.id)}/>
+                                                <DeleteIcon onClick={() => handleDeleteReply(answer?.id)}/>
                                             </span>
                                             )}
                                         </div>
