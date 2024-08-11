@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Form from '../../components/controls/form/form';
 import { useAuth } from '../../hooks/useAuth';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useProduct from '../../hooks/useProduct';
 import './distributor-product-page.css';
 import { Category } from '../../types/CategoryType';
+import toast from 'react-hot-toast';
 
 interface Product {
   _id: string;
@@ -23,7 +24,7 @@ const DistributorProductPage = ({type}: {type: string}) => {
   const { user } = useAuth();
   const { productId } = type === 'edit-product' ? useParams() : {productId: ''};
   const { addProduct, fetchProduct, editProduct } = useProduct();
-
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<Product>({} as Product);
 
   useEffect(() => {
@@ -46,11 +47,11 @@ const DistributorProductPage = ({type}: {type: string}) => {
 
     Object.entries(formData).forEach(([key, value]) => {
       if (key === 'images') {
-        // Handle existing image URLs
+        //Existing images are strings, new images are files
         const existingImages = value.filter((img): img is string => typeof img === 'string');
         existingImages.forEach(imgUrl => formDataToSend.append('images', imgUrl));
 
-        // Handle new file uploads
+        //Filter out the new images and append them to the form data
         const newImages = value.filter((img): img is File => img instanceof File);
         newImages.forEach(file => formDataToSend.append('images', file));
       } else if (key === 'categories') {
@@ -62,12 +63,19 @@ const DistributorProductPage = ({type}: {type: string}) => {
     });
 
     try {
-      const response = type === 'edit-product' 
-        ? await editProduct(formData._id, formDataToSend)
-        : await addProduct(formDataToSend);
-      console.log('Response:', response);
+      const response = type === 'edit-product' ? await editProduct(formData._id, formDataToSend): await addProduct(formDataToSend);
+      if(response === 'Product updated successfully' || response === 'Product added successfully') {
+         toast.success(response);
+         navigate(`/user-dashboard/${user?._id}`);
+      }
+      else {
+        toast.error('Error adding product');
+      }
+     
+      
     } catch (error) {
-      console.error('Error handling product:', error);
+      console.error('Error adding product', error);
+      toast.error('Error adding product');
     }
   };
 

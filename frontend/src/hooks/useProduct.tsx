@@ -10,11 +10,11 @@ interface UseOrderResult {
   products: productData[] | null;
   setProducts: (products: productData[] | null) => void;
   loading: boolean;
-  deleteProduct: (productId: string) => Promise<boolean>;
+  deleteProduct: (productId: string) => Promise<string>;
   distributorProducts: productData[] | null;    
-    addProduct: (product: FormData) => Promise<boolean>;
+    addProduct: (product: FormData) => Promise<string>;
     fetchProduct: (productId: string) => Promise<productData | null>;
-    editProduct: (productId: string,product: FormData) => Promise<boolean>;
+    editProduct: (productId: string,product: FormData) => Promise<string>;
     setDistributorProducts: (products: productData[] | null) => void;
 }
 
@@ -83,31 +83,34 @@ const useProduct = (): UseOrderResult => {
 
   const deleteProduct = async (productId: string) => {
     try {
-      await _delete(`/products/delete/${productId}`, {}, token);
-  
-      return true;
+      const res = await _delete(`/products/delete/${productId}`, {}, token);
+      return res.message;
+    
     } catch (error: any) {
       console.error("Error deleting product:", error);
-      return false;
+      return "Error deleting product";
+    
     }
   };
   const addProduct = async (product: FormData) => {
     try {
-      await _post(`/products/add`, product, token);
-      return true;
+      const res = await _post(`/products/add`, product, token);
+      return res.message;
     } catch (error: any) {
       console.error("Error adding product:", error);
-      return false;
+      return "Error adding product";
+
+    
     }
   }
   const editProduct = async (productId:string,product: FormData) => {
     try {
    
-      await _put(`/products/edit/${productId}`, product, token);
-      return true;
+      const res = await _put(`/products/edit/${productId}`, product, token);
+      return res.message;
     } catch (error: any) {
       console.error("Error editing product:", error);
-      return false;
+      return "Error editing product";
     }
   }
 

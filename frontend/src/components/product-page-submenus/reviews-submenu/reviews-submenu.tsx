@@ -5,12 +5,13 @@ import {formatDateTime} from "../../../utils/formatDataTime.ts";
 import ReviewModal from "../../modals/review-modal/review-modal.tsx";
 import useReview from "../../../hooks/useReview.tsx";
 import { postReviewData } from "../../../types/ReviewType.ts";
+import Spinner from "../../spinner/spinner.tsx";
 
 const ReviewsSubmenu = ({productId, token, reviewRef, user}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const {reviews, loading, fetchReviewsByProduct, createReview} = useReview(token, productId);
-
+    
     useEffect(() => {
       fetchReviewsByProduct(productId);
     }, [fetchReviewsByProduct, productId]);
@@ -22,15 +23,16 @@ const ReviewsSubmenu = ({productId, token, reviewRef, user}) => {
         userId: user.id
       };
       await createReview(newReview);
-    }
+    };
 
     return(
         <div className="product-reviews-container">
           <div className="product-reviews-header" ref={reviewRef}>
-            <h1>Buyer's reviews ({reviews?.length})</h1>
+            <h1>Buyer's reviews ({reviews?.length || "0"})</h1>
             <button onClick={() => setIsModalOpen(true)}>Add a review</button>
           </div>
-          <div className="review-cells-container"> 
+          <div className="review-cells-container">
+            {loading && <Spinner />}
             {reviews && reviews.map((review) => (
               <div key={review._id} className="review-cell">
                 <div className="left-review-cell">

@@ -9,12 +9,12 @@
     padding: 40px 0;
     gap: 20px;
     
-    background-color: var(--primary-color);
+    background-color: var(--test-color);
 }
 
 .product-data-container{
     width: 70%;
-    height: 700px;
+    height: 900px;
 
     display: flex;
     flex-direction: column;
@@ -27,7 +27,7 @@
 
 .horizontal-data{
     width: 80%;
-    height: 65%;
+    height: 90%;
 
     display: flex;
     flex-direction: row;
@@ -37,8 +37,8 @@
 .image-container{
     display: flex;
     flex-direction: row;
-    gap: 10px;
-    padding: 10px;
+    gap: 20px;
+    padding: 20px;
 
     height: 100%;
     width: 70%;
@@ -52,13 +52,26 @@
     width: 65%;
 }
 
+.selected-image{
+    transform: scale(1.1);
+}
+
 .secondary-images{
     height: 90%;
     width: 20%;
-
-    border: solid 1px black;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
-
+.secondary-images img{
+    width: 100%;
+    height: 25%;
+}
+.secondary-images img:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+    box-shadow: 2px 2px 2px var(--third-color);
+}
 .buy-data{
     width: 30%;
     height: 60%;
@@ -76,6 +89,7 @@
 .buy-data h1{
     justify-self: center;
     align-self: center;
+    color: var(--third-color);
 }
 
 .rating-product-display{
@@ -117,8 +131,7 @@
 
 .product-button-container button:hover{
     cursor: pointer;
-    box-shadow: 2px 2px 2px #b6997c;
-    background-color: #b48454;
+    background-color: var(--third-color);
 }
 
 .product-info-container{
@@ -127,6 +140,13 @@
 
     display: flex;
     flex-direction: column;
+    color: var(--info-color);
+}
+.product-info-container h2{
+    border-bottom: 1px solid var(--third-color);
+}
+.product-info-container h3{
+    margin-top: 10px;
 }
 
 .select-button-container{
@@ -146,12 +166,12 @@
     background-color: var(--dark-color);
     color: rgb(246, 246, 246);
     font-weight: 700;
+    font-size: medium;
 
     align-items: center;
     justify-content: center;
 }
 .select-button-container button:hover{
     cursor: pointer;
-    background-color: #b48454;
-    box-shadow: 2px 2px 2px #b6997c;
+    background-color: var(--third-color);
 }

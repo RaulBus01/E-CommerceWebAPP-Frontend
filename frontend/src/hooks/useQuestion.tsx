@@ -6,6 +6,7 @@ interface useQuestionResult{
     questions: questionData[]| undefined;
     loading: boolean;
     fetchQuestionsByProduct: (productId: string) => Promise<void>;
+    fetchQuestionsByUser: (userId: string) => Promise<void>;
     createQuestion: (question: postQuestionData) => Promise<questionData | undefined>;
     deleteQuestion: (questionId: string) => Promise<questionData | undefined>;
     setQuestions: React.Dispatch<React.SetStateAction<questionData[] | undefined>>;
@@ -77,16 +78,7 @@ const useQuestion = (token: string, userId?: string,productId?: string): useQues
         }
     }, [productId, fetchQuestionsByProduct]);
 
-    useEffect(() => {
-       if(productId)
-       {
-        return;
-       }
-        fetchQuestionsByUser();
-        
-    }, [userId, fetchQuestionsByUser]);
-
-    return {questions, loading, fetchQuestionsByProduct, createQuestion,deleteQuestion,setQuestions};
+    return {questions, setQuestions, loading, fetchQuestionsByProduct, fetchQuestionsByUser, createQuestion, deleteQuestion};
 }
 
 export default useQuestion;

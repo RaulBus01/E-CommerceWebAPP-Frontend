@@ -1,8 +1,8 @@
 .order-container {
     height: auto;
     font-family: Arial, sans-serif;
-    color: #333;
-
+    color: var(--info-color);
+    background-color: var(--secondary-color);
   }
   
   .breadcrumb {
@@ -16,6 +16,7 @@
   .order-details{
     display: flex;
     flex-direction: column;
+    background-color: var(--secondary-color);
     min-height: 80vh;
     gap: 20px;
   }
@@ -45,7 +46,7 @@
   .product-details {
     border: 1px solid #ccc;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: var(--primary-color);
   }
   
   .delivery-info {
@@ -83,6 +84,7 @@
   }
   
   .product-item {
+    background-color: var(--primary-color);
     display: flex;
     align-items: center;
     border-top: 1px solid #ccc;

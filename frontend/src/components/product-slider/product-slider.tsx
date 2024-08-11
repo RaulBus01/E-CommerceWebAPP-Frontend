@@ -4,18 +4,20 @@ import ProductCard from "../product-card/product-card";
 import { productData } from "../../types/ProductType";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import Spinner from "../spinner/spinner";
 
 interface ProductSliderProps{
     products: productData[];
+    favouriteProducts: string[];
+    onFavouriteToggle: (productId: string) => void;
 }
 
-const ProductSlider: React.FC<ProductSliderProps> = ({products}) => {
-    console.log(products);
+const ProductSlider: React.FC<ProductSliderProps> = ({products, favouriteProducts, onFavouriteToggle}) => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const productsPerSlide = 4;
     if(products === null){
-        return <div>Loading...</div>;
+        return <div><Spinner /></div>;
     }
     const totalSlides = Math.ceil(products.length / productsPerSlide);
 
@@ -45,7 +47,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({products}) => {
                 >
                     {products.map((product) => (
                         <div className="product-card-wrapper" key={product._id}>
-                            <ProductCard product={product} loading={false} />
+                            <ProductCard product={product} loading={false} isFavourite={favouriteProducts?.includes(product._id)} onFavouriteToggle={onFavouriteToggle} />
                         </div>
                     ))}
                 </div>

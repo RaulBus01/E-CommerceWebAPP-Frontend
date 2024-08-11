@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
-import { orderData } from "../types/OrderType";
-import { _get,_put } from "../utils/api";
+import { orderData, postOrderData } from "../types/OrderType";
+import { _get,_post,_put } from "../utils/api";
 
 interface UseOrderResult {
     orders: orderData[] | null;
@@ -8,7 +8,7 @@ interface UseOrderResult {
     fetchOrderById: (orderId: string) => Promise<any>;
     cancelOrder: (orderId: string) => Promise<any>;
     editOrderStatus: (orderId: string, status: string) => Promise<any>;
-   
+    createOrder: (order: postOrderData) => Promise<any>;
 }
 
 const useOrder = (token: string): UseOrderResult => {
@@ -66,12 +66,20 @@ const useOrder = (token: string): UseOrderResult => {
             return null;
         }
     }
+    const createOrder = async (order: postOrderData) => {
+        setLoading(true);
+        try {
+            console.log("order",order);
+            const response = await _post(`/orders/createOrder`, order, token);
+            setLoading(false);
+            return response.orders;
+        } catch (error: any) {
+            console.error(error);
+            return null;
+        }
+    }
 
-
-
-
-
-    return { orders, loading, fetchOrderById, cancelOrder ,editOrderStatus};
+    return { orders, loading, fetchOrderById, cancelOrder , editOrderStatus, createOrder};
 }
 
 export default useOrder;

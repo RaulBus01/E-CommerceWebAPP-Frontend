@@ -1,0 +1,111 @@
+.checkout-data-main-container{
+    height: 100vh;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkout-data-container{
+    width: 60%;
+    height: auto;
+    margin-top: 30px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background-color: #5F5D9C;
+}
+
+.checkout-data-container h2, h3{
+    color: var(--info-color);
+}
+
+.shipment-info{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px 10px 10px;
+}
+.shipment-info, h2{
+    margin: 10px 0 0 0;
+}
+.shipment-info label{
+    color: var(--info-color);
+}
+.shipment-info input{
+    border-radius: 15px;
+    height: 40px;
+    width: 200px;
+    padding: 10px;
+}
+
+.order-price-info{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+.order-total-text {
+    color: var(--third-color) !important;
+}
+
+.order-price-fields{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.delivery-data{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.payment-data{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+}
+
+.payment-data-fields{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 30px;
+}
+.payment-data-fields select{
+    border-radius: 15px;
+    height: 40px;
+    width: 200px;
+    padding: 10px;
+}
+
+.ship-address-container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px 30px;
+}
+
+.checkout-button-container{
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-top: 50px;
+
+    align-items: center;
+    justify-content: center;
+}
+.checkout-button-container button{
+    width: 100px;
+    height: 40px;
+}

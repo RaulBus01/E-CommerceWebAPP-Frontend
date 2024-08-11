@@ -14,17 +14,18 @@ const defaultAddress = {
 };
 
 const PersonalInformationMenu = ({ user, title = "Personal Information" }) => {
-  
   const { editUser } = useUser();
+  console.log(user);
+
   const [editingField, setEditingField] = useState(null);
   const [formData, setFormData] = useState({
-    name: user.name || "",
-    email: user.email || "",
+    name: user?.name || "",
+    email: user?.email || "",
     address: { 
       ...defaultAddress, 
-      ...(user.customerInfo?.address || user.distributorInfo?.address || {}) 
+      ...(user?.customerInfo?.address || user?.distributorInfo?.address || {}) 
     },
-    phoneNumber: user.phoneNumber || ""
+    phoneNumber: user?.phoneNumber || ""
   });
   
 
@@ -34,7 +35,7 @@ const PersonalInformationMenu = ({ user, title = "Personal Information" }) => {
     setFormData(prev => ({
       ...prev,
       [fieldName]: fieldName === 'address' 
-        ? { ...defaultAddress, ...(user.customerInfo?.address || user.distributorInfo?.address || {}) }
+        ? { ...defaultAddress, ...(user?.customerInfo?.address || user?.distributorInfo?.address || {}) }
         : user[fieldName] || ""
     }));
     console.log(formData);

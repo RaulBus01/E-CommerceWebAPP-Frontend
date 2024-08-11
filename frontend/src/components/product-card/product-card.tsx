@@ -10,40 +10,29 @@ import useFavourite from "../../hooks/useFavourite";
 import { productData } from "../../types/ProductType";
 import  useCart  from "../../hooks/useCart";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../spinner/spinner";
 
 
 interface ProductCardProps {
   product: productData;
   loading: boolean;
-  onRemoveFavorite?: (productId: string) => void;
   setProducts?: (products: productData[]) => void;
   products?: productData[] | null;
   deleteProduct?: (productId: string) => Promise<boolean>;
+  isFavourite: boolean;
+  onFavouriteToggle: (productId: string) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavorite,setProducts,products,deleteProduct }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, loading, isFavourite, onFavouriteToggle = () => {}, setProducts, products, deleteProduct }) => {
  
   const { token, user } = useAuth();
   const navigate = useNavigate();
 
   const isCustomer = user?.role === "customer";
-  const { addToFavourite, removeFavourite, isProductFavourite } = isCustomer ? useFavourite(token as string) : { addToFavourite: () => {}, removeFavourite: () => {}, isProductFavourite: () => false };
   const { addProductToCart } = isCustomer ? useCart(token as string) : { addProductToCart: () => {} };
   
-  const isFavorite = user?.role === "customer" ? isProductFavourite(product._id) : false;
   const isDistributorAssigned = user?.role === "distributor" && product.distributor._id === user.id;
   const isAdmin = user?.role === "admin";
-
-  const handleFavorite = useCallback(async () => {
-    if (isFavorite) {
-      await removeFavourite(product._id);
-      if (onRemoveFavorite) {
-        onRemoveFavorite(product._id);
-      }
-    } else {
-      await addToFavourite(product._id);
-    }
-  }, [isFavorite, product._id, addToFavourite, removeFavourite, onRemoveFavorite]);
 
   const handleAddToCart = useCallback(async () => {
     await addProductToCart(product, token);
@@ -61,7 +50,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
         
         const updatedProduct = { ...product, isActive: false };
      
-
         const updatedProducts = products?.map((product) =>
           product._id === updatedProduct._id ? updatedProduct : product
         );
@@ -69,9 +57,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
         if (setProducts) {
           setProducts(updatedProducts || []);
         }
-
-    
-       
+     
       } catch (error) {
         console.error("Failed to delete product:", error);
       }
@@ -85,10 +71,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
   };
 
   if (loading) {
-    return <div>Loading</div>;
+    return <div className="card-container"><Spinner /></div>;
   }
-
- 
 
   return (
     <div className="card-container">
@@ -110,8 +94,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
           <button  onClick={handleAddToCart} className="add-to-cart-button">
             <AddShoppingCartIcon />
           </button>
-          <button onClick={handleFavorite} className="favorite-button">
-            <FavoriteIcon style={{ color: isFavorite ? "red" : "white" }} />
+          <button onClick={() => onFavouriteToggle(product._id)} className="favorite-button">
+            <FavoriteIcon style={{ color: isFavourite ? "var(--third-color)" : "white" }} />
           </button>
           </>
           : isDistributorAssigned || isAdmin ?
@@ -133,4 +117,4 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading,onRemoveFavo
   );
 };
 
-export default React.memo(ProductCard);
+export default ProductCard;
