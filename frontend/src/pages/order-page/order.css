@@ -10,7 +10,7 @@
     background-color: var(--test-color);
 }
 
-button{
+.checkout-form-button{
     border: none;
     border-radius: 15px;
     width: 150px;
@@ -19,7 +19,7 @@ button{
     color: var(--info-color);
     background-color: var(--primary-color);
 }
-button:hover{
+.checkout-form-button:hover{
     background-color: var(--third-color);
     cursor: pointer;
 }
