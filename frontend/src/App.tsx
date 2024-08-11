@@ -20,12 +20,10 @@ import AdminRoute from './pages/authentication-page/adminRoute';
 import DistributorProductPage from './pages/distributor-product-page/distributor-product-page';
 import Order from './pages/order-page/order';
 import ProductPage from './pages/product-page/product-page';
-import {Elements} from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
 import CreateOrder from './pages/order-page/create-order';
 import CheckoutPage from './pages/checkout-page/checkout-page';
 import OrderSummaryPage from './pages/order-summary-page/order-summary-page';
-const stripePromise = loadStripe('pk_test_51PldaG2KhZgwiVa57G1QWSC67ilvXaJI8hsgRDB96syfOzPKrhDdC82rkEA1yhVRo7Q1VX19VbBBBRhCjTJOJMI600RomhFSQL');
+
 const App = () => {
   const location = useLocation();
   const disableNavPaths = ['/login', '/register/customer', '/register/distributor', '/admin/login'];

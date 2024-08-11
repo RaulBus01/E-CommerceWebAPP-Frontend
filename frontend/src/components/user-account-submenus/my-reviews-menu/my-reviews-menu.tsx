@@ -51,7 +51,7 @@ const MyReviewsMenu = ({token,user}:{token:string,user?:userData | null}) => {
                                     <p><strong>Review message:</strong> {review.content}</p>
                                 </div>
                                 <div>
-                                    <img src={review.product.image[0]} onClick={() => handleImageClick(review.product._id)}></img>
+                                    <img src={review.product.images[0]} onClick={() => handleImageClick(review.product._id)}></img>
                                 </div>
                                 {user?.role === 'admin' && (
                                 <span>

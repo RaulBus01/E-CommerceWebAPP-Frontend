@@ -19,7 +19,7 @@ const ProductPage = () => {
   
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [selectedMenu, setSelectedMenu] = useState<string>("Reviews");
-  const [selectedImage, setSelectedImage] = useState<string>(product?.image[0] || "");
+  const [selectedImage, setSelectedImage] = useState<string>(product?.images[0] || "");
 
   const reviewRef = useRef<HTMLDivElement>(null);
   
@@ -43,7 +43,7 @@ const ProductPage = () => {
     if (product && productId) {
       const isFav = isProductFavourite(productId);
       setIsFavourite(isFav);
-      setSelectedImage(product.image[0]);
+      setSelectedImage(product.images[0]);
     }
   }, [productId, product, isProductFavourite]);
 

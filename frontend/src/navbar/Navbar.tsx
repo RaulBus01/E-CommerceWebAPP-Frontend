@@ -13,8 +13,8 @@ import useCart from "../hooks/useCart";
 
 const Navbar = () => {
   const { token, user } = useAuth();
-  const { favourites } = useFavourite(token as string);
-  const { cart } = useCart(token as string);
+  // const { favourites } = useFavourite(token as string);
+  // const { cart } = useCart(token as string);
 
   return (
     <div className="navbar">
@@ -44,9 +44,9 @@ const Navbar = () => {
             <NavLink className="nav-link" to="/favorites">
               <FavoriteBorderIcon />
               <span className="nav-text">Favourites</span>
-              {favourites && favourites.length > 0 && (
+              {/* {favourites && favourites.length > 0 && (
                 <span className="favourites-count">({favourites.length})</span>
-              )}
+              )} */}
             </NavLink>
             }
           </li>
@@ -55,9 +55,9 @@ const Navbar = () => {
             <NavLink  className="nav-link" to="/cart">
               <ShoppingCartIcon />
               <span className="nav-text">Cart</span>
-              {cart.products && cart.products.length > 0 && (
+              {/* {cart.products && cart.products.length > 0 && (
                 <span className="favourites-count">({cart.products.length})</span>
-              )}
+              )} */}
             </NavLink>
           }
           </li>

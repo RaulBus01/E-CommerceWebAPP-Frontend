@@ -6,7 +6,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuth } from "../../hooks/useAuth";
-import useFavourite from "../../hooks/useFavourite";
+
 import { productData } from "../../types/ProductType";
 import  useCart  from "../../hooks/useCart";
 import { useNavigate } from "react-router-dom";

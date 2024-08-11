@@ -30,7 +30,9 @@ const FavoritePage = () => {
                         key={favourite?.product._id}
                         product={favourite?.product}
                         loading={loading}
-                        onRemoveFavorite={handleRemoveFavorite}
+                        isFavourite={true}
+                        onFavouriteToggle={handleRemoveFavorite}
+                        
                     />
                 ))}
             </div>

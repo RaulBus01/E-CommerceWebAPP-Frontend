@@ -8,22 +8,17 @@ import useReply from "../../../hooks/useReply";
 import { userData } from "../../../types/UserType";
 const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user?:userData}) => {
     
- 
+    console.log(userId);
     const [visibleReplies, setVisibleReplies] = useState({});
     const { questions, loading: questionLoading,setQuestions,deleteQuestion } = userId ? useQuestion(token,userId) : useQuestion(token);
+
+    console.log(questions);
 
     const {deleteReply} = useReply(token);
 
  
    
-    if(questionLoading){
-        return(
-            <div className="my-orders-menu">
-                <h2>My Questions</h2>
-                <p>Loading...</p>
-            </div>
-        );
-    }
+   
     const handleDeleteReply = async (replyId) => {
 
         const confirmDelete = window.confirm("Are you sure you want to delete this reply?");
@@ -101,5 +96,4 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
         </div>
     );
 }
-
-export default MyQuestionsMenu;
+export default MyQuestionsMenu  

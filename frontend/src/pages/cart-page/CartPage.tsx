@@ -131,7 +131,16 @@ const CartPage = () => {
       </div>
       {cart.products && cart.products.length > 0 && (
         <div className="checkout-button-container">
+          {user?.customerInfo?.isVerified ? (
           <button onClick={(handleCheckout)}>Proceed to checkout</button>
+          ) : (
+            <div className="checkout-button-container">
+              <p>Please verify your account to proceed to checkout</p> 
+              <button onClick={() => navigate(`/user-dashboard/${user?._id}`)}>Go to account</button>
+            </div>
+
+            
+          )}
         </div>
       )}
     </div>

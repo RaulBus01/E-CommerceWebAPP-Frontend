@@ -5,7 +5,6 @@ import PersonalInformationMenu from "../../components/user-account-submenus/pers
 import MyOrdersMenu from "../../components/user-account-submenus/my-orders-menu/my-orders-menu";
 import MyReviewsMenu from "../../components/user-account-submenus/my-reviews-menu/my-reviews-menu";
 import MyQuestionsMenu from "../../components/user-account-submenus/my-questions-menu/my-questions-menu";
-import AdminMenu from "../../components/user-account-submenus/admin-menu/admin-menu";
 import UsersMenu from "../../components/user-account-submenus/admin-menu/users-menu";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";

@@ -30,7 +30,7 @@ const useProduct = (): UseOrderResult => {
     setLoading(true);
     try {
       const response = await _get(`/products/findAll`, {}, {});
-      setProducts(response);
+      setProducts(response.products);
     
     } catch (error: any) {
       console.error("Error fetching all products:", error);
@@ -43,7 +43,7 @@ const useProduct = (): UseOrderResult => {
     setLoading(true);
     try {
       const response = await _get(`/products/find/${productId}`, {}, {});
-      setProduct(response);
+      setProduct(response.product);
     } catch (error: any) {
       console.error("Error fetching product by id:", error);
     } finally {
@@ -58,7 +58,7 @@ const useProduct = (): UseOrderResult => {
     setLoading(true);
     try {
       const response = await _get(`/products/findDistributor/${user.id}`, token);
-      setDistributorProducts(response);
+      setDistributorProducts(response.products);
     } catch (error: any) {
       console.error("Error fetching distributor products:", error);
     } finally {

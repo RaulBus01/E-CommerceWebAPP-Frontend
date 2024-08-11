@@ -3,6 +3,9 @@ import './personal-information-menu.css';
 import { formatDateTime, getNumberOfDays } from "../../../utils/formatDataTime";
 import InfoCell from "../../info-cell/info-cell";
 import useUser from "../../../hooks/useUser";
+import useVerify from "../../../hooks/useVerify";
+import { toast } from "react-hot-toast";
+
 
 const defaultAddress = {
   country: "",
@@ -17,6 +20,7 @@ const PersonalInformationMenu = ({ user, title = "Personal Information" }) => {
   const { editUser } = useUser();
   console.log(user);
 
+  const {handleResendVerificationEmail} = useVerify();
   const [editingField, setEditingField] = useState(null);
   const [formData, setFormData] = useState({
     name: user?.name || "",
@@ -97,6 +101,21 @@ const PersonalInformationMenu = ({ user, title = "Personal Information" }) => {
       ))}
     </div>
   );
+  const handleSentVerificationEmail = async () => {
+    try {
+     const repsonse = await handleResendVerificationEmail();
+     if(repsonse === 'Verification email sent') {
+      toast.success('Verification email sent');
+     }
+     else {
+      toast.error('Error sending verification email');
+     }
+     
+    } catch (error) {
+      console.error('Error sending verification email', error);
+      toast.error('Error sending verification email');
+    }
+  };
 
   return (
     <div className="personal-info-menu">
@@ -107,7 +126,10 @@ const PersonalInformationMenu = ({ user, title = "Personal Information" }) => {
           <InfoCell 
             title={user?.role === 'customer' ? "Account status" : "Distributor status"}
             content={user?.role === 'customer' 
-              ? (user?.customerInfo?.isVerified ? 'Verified' : 'Not verified')
+              ? (user?.customerInfo?.isVerified ? 'Verified' :  
+                <span>
+                  Not verified <button onClick={handleSentVerificationEmail}>Verify</button>
+                </span>)
               : (user?.distributorInfo?.isAuthorized ? 'Authorized' : 'Not Authorized')}
           />
           <InfoCell title="Email" content={user?.email} />
