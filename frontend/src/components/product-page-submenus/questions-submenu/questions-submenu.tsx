@@ -16,8 +16,6 @@ const QuestionsSubmenu = ({productId, token, user}) => {
     const {loading: questionsLoading, questions, fetchQuestionsByProduct, createQuestion} = useQuestion(token,user.id,productId);
     const {createReply, loading: replyLoading} = useReply(token);
 
-    console.log(questions);
-
     useEffect(() => {
       fetchQuestionsByProduct(productId);
     }, [fetchQuestionsByProduct, productId]);

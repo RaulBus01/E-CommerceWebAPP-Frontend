@@ -15,11 +15,11 @@ interface ProductSliderProps{
 const ProductSlider: React.FC<ProductSliderProps> = ({products, favouriteProducts, onFavouriteToggle}) => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
-    const productsPerSlide = 4;
+    const productsPerSlide = 5;
     if(products === null){
         return <div><Spinner /></div>;
     }
-    const totalSlides = Math.ceil(products.length / productsPerSlide);
+    const totalSlides = Math.ceil(products?.length / productsPerSlide);
 
     const handleNext = () => {
         setCurrentSlide((prevSlide) => prevSlide === totalSlides - 1 ? 0 : prevSlide + 1);
@@ -27,11 +27,6 @@ const ProductSlider: React.FC<ProductSliderProps> = ({products, favouriteProduct
     const handlePrev = () => {
         setCurrentSlide((prevSlide) => prevSlide === 0 ? totalSlides - 1 : prevSlide - 1);
     };
-
-    //index of the first product on a slide
-    const startIndex = currentSlide * productsPerSlide;
-    //array of the products on one slide
-    const currentProducts = products.slice(startIndex, startIndex + productsPerSlide);
 
     return(
         <div className="product-slider">

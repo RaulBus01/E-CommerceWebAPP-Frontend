@@ -6,10 +6,11 @@ import useCart from "../../hooks/useCart";
 import useFavourite from "../../hooks/useFavourite";
 import "./CartPage.css";
 import toast from "react-hot-toast";
+import Spinner from "../../components/spinner/spinner";
 
 const CartPage = () => {
   const { token,user } = useAuth();
-  const { cart, setCart, editProductQuantity, removeProduct } = useCart(token as string);
+  const { cart, setCart, editProductQuantity, removeProduct, loading } = useCart(token as string);
   const { addToFavourite, removeFavourite } = useFavourite(token);
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
@@ -89,6 +90,15 @@ const CartPage = () => {
     console.log(cart);
     navigate("/checkout", { state: { cart, token, user } });
   };
+
+  if (loading) {
+    return (
+      <div className="cart-page">
+        <div className="cart-page-title">Your Cart</div>
+          <Spinner />
+        </div>
+    );
+  }
 
   return (
     <div className="cart-page">

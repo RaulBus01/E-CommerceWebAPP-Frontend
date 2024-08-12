@@ -102,6 +102,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading, isFavourite
         <p>
           {product?.ratingProduct || "N/A"} ({product?.numberOfReviews || 0})
         </p>
+        {product?.stock > 0 ? (
+          <p style={{ color: "var(--success-color)" }}>In stock</p>
+        ) : (
+          <p style={{ color: "var(--danger-color)" }}>Out of stock</p>
+        )}
       </div>
       <div className="button-container">
         {user?.role === "customer" ? 

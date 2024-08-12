@@ -28,20 +28,20 @@
 }
 
 .product-slider-container h1{
-  color: var(--third-color);
+  color: var(--primary-color);
 }
 
 .all-products-container{
   width: 70%;
 
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
   padding: 10px 10px;
   row-gap: 20px;
 
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   gap: 20px;
 }
 @media (max-width: 768px) {

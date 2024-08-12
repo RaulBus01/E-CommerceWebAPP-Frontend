@@ -123,6 +123,11 @@ const ProductPage = () => {
                 <h3>{product?.ratingProduct}</h3>
                 <StarIcon style={{ color: "yellow" }} />
                 <p>({product?.numberOfReviews || "N/A"})</p>
+                {product?.stock > 0 ? (
+                  <p style={{color: "#12FE01"}}>In stock</p>
+                ) : (
+                  <p style={{color: "var(--danger-color)"}}>Out of stock</p>
+                )}
               </div>
               <div className="product-button-container">
                 <button>

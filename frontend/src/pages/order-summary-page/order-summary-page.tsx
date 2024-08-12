@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import './order-summary-page.css';
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 const OrderSummaryPage = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const [paymentStatus, setPaymentStatus] = useState('');
 
     const order = location.state?.newOrder;
@@ -17,7 +18,13 @@ const OrderSummaryPage = () => {
         } else {
           setPaymentStatus('Payment failed or cancelled.');
         }
-      }, [location]);
+
+        const timer = setTimeout(() => {
+            navigate('/');
+        }, 10000)
+        return () => clearTimeout(timer);
+      }, [location, navigate]);
+
       return (
         <div className="order-summary-container">
             <div className="order-summary-data">
@@ -59,6 +66,10 @@ const OrderSummaryPage = () => {
                         <h2>{paymentStatus}</h2>
                     </>
                 )}
+            </div>
+            <div className="redirect-text">
+                <h2>You will be redirected in 10 seconds...</h2>
+                <button onClick={() => navigate('/')}>Go to homepage</button>
             </div>
         </div>
     );
