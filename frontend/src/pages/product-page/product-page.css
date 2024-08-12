@@ -94,6 +94,10 @@
 .buy-data h1 {
     color: var(--third-color);
     text-align: center;
+    font-size: large;
+    overflow: hidden;
+    text-overflow: ellipsis
+    
 }
 
 .discount-price-display {
