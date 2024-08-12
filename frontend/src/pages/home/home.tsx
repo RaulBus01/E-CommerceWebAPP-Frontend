@@ -11,7 +11,7 @@ import { useAuth } from "../../hooks/useAuth";
 
 const Home = () => {
   const { products, loading } = useProduct();
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const { addToFavourite, removeFavourite, isProductFavourite } = useFavourite(token as string);
 
   
@@ -19,10 +19,12 @@ const Home = () => {
   const [favouriteProducts, setFavouriteProducts] = useState<string[]>(products?.filter(product => isProductFavourite(product._id)).map(product => product._id) || []);
   const [mostRecentProducts, setMostRecentProducts] = useState<productData[]>([]);
   
+  const productBatch = 24;
+
   useEffect(() => {
     if (products) {
       const newProducts = [...products].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-      const mostRecentProducts = newProducts.slice(0, 8);
+      const mostRecentProducts = newProducts.slice(0, 10);
       setMostRecentProducts(mostRecentProducts);
 
       const favProducts = products.filter(product => isProductFavourite(product._id)).map(product => product._id);
@@ -55,11 +57,30 @@ const Home = () => {
         <h1>New arrivals</h1>
         <ProductSlider products={mostRecentProducts as productData[]} favouriteProducts={favouriteProducts} onFavouriteToggle={handleFavoriteToggle}/>
       </div>
-      <div className="all-products-container">
-        {products?.map((product) => (
-          <ProductCard key={product._id} product={product} loading={loading} isFavourite={favouriteProducts.includes(product._id)} onFavouriteToggle={handleFavoriteToggle} />
-        ))}
-      </div>
+      {(token && user?.role === "customer") ?(
+        <>
+          <div className="all-products-container">
+            {products?.slice(0, productBatch).map((product) => (
+              <ProductCard key={product._id} product={product} loading={loading} isFavourite={favouriteProducts.includes(product._id)} onFavouriteToggle={handleFavoriteToggle} />
+            ))}
+          </div>
+          <div className="product-slider-container">
+            <h1>Your favourite products</h1>
+            <ProductSlider products={products?.filter(product => favouriteProducts.includes(product._id)) as productData[]} favouriteProducts={favouriteProducts} onFavouriteToggle={handleFavoriteToggle}/>
+          </div>
+          <div className="all-products-container">
+            {products?.slice(productBatch, products.length).map((product) => (
+            <ProductCard key={product._id} product={product} loading={loading} isFavourite={favouriteProducts.includes(product._id)} onFavouriteToggle={handleFavoriteToggle} />
+          ))}
+          </div>
+        </>
+      ) : (
+        <div className="all-products-container">
+          {products?.map((product) => (
+            <ProductCard key={product._id} product={product} loading={loading} isFavourite={favouriteProducts.includes(product._id)} onFavouriteToggle={handleFavoriteToggle} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

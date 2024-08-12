@@ -7,10 +7,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import useReply from "../../../hooks/useReply";
 import { userData } from "../../../types/UserType";
 import { useNavigate } from "react-router";
+import Spinner from "../../spinner/spinner";
 const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user?:userData}) => {
     
     const [visibleReplies, setVisibleReplies] = useState({});
-    const { questions, loading: questionLoading,setQuestions,deleteQuestion,fetchQuestionsByUser } = userId ? useQuestion(token,userId) : useQuestion(token,'admin');
+    const { questions, loading: questionLoading, setQuestions, deleteQuestion, fetchQuestionsByUser } = userId ? useQuestion(token,userId) : useQuestion(token,'admin');
 
     const navigate = useNavigate();
 
@@ -53,7 +54,16 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
             [questionId]: !prev[questionId]
         }));
     };
-   
+    
+    if(questionLoading){
+        return(
+            <div className="my-questions-menu">
+                <h2>My Questions</h2>
+                <Spinner />
+            </div>
+        );
+    }
+
     return (
         <div className="my-questions-menu">
             <div className="questions-header">

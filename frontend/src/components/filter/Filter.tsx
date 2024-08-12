@@ -124,7 +124,7 @@ const Filter = ({
           onChange={handleMaxSliderChange}
         />
         <div className="currency">
-          Lei {priceRange[0]} - Lei {priceRange[1]}
+          $ {priceRange[0]} - $ {priceRange[1]}
         </div>
       </div>
 

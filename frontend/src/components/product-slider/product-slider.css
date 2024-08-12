@@ -24,7 +24,7 @@
 }
 
 .product-card-wrapper {
-    flex: 0 0 25%; 
+    flex: 0 0 20%; 
     box-sizing: border-box;
     padding: 10px;
     transition: transform 0.5s ease-in-out;

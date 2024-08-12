@@ -179,7 +179,7 @@ li {
   color: var(--info-color);
 }
 .nav-link:hover{
-  color: var(--info-color);
+  color: var(--third-color);
 }
 .bottom-navbar {
   width: 100%;

@@ -6,10 +6,11 @@ import useCart from "../../hooks/useCart";
 import useFavourite from "../../hooks/useFavourite";
 import "./CartPage.css";
 import toast from "react-hot-toast";
+import Spinner from "../../components/spinner/spinner";
 
 const CartPage = () => {
   const { token,user } = useAuth();
-  const { cart, setCart, editProductQuantity, removeProduct } = useCart(token as string);
+  const { cart, setCart, editProductQuantity, removeProduct, loading } = useCart(token as string);
   const { addToFavourite, removeFavourite } = useFavourite(token);
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
@@ -90,6 +91,15 @@ const CartPage = () => {
     navigate("/checkout", { state: { cart, token, user } });
   };
 
+  if (loading) {
+    return (
+      <div className="cart-page">
+        <div className="cart-page-title">Your Cart</div>
+          <Spinner />
+        </div>
+    );
+  }
+
   return (
     <div className="cart-page">
       <div className="cart-page-title">Your Cart</div>
@@ -116,11 +126,11 @@ const CartPage = () => {
                     <div>{product?.product?.discountPrice < product.product.price ? (
                       <>
                         <span className="discount-price">
-                          {product?.product?.discountPrice} Lei
+                          {product?.product?.discountPrice} $
                         </span>
                       </>
                     ) : (
-                      <span>{product?.product?.price} Lei</span>
+                      <span>{product?.product?.price} $</span>
                     )}</div>
                     <div>
                       Total:{" "}
@@ -180,16 +190,16 @@ const CartPage = () => {
         {cart.products && cart.products.length > 0 && (
           <div className="cart-total">
             <div className="summary">Order Summary</div>
-            <div className="product-price-details">Product Price: {totalPrice} Lei</div>
+            <div className="product-price-details">Product Price: {totalPrice} $</div>
             <div className="shipping-details">
               {totalPrice > 100 ? (
                 <div>Shipping: Free</div>
               ) : (
-                <div>Shipping: {shipping} Lei</div>
+                <div>Shipping: {shipping} $</div>
               )}
             </div>
             <div className="total">
-              Cart Total: {totalPrice > 100 ? totalPrice : totalPrice + shipping} Lei
+              Cart Total: {totalPrice > 100 ? totalPrice : totalPrice + shipping} $
             </div>
             {user?.customerInfo?.isVerified ? (
               <div
