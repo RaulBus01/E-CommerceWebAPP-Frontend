@@ -100,12 +100,7 @@ const CartPage = () => {
                 <div className="cart-item-details">
                   
                   <h2 className="cart-item-title">{product?.product?.name}</h2>
-                  <div className="cart-item-description">
-                    {product?.product?.description}
-                  </div>
-                  <div className="cart-item-seller">
-                    Seller: {product?.product?.distributor}
-                  </div>
+                  
                   <div className="cart-item-availability">
                     Availability: {product?.product?.stock}
                   </div>
