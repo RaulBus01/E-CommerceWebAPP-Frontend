@@ -115,7 +115,6 @@ const DistributorProductPage = ({type}: {type: string}) => {
             { id: 'brand', label: 'Brand', type: 'text', placeholder: 'Enter brand', icon: 'brand' },
             { id: 'price', label: 'Price', type: 'number', placeholder: 'Enter price', icon: 'price' },
             { id: 'discountPrice', label: 'Discount Price', type: 'number', placeholder: 'Enter discount price', icon: 'price' },
-            { id: 'discountPercentage', label: 'Discount Percentage', type: 'number', placeholder: 'Enter discount percentage', icon: 'price' },
             { id: 'images', label: 'Images', type: 'file', placeholder: 'Select images', icon: 'image' }, 
             { id: 'stock', label: 'Stock', type: 'number', placeholder: 'Enter stock', icon: 'stock' },
             type === 'edit-product' ? { id: 'isActive', label: 'Active', type: 'checkbox', placeholder: 'Enter product status', icon: 'status' } : null
