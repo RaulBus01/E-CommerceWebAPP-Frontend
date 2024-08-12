@@ -27,7 +27,7 @@
 .product-reviews-header button{
     float: right;
 
-    background-color: var(--primary-color);
+    background-color: var(--third-color );
     color: var(--info-color);
     border: none;
     border-radius: 15px;
@@ -40,6 +40,7 @@
     cursor: pointer;
     background-color: var(--third-color);
 }
+
 
 .review-cells-container{
     width: 100%;

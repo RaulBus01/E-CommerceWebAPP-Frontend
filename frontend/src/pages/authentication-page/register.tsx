@@ -54,7 +54,6 @@ const RegisterPage: React.FC = () => {
           <RegisterForm onSubmit={handleSubmit} userRole={userRole as userRole} />
         </div>
         <div className="auth-image">
-          <img src="src" alt="Sign Up Illustration" />
           {
             userRole === 'customer' ?
             <>

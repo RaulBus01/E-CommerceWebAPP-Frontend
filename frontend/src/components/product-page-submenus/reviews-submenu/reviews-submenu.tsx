@@ -29,7 +29,7 @@ const ReviewsSubmenu = ({productId, token, reviewRef, user}) => {
         <div className="product-reviews-container">
           <div className="product-reviews-header" ref={reviewRef}>
             <h1>Buyer's reviews ({reviews?.length || "0"})</h1>
-            <button onClick={() => setIsModalOpen(true)}>Add a review</button>
+            <button className='add' onClick={() => setIsModalOpen(true)}>Add a review</button>
           </div>
           <div className="review-cells-container">
             {loading && <Spinner />}
