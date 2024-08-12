@@ -100,7 +100,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading, isFavourite
       <div className="rating-container">
         <StarIcon style={{ color: "yellow" }} />
         <p>
-          {product?.ratingProduct || "N/A"} ({product?.numberOfReviews || 0})
+          {product?.ratingProduct || "0"} ({product?.numberOfReviews || 0})
         </p>
         {product?.stock > 0 ? (
           <p style={{ color: "var(--success-color)" }}>In stock</p>

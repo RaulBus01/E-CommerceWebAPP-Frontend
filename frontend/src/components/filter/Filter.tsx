@@ -93,7 +93,7 @@ const Filter = ({
             type="number"
             placeholder="Min"
             min="0"
-            max="300"
+            max="30"
             value={priceRange[0] > 0 ? priceRange[0] : ""}
             onChange={handleMinPriceChange}
             className="price-input"
@@ -103,7 +103,7 @@ const Filter = ({
             type="number"
             placeholder="Max"
             min="0"
-            max="300"
+            max="30"
             value={priceRange[1] > 0 ? priceRange[1] : ""}
             onChange={handleMaxPriceChange}
             className="price-input"
@@ -112,14 +112,14 @@ const Filter = ({
         <input
           type="range"
           min="0"
-          max="300"
+          max="30"
           value={priceRange[0]}
           onChange={handleMinSliderChange}
         />
         <input
           type="range"
           min="0"
-          max="300"
+          max="30"
           value={priceRange[1]}
           onChange={handleMaxSliderChange}
         />
