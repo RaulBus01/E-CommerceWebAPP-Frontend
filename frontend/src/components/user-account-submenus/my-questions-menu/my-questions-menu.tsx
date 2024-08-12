@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import './my-questions-menu.css';
 
 import {formatDateTime} from "../../../utils/formatDataTime";
@@ -10,7 +10,7 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
     
     console.log(userId);
     const [visibleReplies, setVisibleReplies] = useState({});
-    const { questions, loading: questionLoading,setQuestions,deleteQuestion } = userId ? useQuestion(token,userId) : useQuestion(token,'admin');
+    const { questions, loading: questionLoading,setQuestions,deleteQuestion,fetchQuestionsByUser } = userId ? useQuestion(token,userId) : useQuestion(token,'admin');
 
     console.log(questions);
 
@@ -18,9 +18,9 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
 
     useEffect(() => {
         if (userId) {
-            fetchQuestionsByUser();
+            fetchQuestionsByUser(userId);
         }
-    }, [userId, fetchQuestionsByUser]);
+    }, [userId]);
    
     const handleDeleteReply = async (replyId) => {
 

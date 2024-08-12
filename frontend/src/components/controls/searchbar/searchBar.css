@@ -1,3 +1,4 @@
+/* General Styles */
 .search-bar-container {
   position: relative;
   width: 100%;
@@ -8,7 +9,8 @@
   display: flex;
   align-items: center;
   height: 40px;
-  width: 55%;
+  min-width: 100px;
+  max-width: 500px;
   background-color: var(--info-color);
   border: 1px solid #ccc;
   border-radius: 25px;
@@ -45,9 +47,8 @@
 
 .search-dropdown {
   position: absolute;
-
   top: 100%;
-  width: 55%; 
+  width: 500px;
   background-color: white;
   border: 1px solid #ccc;
   border-top: none;
@@ -62,31 +63,30 @@
   padding: 10px;
   border-bottom: 1px solid #ccc;
   cursor: pointer;
-  
-
 }
-.search-dropdown-item-image
-{
+
+.search-dropdown-item-image {
   width: 60px;
   height: 60px;
   border-radius: 50%;
   margin-right: 10px;
 }
+
 .search-dropdown-item:last-child {
   border-bottom: none;
   border-radius: 0px 0px 25px 25px;
 }
 
-
 .search-dropdown-item:hover:last-child {
   background-color: #f0f0f0;
-  border-radius:0px 0px 25px 25px;
-
+  border-radius: 0px 0px 25px 25px;
 }
-.search-dropdown-item:hover{
+
+.search-dropdown-item:hover {
   background-color: #f0f0f0;
   border-radius: 0px;
 }
+
 .no-results {
   display: flex;
   justify-content: center;
@@ -96,4 +96,88 @@
   color: var(--third-color);
 }
 
+/* Tablet Styles */
+@media (max-width: 768px) {
+  .search-bar-container {
+    margin-left: 20px;
+  }
 
+  .search-input-wrapper {
+    max-width: 100%;
+    height: 35px;
+    padding-left: 8px;
+  }
+
+  .search-input-wrapper input {
+    font-size: 12px;
+    padding: 4px;
+  }
+
+  .search-icon, .close-icon {
+    margin: 0.8rem 0.4rem;
+  }
+
+  .search-dropdown {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0 0 15px 15px;
+  }
+
+  .search-dropdown-item {
+    padding: 8px;
+  }
+
+  .search-dropdown-item-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .no-results {
+    font-size: 12px;
+    height: 80px;
+  }
+}
+
+/* Phone Styles */
+@media (max-width: 480px) {
+  .search-bar-container {
+    margin-left: 10px;
+  }
+
+  .search-input-wrapper {
+    max-width: 100%;
+    height: 30px;
+    padding-left: 6px;
+    border-radius: 15px;
+  }
+
+  .search-input-wrapper input {
+    font-size: 10px;
+    padding: 3px;
+  }
+
+  .search-icon, .close-icon {
+    margin: 0.5rem 0.3rem;
+    font-size: 14px;
+  }
+
+  .search-dropdown {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0 0 10px 10px;
+  }
+
+  .search-dropdown-item {
+    padding: 6px;
+  }
+
+  .search-dropdown-item-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .no-results {
+    font-size: 10px;
+    height: 60px;
+  }
+}

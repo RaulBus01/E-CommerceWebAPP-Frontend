@@ -5,6 +5,7 @@
     width: 95%;
     height: 100%;
     margin-bottom: 20px;
+  
     
   }
   
@@ -16,6 +17,7 @@
     height: 80px;
     padding: 0 20px;
     background-color: transparent;
+  
  
   }
   
@@ -31,6 +33,7 @@
     width: 400px;
     height: 40px;
     margin: 10px;
+    font-size: 1.5rem;
     cursor: pointer;
   }
   
@@ -141,4 +144,53 @@
     margin: 0; 
     line-height: 1.5;
   }
-  
+  @media (max-width: 768px) {
+    .users-menu-header {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .users-menu-header button {
+        width: 100%;
+        font-size: 1.2rem;
+    }
+
+    .users-table-header, .users-content {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .distributor-header, .distributor-content {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .user-text, .user-text-address {
+        font-size: 0.8rem;
+        padding: 5px;
+    }
+}
+
+/* Responsive styles for phones */
+@media (max-width: 480px) {
+    .users-menu-header {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .users-menu-header button {
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    .users-table-header, .users-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .distributor-header, .distributor-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .user-text, .user-text-address {
+        font-size: 0.7rem;
+        padding: 5px;
+    }
+}

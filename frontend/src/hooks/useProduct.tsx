@@ -107,7 +107,7 @@ const useProduct = (byCategory = false): UseOrderResult => {
   const fetchProduct = async (productId: string) => {
     try {
       const response = await _get(`/products/find/${productId}`, {}, token as string);
-      return response;
+      return response.product;
     } catch (error: any) {
       console.error("Error fetching product:", error);
       return null;

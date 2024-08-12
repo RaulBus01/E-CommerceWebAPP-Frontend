@@ -105,7 +105,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading, isFavourite
           </button>
 
            {product.isActive && <button className="delete-button" onClick={handleDeleteProduct}>
-            <DeleteIcon /> Delete
+            <DeleteIcon /> Remove
           </button> 
             } 
             

@@ -8,7 +8,7 @@ import "./CartPage.css";
 import toast from "react-hot-toast";
 
 const CartPage = () => {
-  const { token } = useAuth();
+  const { token,user } = useAuth();
   const { cart, setCart, editProductQuantity, removeProduct } = useCart(token as string);
   const { addToFavourite, removeFavourite } = useFavourite(token);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -91,32 +91,32 @@ const CartPage = () => {
         <div className="cart-items">
           {cart.products && cart.products.length > 0 ? (
             cart.products.map((product) => (
-              <div className="cart-item" key={product.product._id}>
+              <div className="cart-item" key={product?.product?._id}>
                 <img
-                    src={product.product.image[0]}
-                    alt={product.product.name}
+                    src={product?.product?.images[0]}
+                    alt={product?.product?.name}
                     className="cart-item-image"
                   />
                 <div className="cart-item-details">
                   
-                  <h2 className="cart-item-title">{product.product.name}</h2>
+                  <h2 className="cart-item-title">{product?.product?.name}</h2>
                   <div className="cart-item-description">
-                    {product.product.description}
+                    {product?.product?.description}
                   </div>
                   <div className="cart-item-seller">
-                    Seller: {product.product.distributor}
+                    Seller: {product?.product?.distributor}
                   </div>
                   <div className="cart-item-availability">
-                    Availability: {product.product.stock}
+                    Availability: {product?.product?.stock}
                   </div>
                 </div>
                 <div className="cart-item-right">
                   <div className="cart-item-price">
-                    <div>{product.product.price} Lei</div>
+                    <div>{product?.product?.price} Lei</div>
                     <div>
                       Total:{" "}
                       {Math.round(
-                        product.quantity * product.product.price * 100
+                        product?.quantity * product?.product?.price * 100
                       ) / 100}{" "}
                       Lei
                     </div>
@@ -131,13 +131,13 @@ const CartPage = () => {
                     >
                       -
                     </button>
-                    <span>{product.quantity}</span>
+                    <span>{product?.quantity}</span>
                     <button
                       className="add-quantity-button"
                       onClick={() =>
                         handleEditProductQuantity(product, "increase")
                       }
-                      disabled={product.product.stock <= 0}
+                      disabled={product?.product?.stock <= 0}
                     >
                       +
                     </button>
@@ -145,14 +145,14 @@ const CartPage = () => {
                   <div className="cart-item-actions">
                     <div
                       className="cart-item-action-favourites"
-                      onClick={() => handleFavourites(product.product)}
+                      onClick={() => handleFavourites(product?.product)}
                     >
                       <Favorite style={{ marginRight: "8px", color: "red" }} />
                       Move to Favourites
                     </div>
                     <div
                       className="cart-item-action-remove"
-                      onClick={() => handleRemove(product.product)}
+                      onClick={() => handleRemove(product?.product)}
                     >
                       <DeleteOutline style={{ marginRight: "8px" }} />
                       Remove

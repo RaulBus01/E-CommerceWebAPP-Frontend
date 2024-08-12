@@ -79,17 +79,23 @@ const DistributorProductPage = ({type}: {type: string}) => {
       toast.error('Error adding product');
     }
   };
-
+  console.log(formData);
   return (
     <div className="add-product-container">
       <header>
         <h1>
-          {user?.role === 'distributor' 
+          {user?.role === 'distributor' || user?.role === 'admin'
             ? type === 'add-product' ? 'Add Product' : 'Edit Product' 
             : 'Access Denied'}
         </h1>
       </header>
       <main>
+        {user?.role !== 'distributor' && user?.role !== 'admin' ? (
+          <div className="access-denied">
+            <h2>Access Denied</h2>
+            <p>You are not authorized to view this page.</p>
+          </div>
+        ) :
         <Form
           fieldList={[
             { id: 'name', label: 'Product Name', type: 'text', placeholder: 'Enter product name', icon: 'product' },
@@ -106,6 +112,7 @@ const DistributorProductPage = ({type}: {type: string}) => {
           onSubmit={handleSubmit}
           type={type}
         />
+  }
       </main>
     </div>
   );

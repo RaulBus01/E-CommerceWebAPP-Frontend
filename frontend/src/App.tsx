@@ -46,7 +46,7 @@ const App = () => {
             <Route element={<ProtectedRoute />}>
               
               <Route path="/cart" element={<CartPage />} />
-              <Route path="/checkoutData" element={<CheckoutPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/profile" element={<UserProfilePage />} />
               <Route path="/favorites" element={<FavoritePage />} />
               <Route path="/distributor-dashboard/:id" element={<UserProfilePage />} />

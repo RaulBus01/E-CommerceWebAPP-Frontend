@@ -37,9 +37,9 @@ const Navbar = () => {
               <span className="nav-text">Account</span>
             </NavLink>
           </li>
-          
+          { user?.role === "customer" &&
           <li className="nav-icons">
-            { user?.role === "customer" &&
+           
             <NavLink className="nav-link" to="/favorites">
               <FavoriteBorderIcon />
               <span className="nav-text">Favourites</span>
@@ -47,8 +47,10 @@ const Navbar = () => {
                 <span className="favourites-count">({favourites.length})</span>
               )} */}
             </NavLink>
-            }
+            
           </li>
+          }
+          { user?.role === "customer" &&
           <li className="nav-icons">
             { user?.role === "customer" &&
             <NavLink  className="nav-link" to="/cart">
@@ -60,6 +62,7 @@ const Navbar = () => {
             </NavLink>
           }
           </li>
+          }
           </div>
         </ul>
       </nav>
