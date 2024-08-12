@@ -82,7 +82,7 @@ const QuestionsSubmenu = ({productId, token, user}) => {
                 <div className="replies-container">
                   {question?.replies && question?.replies.slice(0, expandedReplies[question.id] ? question.replies.length : 1)
                     .map((reply) => (
-                      <div key={reply?._id} className="reply-cell">
+                      <div key={reply?.id} className="reply-cell">
                         <div className="left-review-cell">
                           <h3>{reply?.user.name || user?.name} replied:</h3>
                           <p>{reply?.content}</p>

@@ -20,10 +20,11 @@ const FavoritePage = () => {
         </div>
     }
 
-    const handleEmptyFacourites = () => {
+    const handleEmptyFavourites = async () => {
         if (!window.confirm("Are you sure you want to remove all favourites?")) return;
-        removeAllFavourites();
+        await removeAllFavourites();
         setFavourites(null);
+        window.location.reload();
     }
 
     return (
@@ -49,7 +50,7 @@ const FavoritePage = () => {
                 </div>
             ) : (
                 <div className="empty-button-container">
-                    <button onClick={handleEmptyFacourites}>Clear favourites</button>
+                    <button onClick={handleEmptyFavourites}>Clear favourites</button>
                 </div>
             )}
         </div>

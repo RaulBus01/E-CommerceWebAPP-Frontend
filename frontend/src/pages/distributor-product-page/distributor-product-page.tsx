@@ -12,6 +12,8 @@ interface Product {
   name: string;
   description: string;
   price: number;
+  discountPrice?: number;
+  discountPercentage?: number;
   images: (string | File)[];
   stock: number;
   brand: string;
@@ -22,7 +24,7 @@ interface Product {
 
 const DistributorProductPage = ({type}: {type: string}) => {
   const { user } = useAuth();
-  const { productId } = type === 'edit-product' ? useParams() : {productId: ''};
+  const { productId } = type === 'edit-product' ? useParams<{ productId: string }>() : { productId: '' };
   const { addProduct, fetchProduct, editProduct } = useProduct();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<Product>({} as Product);
@@ -31,9 +33,12 @@ const DistributorProductPage = ({type}: {type: string}) => {
     if (type === 'edit-product' && productId) {
       fetchProduct(productId).then((product) => {
         if (product) {
+          console.log(product);
+          console.log(productId);
           const { createdAt, updatedAt, ratingProduct, numberOfReviews, reviews, questions, ...rest } = product;
           setFormData({
             ...rest,
+            _id: productId,
             images: product?.images || [],
           });
         }
@@ -43,6 +48,11 @@ const DistributorProductPage = ({type}: {type: string}) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (type === 'edit-product' && !formData._id) {
+      toast.error('Product ID is missing. Unable to edit product.');
+      return;
+    }
     
     const formDataToSend = new FormData();
 
@@ -64,6 +74,7 @@ const DistributorProductPage = ({type}: {type: string}) => {
     });
 
     try {
+      console.log('Editing product with ID:', formData._id);
       const response = type === 'edit-product' ? await editProduct(formData._id, formDataToSend): await addProduct(formDataToSend);
       if(response === 'Product updated successfully' || response === 'Product added successfully') {
          toast.success(response);
@@ -103,6 +114,8 @@ const DistributorProductPage = ({type}: {type: string}) => {
             { id: 'categories', label: 'Category', type: 'category', placeholder: 'Enter category', icon: 'category' },
             { id: 'brand', label: 'Brand', type: 'text', placeholder: 'Enter brand', icon: 'brand' },
             { id: 'price', label: 'Price', type: 'number', placeholder: 'Enter price', icon: 'price' },
+            { id: 'discountPrice', label: 'Discount Price', type: 'number', placeholder: 'Enter discount price', icon: 'price' },
+            { id: 'discountPercentage', label: 'Discount Percentage', type: 'number', placeholder: 'Enter discount percentage', icon: 'price' },
             { id: 'images', label: 'Images', type: 'file', placeholder: 'Select images', icon: 'image' }, 
             { id: 'stock', label: 'Stock', type: 'number', placeholder: 'Enter stock', icon: 'stock' },
             type === 'edit-product' ? { id: 'isActive', label: 'Active', type: 'checkbox', placeholder: 'Enter product status', icon: 'status' } : null

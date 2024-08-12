@@ -6,18 +6,19 @@ import useQuestion from "../../../hooks/useQuestion";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useReply from "../../../hooks/useReply";
 import { userData } from "../../../types/UserType";
+import { useNavigate } from "react-router";
 const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user?:userData}) => {
     
-    console.log(userId);
     const [visibleReplies, setVisibleReplies] = useState({});
     const { questions, loading: questionLoading,setQuestions,deleteQuestion,fetchQuestionsByUser } = userId ? useQuestion(token,userId) : useQuestion(token,'admin');
 
-    console.log(questions);
+    const navigate = useNavigate();
 
     const {deleteReply} = useReply(token);
 
     useEffect(() => {
         if (userId) {
+            fetchQuestionsByUser(userId);
             fetchQuestionsByUser(userId);
         }
     }, [userId]);
@@ -40,7 +41,10 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
         await deleteQuestion(questionId);
         setQuestions(questions?.filter((question) => question.id !== questionId));
     }
- 
+    
+    const handleImageClick = (productId: string) => {
+        navigate(`/product/${productId}`);
+    }
 
     const handleRepliesVisibility = (questionId) => {
        
@@ -62,8 +66,8 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
                         <div key={question.id} className="question-item">
                           <div className="question-data">
                              <div className="question-product">
-                                        <img src={question?.product?.images[0]}></img>
-                                        <div className="product-name">{question?.product?.name}</div>
+                                        <img src={question.product.images[0]} onClick={() => handleImageClick(question.product._id)}></img>
+                                        <div className="product-name">{question.product.name}</div>
                             </div>
                             <div className="question-content">
                                 <div className="question-info"> {question?.user?.name} </div>
