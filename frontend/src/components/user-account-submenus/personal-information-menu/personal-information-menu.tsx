@@ -34,7 +34,7 @@ const PersonalInformationMenu = ({ user, title = "Personal Information" }) => {
   
 
   const handleEdit = (fieldName: string) => {
-  
+    
     setEditingField(fieldName);
     setFormData(prev => ({
       ...prev,

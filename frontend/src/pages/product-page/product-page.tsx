@@ -10,11 +10,15 @@ import StarIcon from "@mui/icons-material/Star";
 import ReviewsSubmenu from "../../components/product-page-submenus/reviews-submenu/reviews-submenu.tsx";
 import QuestionsSubmenu from "../../components/product-page-submenus/questions-submenu/questions-submenu.tsx";
 import Spinner from "../../components/spinner/spinner.tsx";
+import useCart from "../../hooks/useCart.tsx";
+import toast from 'react-hot-toast'
 
 const ProductPage = () => {
   const { productId } = useParams<{ productId: string }>();
   const { loading, product, fetchProductById } = useProduct();
+
   const { user, token } = useAuth();
+  const {addProductToCart} = useCart(token as string);
   const { addToFavourite, removeFavourite, isProductFavourite } = useFavourite(token);
   
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
@@ -48,7 +52,14 @@ const ProductPage = () => {
       setSelectedImage(product.images[0]);
     }
   }, [productId, product, isProductFavourite]);
-
+ const handleProudct = useCallback(async ()=>{
+    try{
+      await addProductToCart (product,token)
+      toast.success('Product added to cart')
+    }catch{
+      toast.error('Error adding product to cart')
+    }
+ },[product])
   const handleFavorite = useCallback(async () => {
     try {
       if (isFavourite) {
@@ -133,7 +144,7 @@ const ProductPage = () => {
                 )}
               </div>
               <div className="product-button-container">
-                <button>
+                <button onClick={handleProudct} >
                   <AddShoppingCartIcon></AddShoppingCartIcon>
                 </button>
                 <button onClick={handleFavorite}>
