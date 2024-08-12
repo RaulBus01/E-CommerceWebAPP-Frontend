@@ -21,13 +21,18 @@ const CheckoutPage = () => {
     const token = location.state?.token;
     const user = location.state?.user;
     const shipping = 12.99;
+
+    console.log(cart);
     
     const { emptyCart } = useCart(token);
     const { createOrder } = useOrder(token);
 
     const productsPrice = () => {
-        return cart.products.reduce((acc, product) => acc + product.product.price * product.quantity, 0);
-    }
+        return cart.products.reduce((acc, product) => {
+            const price = product.product.discountPrice < product.product.price ? product.product.discountPrice : product.product.price;
+            return acc + price * product.quantity;
+        }, 0);
+    };
 
     const orderTotal = productsPrice() > 100 ? productsPrice() : productsPrice() + shipping;
 
