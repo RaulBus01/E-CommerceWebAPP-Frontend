@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect, useState  } from "react";
 import "./Filter.css";
 
 
@@ -13,7 +13,13 @@ const Filter = ({
   setProducts,
   setLoading,
   filterProducts,
+  brands,
 }) => {
+  
+ 
+  console.log("brands",brands)
+ 
+
   const handleMinPriceChange = (e) => {
     const newMin = Number(e.target.value);
     if (newMin >= 0 && newMin <= priceRange[1] && newMin <= 300) {
@@ -132,8 +138,8 @@ const Filter = ({
 
       <div className="filter-item">
         <div className="filter-brand">Brand</div>
-        {["Airheads", "Albert's", "Betty Crocker"].map((brand) => (
-          <div className="check-brand" key={brand}>
+        {brands.map((brand) => (
+          <div className="check-brand" key={brand}> 
             <input
               type="checkbox"
               checked={selectedBrand.includes(brand)}

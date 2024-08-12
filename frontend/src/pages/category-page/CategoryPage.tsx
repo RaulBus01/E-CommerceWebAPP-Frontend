@@ -14,6 +14,18 @@ const CategoryPage = () => {
     id: string;
     name: string;
   };
+  const [brands, setBrands] = useState<string[]>([]);
+  const getBrands = (products: any) => {
+    const brands = products.map((product: any) => product.brand);
+    return Array.from(new Set(brands));
+  };
+  useEffect(() => {
+    if (products) {
+      setBrands(getBrands(products));
+    }
+  }, [products]);
+
+
 
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [availability, setAvailability] = useState({
@@ -65,6 +77,7 @@ const CategoryPage = () => {
         setProducts={setProducts}
         setLoading={setLoading}
         filterProducts={filterProducts}
+        brands={brands}
       />
 
       <div className="product-section">
