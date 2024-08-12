@@ -42,24 +42,24 @@ const MyReviewsMenu = ({token,user}:{token:string,user?:userData | null}) => {
                 {reviews && reviews.length > 0 ? (
                     <div className="reviews-container">
                         {reviews.map((review) => (
-                            <div key={review._id} className="review-item">
+                            <div key={review?._id} className="review-item">
                                 <div className="review-data">
                                     <div className="review-product">
-                                        <img src={review.product.images[0]} onClick={() => handleImageClick(review.product._id)}></img>
-                                        <div className="product-name">{review.product.name}</div>
+                                        <img src={review?.product?.images[0]} onClick={() => handleImageClick(review?.product?._id)}></img>
+                                        <div className="product-name">{review?.product?.name}</div>
                                     </div>
                                     <div className="review-content">
-                                        <div className="review-info"> {review.user.name} </div>
+                                        <div className="review-info"> {review?.user?.name} </div>
                                       
-                                        <p className="review-date">on: {formatDateTime(review.createdAt)}</p>
-                                        <div className="review-title">{review.title}</div> 
+                                        <p className="review-date">on: {formatDateTime(review?.createdAt)}</p>
+                                        <div className="review-title">{review?.title}</div> 
                                         <div className="rating">
-                                        {review.rating && review.rating > 0 &&  Array.from({length: review.rating}, (_, i) => (
+                                        {review?.rating && review?.rating > 0 &&  Array.from({length: review?.rating}, (_, i) => (
                                             <StarIcon key={i} style={{ color: "yellow" }} />
                                         ))}
                                         </div>
                                         <div className="review-content">
-                                            <p>{review.content}</p>
+                                            <p>{review?.content}</p>
                                         </div>
 
                                     
