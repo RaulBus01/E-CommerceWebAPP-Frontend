@@ -11,7 +11,7 @@ import RegisterForm from '../../components/controls/form/registerForm.tsx'
 const RegisterPage: React.FC = () => {
   const { register } = useAuth()
   const{userRole} = useParams()
-  console.log(userRole)
+
 
   const navigate = useNavigate()
   const handleSubmit = async (data: registerDataCustomer | registerDataDistributor) => {

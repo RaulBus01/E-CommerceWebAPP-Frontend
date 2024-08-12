@@ -31,7 +31,7 @@ const QuestionsSubmenu = ({productId, token, user}) => {
           replies: [],
         };
         await createQuestion(newQuestion);
-        console.log(newQuestion);
+      
 
         setProductQuestions([...productQuestions, newQuestion]);
      

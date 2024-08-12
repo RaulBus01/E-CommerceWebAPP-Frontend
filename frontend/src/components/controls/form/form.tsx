@@ -6,7 +6,7 @@ import { Category } from '../../../types/CategoryType';
 
 const Form = ({ fieldList, formData, setFormData, onSubmit, type }) => {
   const { categories, loading } = useCategory();
-  console.log(type);
+  
   const handleChange = (id) => (value) => {
     setFormData({ ...formData, [id]: value });
   };

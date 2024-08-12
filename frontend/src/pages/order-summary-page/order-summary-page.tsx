@@ -7,7 +7,7 @@ const OrderSummaryPage = () => {
     const [paymentStatus, setPaymentStatus] = useState('');
 
     const order = location.state?.newOrder;
-    console.log(order);
+   
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const redirectStatus = queryParams.get('redirect_status');

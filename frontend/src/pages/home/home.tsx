@@ -14,6 +14,8 @@ const Home = () => {
   const { token } = useAuth();
   const { addToFavourite, removeFavourite, isProductFavourite } = useFavourite(token as string);
 
+  
+
   const [favouriteProducts, setFavouriteProducts] = useState<string[]>(products?.filter(product => isProductFavourite(product._id)).map(product => product._id) || []);
   const [mostRecentProducts, setMostRecentProducts] = useState<productData[]>([]);
   

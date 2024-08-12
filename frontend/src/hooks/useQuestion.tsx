@@ -38,12 +38,12 @@ const useQuestion = (token: string, userId?: string,productId?: string): useQues
 
     const fetchQuestionsByUser = useCallback(async () => {
         setLoading(true);
-        console.log(userId);
+       
         try {
             
             const response = await _get(`/question/findUserQuestion/${userId ? userId : 'admin'}`, token);
             const res: questionData[] = response.questions;
-            console.log(res);
+            
             setQuestions(res);
         } catch (error: any) {
             console.log("Error fetching questions by user:", error);

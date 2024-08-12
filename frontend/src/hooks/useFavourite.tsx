@@ -39,7 +39,7 @@ const useFavourite = (token:string | null): UseFavouriteResult => {
                 setFavouriteSet(new Set(productIds));
                 
             } catch (error: any) {
-                console.log(error);
+               
             } finally {
                 setLoading(false);
             }

@@ -22,7 +22,7 @@ const CheckoutPage = () => {
     const user = location.state?.user;
     const shipping = 12.99;
 
-    console.log(cart);
+
     
     const { emptyCart } = useCart(token);
     const { createOrder } = useOrder(token);

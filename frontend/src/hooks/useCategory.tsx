@@ -17,7 +17,7 @@ const useCategory = () : UseCategoryResult => {
         setLoading(true);
         try {
             const response = await _get(`/categoriesTree`, {}, {});
-            console.log('Response:', response);
+          
             setCategories(response);
         } catch (error: any) {
             console.error("Error fetching all categories:", error);

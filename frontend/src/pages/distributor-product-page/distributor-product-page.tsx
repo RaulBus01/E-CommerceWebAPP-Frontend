@@ -33,8 +33,7 @@ const DistributorProductPage = ({type}: {type: string}) => {
     if (type === 'edit-product' && productId) {
       fetchProduct(productId).then((product) => {
         if (product) {
-          console.log(product);
-          console.log(productId);
+      
           const { createdAt, updatedAt, ratingProduct, numberOfReviews, reviews, questions, ...rest } = product;
           setFormData({
             ...rest,
@@ -90,7 +89,7 @@ const DistributorProductPage = ({type}: {type: string}) => {
       toast.error('Error adding product');
     }
   };
-  console.log(formData);
+  
   return (
     <div className="add-product-container">
       <header>
