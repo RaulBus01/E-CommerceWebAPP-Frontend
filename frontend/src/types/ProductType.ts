@@ -9,6 +9,8 @@ interface productData {
     _id: string;                         
     name: string;
     price: number;
+    discountPrice?: number;
+    calculatedDiscountPercentage?: number;
     categories: string[];
     description: string;
     images: string;

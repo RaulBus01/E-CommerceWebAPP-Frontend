@@ -74,13 +74,28 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading, isFavourite
     return <div className="card-container"><Spinner /></div>;
   }
 
+  const calculateDiscountPercentage = (price: number, discountPrice: number): number => {
+    return Math.round(((price - discountPrice) / price) * 100);
+  };
+
+  if (product.discountPrice && product.price) {
+    product.calculatedDiscountPercentage = calculateDiscountPercentage(product.price, product.discountPrice);
+  }
+
   return (
     <div className="card-container">
       <img  src={product?.images[0]} alt="product" onClick={handleProductPage} />
       <div className="information-container">
         
         {<p onClick={handleProductPage} className="product-name">{product?.name}</p>}
-        <h2>{product?.price} lei</h2>
+        {product?.calculatedDiscountPercentage > 0 ? (
+          <div className="discount-price-display">
+              <h3>{product?.price} lei</h3>
+              <h2>{product?.discountPrice}lei(-{product.calculatedDiscountPercentage}%)</h2>
+          </div>
+        ) : (
+          <h2>{product?.price} lei</h2>
+        )}
       </div>
       <div className="rating-container">
         <StarIcon style={{ color: "yellow" }} />
