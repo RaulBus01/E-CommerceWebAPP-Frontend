@@ -22,7 +22,13 @@ const ProductPage = () => {
   const [selectedImage, setSelectedImage] = useState<string>(product?.images[0] || "");
 
   const reviewRef = useRef<HTMLDivElement>(null);
-  console.log(product);
+
+  useEffect(() => {
+    if (productId) {
+      fetchProductById(productId);
+    }
+  }, [productId, fetchProductById]);
+
   const loadSelectedMenu = () => {
     switch (selectedMenu){
       case "Reviews":
@@ -33,11 +39,7 @@ const ProductPage = () => {
         return <ReviewsSubmenu user={user} reviewRef={reviewRef} productId={productId} token={token} />;
     }
   }
-  useEffect(() => {
-    if (productId) {
-      fetchProductById(productId);
-    }
-  }, [productId, fetchProductById]);
+
 
   useEffect(() => {
     if (product && productId) {
@@ -137,6 +139,7 @@ const ProductPage = () => {
           </div>
           <div className="product-info-container">
             <h2>{product?.name}</h2>
+          
             <h3>{product?.description}</h3>
           </div>
         </div>

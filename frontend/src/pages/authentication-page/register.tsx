@@ -44,7 +44,7 @@ const RegisterPage: React.FC = () => {
       <div className="auth-header">
         <h1 className="auth-title" >
           <a href="/" >
-          Bookstore
+          Candee Shop
           </a>
           </h1>
         </div>
