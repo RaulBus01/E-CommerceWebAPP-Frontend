@@ -13,12 +13,17 @@ const CartPage = () => {
   const { addToFavourite, removeFavourite } = useFavourite(token);
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
+  const shipping = 12.99;
 
   useEffect(() => {
     const calculateTotalPrice = () => {
       let total = 0;
       cart.products.forEach((product) => {
-        total += product.quantity * product.product.price;
+        if(product.product.discountPrice && product.product.discountPrice < product.product.price){
+          total += product.quantity * product.product.discountPrice;
+        }else{
+          total += product.quantity * product.product.price;
+        }
       });
       setTotalPrice(Math.round(total * 100) / 100);
     };
@@ -81,7 +86,8 @@ const CartPage = () => {
   };
 
   const handleCheckout = () => {
-    navigate("/checkout");
+    console.log(cart);
+    navigate("/checkout", { state: { cart, token, user } });
   };
 
   return (
@@ -112,13 +118,24 @@ const CartPage = () => {
                 </div>
                 <div className="cart-item-right">
                   <div className="cart-item-price">
-                    <div>{product?.product?.price} Lei</div>
+                    <div>{product?.product?.discountPrice < product.product.price ? (
+                      <>
+                        <span className="discount-price">
+                          {product?.product?.discountPrice} Lei
+                        </span>
+                      </>
+                    ) : (
+                      <span>{product?.product?.price} Lei</span>
+                    )}</div>
                     <div>
                       Total:{" "}
-                      {Math.round(
-                        product?.quantity * product?.product?.price * 100
+                      {Math.round( 
+                        product?.product?.discountPrice < product.product.price ? (
+                          product?.product?.discountPrice * product?.quantity
+                        ) * 100 : (
+                          product?.product?.price * product?.quantity
+                        ) * 100
                       ) / 100}{" "}
-                      Lei
                     </div>
                   </div>
                   <div className="cart-item-quantity">
@@ -169,33 +186,34 @@ const CartPage = () => {
           <div className="cart-total">
             <div className="summary">Order Summary</div>
             <div className="product-price-details">Product Price: {totalPrice} Lei</div>
-            <div className="shipping-details">Shipping: 0 Lei</div>
-            <div className="total">Cart Total: {totalPrice}</div>
-            <div
+            <div className="shipping-details">
+              {totalPrice > 100 ? (
+                <div>Shipping: Free</div>
+              ) : (
+                <div>Shipping: {shipping} Lei</div>
+              )}
+            </div>
+            <div className="total">
+              Cart Total: {totalPrice > 100 ? totalPrice : totalPrice + shipping} Lei
+            </div>
+            {user?.customerInfo?.isVerified ? (
+              <div
               className="checkout-button"
               onClick={handleCheckout}
               role="button"
               tabIndex={0}
-            >
-              Go to Checkout
+              >
+                Go to Checkout
+              </div>
+            ) : (
+              <div className="checkout-button-container">
+                <p>Please verify your account to proceed to checkout</p> 
+                <button onClick={() => navigate(`/user-dashboard/${user?._id}`)}>Go to account</button>
             </div>
+            )}
           </div>
         )}
       </div>
-      {cart.products && cart.products.length > 0 && (
-        <div className="checkout-button-container">
-          {user?.customerInfo?.isVerified ? (
-          <button onClick={(handleCheckout)}>Proceed to checkout</button>
-          ) : (
-            <div className="checkout-button-container">
-              <p>Please verify your account to proceed to checkout</p> 
-              <button onClick={() => navigate(`/user-dashboard/${user?._id}`)}>Go to account</button>
-            </div>
-
-            
-          )}
-        </div>
-      )}
     </div>
   );
 };
