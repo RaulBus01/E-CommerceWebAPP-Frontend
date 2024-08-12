@@ -110,6 +110,7 @@ const ProductPage = () => {
               </div>
             </div>
             <div className="buy-data">
+              {product?.name && <h1>{product?.name}</h1>}
               {product?.calculatedDiscountPercentage > 0 ? (
                 <div className="discount-price-display">
                   <h3>{product?.price} lei</h3>
@@ -122,14 +123,14 @@ const ProductPage = () => {
               <div className="rating-product-display" onClick={scrollToReviews}>
                 <h3>{product?.ratingProduct}</h3>
                 <StarIcon style={{ color: "yellow" }} />
-                <p>({product?.numberOfReviews || "N/A"})</p>
+                <p>({product?.numberOfReviews || "0"})</p>
               </div>
               <div className="product-button-container">
                 <button>
                   <AddShoppingCartIcon></AddShoppingCartIcon>
                 </button>
                 <button onClick={handleFavorite}>
-                  <FavoriteIcon style={{ color: isFavourite ? "red" : "white" }}></FavoriteIcon>
+                  <FavoriteIcon style={{ color: isFavourite ? "pink" : "white" }}></FavoriteIcon>
                 </button>
               </div>
             </div>

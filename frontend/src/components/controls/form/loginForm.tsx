@@ -47,7 +47,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         icon="key"
         showVisibilityIcon
       />
-      <p>Forgot your password? <NavLink to="/forgot-password">Reset Password</NavLink></p>
+    
       <Button
         text="Login"
         type="submit"
