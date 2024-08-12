@@ -17,7 +17,7 @@ interface questionData{
     replies?: replyData[];
 }
 interface postQuestionData{
-    productId: string;
+    product: string;
     content: string;
 }
 export type {questionData, postQuestionData}; 
