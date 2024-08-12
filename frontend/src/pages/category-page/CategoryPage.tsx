@@ -80,6 +80,8 @@ const CategoryPage = () => {
                 key={product._id}
                 product={product}
                 loading={loading}
+                isFavourite={false}
+                onFavouriteToggle={() => {}}
               />
             ))}
           </div>
