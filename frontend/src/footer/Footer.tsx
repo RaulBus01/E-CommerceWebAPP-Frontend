@@ -32,16 +32,7 @@ const Footer = () => {
                     <li><NavLink to="/Terms&Conditions">Terms & Conditions</NavLink></li>
                 </ul>
             </div>
-            <div className="footer-subscribe">
-                <p>Sign up to get 10% off your first order</p>
-                <form className='subscribe-form'>
-                    <input type="email" placeholder="Enter your email address" />
-                    <button type="submit">Subscribe</button>
-                </form>
-                <div className="social-icons">
-                   
-                </div>
-            </div>
+           
         </div>
         <div className="footer-bottom">
             <ul>

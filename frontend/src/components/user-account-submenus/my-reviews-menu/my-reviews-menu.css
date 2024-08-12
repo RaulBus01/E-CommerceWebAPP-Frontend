@@ -72,8 +72,6 @@
 .review-product{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    
     align-items: center;
         
 }
@@ -156,52 +154,56 @@
     }
 }
 @media (max-width: 480px) {
-    .review-item {
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
-        box-shadow: none;
-        border-radius: 10px;
-    }
-
-    .review-content {
-        width: 100%;
-        margin: 10px 0;
-        font-size: 1rem;
-    }
-
-    .review-info {
-        font-size: 1rem;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .product-name {
-        font-size: 1rem;
-        margin: 5px 0;
-    }
-
-    .review-item img {
-        width: 100px;
-        height: 100px;
-    }
-
-    .review-title {
-        font-size: 1.2rem;
-    }
-
-    .my-reviews-header {
+    .reviews-header {
         padding: 10px;
         flex-direction: column;
         height: auto;
-    }
-
-    .reviews-container {
+      }
+    
+      .reviews-container {
         gap: 20px;
-    }
+      }
+    
+      .review-item {
+        width: 220px;
+        flex-direction: column;
+        padding: 10px;
+        box-shadow: none;
+        border-radius: 10px;
+      }
+     
+    
+      .review-content {
+        width: 100%;
+        margin: 10px 0;
+        font-size: 1rem;
+      }
+    
+      .review-info {
+        font-size: 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    
+      .product-name {
+        font-size: 1rem;
+        margin: 5px 0;
+      }
+      .review-product img{
+        width: 80px;
+        height: 80px;
+      }
+    
+      
+    
+      .review-replies-container {
+        width: 100%;
+      }
+    
 
-    .review-actions svg {
-        font-size: 30px;
-    }
+      .reviews-actions svg,
+      .reply-actions svg {
+        font-size: 25px;
+      }
+    
 }

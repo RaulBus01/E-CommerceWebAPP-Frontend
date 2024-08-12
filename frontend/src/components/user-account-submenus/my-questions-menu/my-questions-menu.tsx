@@ -76,7 +76,7 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
                                 <div className="question-content">
                                     <p>{question.content}</p>
                                 </div>
-                                <button onClick={() => handleRepliesVisibility(question.id)} className="btn btn-primary">
+                                <button onClick={() => handleRepliesVisibility(question.id)} className="btn-replies">
                                 
                                 {question.replies?.length} Answers
                                 </button>
