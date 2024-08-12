@@ -66,7 +66,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading, isFavourite
   }
 }
   const handleProductPage = () => {
-    console.log(product._id);
+  
     navigate(`/product/${product._id}`);
   };
 

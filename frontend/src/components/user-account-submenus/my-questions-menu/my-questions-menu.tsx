@@ -53,7 +53,7 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
             [questionId]: !prev[questionId]
         }));
     };
-    console.log(questions);
+   
     return (
         <div className="my-questions-menu">
             <div className="questions-header">

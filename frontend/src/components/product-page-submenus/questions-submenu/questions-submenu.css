@@ -12,7 +12,7 @@
     width: 90%;
     height: auto;
 
-    border: solid 1px var(--primary-color);
+    border: solid 1px var(--fourth-color);
     border-radius: 10px;
     padding: 10px;
 
@@ -54,29 +54,46 @@
     gap: 10px;
 }
 .replies-container button{
-    width: 20%;
-    height: 20px;
+    width: 30%;
+    height: 30px;
+    border:none;
+    background-color: var(--fourth-color);
+    color : var(--dark-color);
 
     border-radius: 15px;
 }
 .replies-container button:hover{
     cursor: pointer;
-    background-color: var(--third-color);
+
 }
 
 .reply-cell{
     width: 100%;
+}
+.reply-cell button{
+    width: 100%;
+    height: 30px;
+    border: none;
+    background-color: var(--secondary-color);
+    color : var(--info-color);
+    border-radius: 15px;
+    font-size: 1.1rem;
+    
 }
 
 .reply-container{
     width: 100%;
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
     gap: 20px;
 }
 .reply-container button{
     padding: 10px 20px;
     border-radius: 10px;
+    width: 40%;
+    background-color: var(--third-color);
     border: none;
 }
 .reply-container button:hover{
@@ -84,11 +101,22 @@
     background-color: var(--third-color);
 }
 .reply-container textarea{
+    font-size: 1.1rem;
+    color: var(--info-color);
+    margin-left: 10px;
+    background-color:  transparent;
+    border: none;
+    border-bottom: 1px solid var(--info-color);
     width: 80%;
-    height: 50px;
+    height: 100px;
 
     resize: none;
 }
+.reply-container textarea:focus{
+    outline: none;
+    border-bottom: 1px solid var(--third-color);
+}
+
 @media (max-width: 768px) {
     .question-cell {
         width: 95%;

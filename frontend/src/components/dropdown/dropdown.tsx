@@ -25,7 +25,7 @@ const Dropdown = () => {
   const handleOptionClick = (option: string) => {
     navigate(`/category/${option.replace(/ /g, "-")}`);
     setOpenDropdown(null);
-    console.log(openDropdown);
+
   };
 
   if (loading) {

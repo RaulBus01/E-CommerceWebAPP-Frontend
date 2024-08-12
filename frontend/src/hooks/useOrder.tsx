@@ -69,7 +69,7 @@ const useOrder = (token: string): UseOrderResult => {
     const createOrder = async (order: postOrderData) => {
         setLoading(true);
         try {
-            console.log("order",order);
+           
             const response = await _post(`/orders/createOrder`, order, token);
             setLoading(false);
             return response.orders;

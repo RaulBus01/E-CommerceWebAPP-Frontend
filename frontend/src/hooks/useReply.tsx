@@ -26,7 +26,7 @@ const useReply = (token: string): UseReplyResult => {
     const deleteReply = useCallback(async (replyId: string) => {
         setLoading(true);
         try{
-            console.log(replyId);
+           
             const response = await _delete('/reply/deleteReply', {replyId}, token);
             return response;
         }catch{

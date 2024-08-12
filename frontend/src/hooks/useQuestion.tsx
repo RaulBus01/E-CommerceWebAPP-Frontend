@@ -5,16 +5,21 @@ import { userData } from "../types/UserType";
 
 interface useQuestionResult{
     questions: questionData[]| undefined;
+    productQuestions: questionData[]| undefined;
+
     loading: boolean;
     fetchQuestionsByProduct: (productId: string) => Promise<void>;
     fetchQuestionsByUser: (userId: string) => Promise<void>;
     createQuestion: (question: postQuestionData) => Promise<questionData | undefined>;
     deleteQuestion: (questionId: string) => Promise<questionData | undefined>;
     setQuestions: React.Dispatch<React.SetStateAction<questionData[] | undefined>>;
+    setProductQuestions: React.Dispatch<React.SetStateAction<questionData[] | undefined>>;
+
 }
 
 const useQuestion = (token: string, userId?: string,productId?: string): useQuestionResult => {
     const [questions, setQuestions] = useState<questionData[]| undefined>(undefined);
+    const [productQuestions, setProductQuestions] = useState<questionData[]| undefined>(undefined);
     const [loading, setLoading] = useState<boolean>(true);
 
     const fetchQuestionsByProduct = useCallback(async (productId: string) => {
@@ -23,7 +28,7 @@ const useQuestion = (token: string, userId?: string,productId?: string): useQues
             const response = await _get(`/question/findQuestion/${productId}`, token);
             
             const res: questionData[] = response.questions;
-            setQuestions(res);
+            setProductQuestions(res);
         } catch (error: any) {
             console.log("Error fetching questions by product:", error);
         } finally {
@@ -33,12 +38,12 @@ const useQuestion = (token: string, userId?: string,productId?: string): useQues
 
     const fetchQuestionsByUser = useCallback(async () => {
         setLoading(true);
-        console.log(userId);
+       
         try {
             
             const response = await _get(`/question/findUserQuestion/${userId ? userId : 'admin'}`, token);
             const res: questionData[] = response.questions;
-            console.log(res);
+            
             setQuestions(res);
         } catch (error: any) {
             console.log("Error fetching questions by user:", error);
@@ -73,20 +78,20 @@ const useQuestion = (token: string, userId?: string,productId?: string): useQues
             setLoading(false);
         }
     }, [token]);
-
     useEffect(() => {
         if (productId) {
             fetchQuestionsByProduct(productId);
         }
-    }, [productId, fetchQuestionsByProduct]);
+    }, [productId]);
+
+  
     useEffect(() => {
-     
         if (userId || userId === "admin") {
             fetchQuestionsByUser();
         }
-    }, [userId, fetchQuestionsByUser]);
+    }, [userId]);
 
-    return {questions, setQuestions, loading, fetchQuestionsByProduct, fetchQuestionsByUser, createQuestion, deleteQuestion};
+    return {questions, setQuestions,productQuestions,setProductQuestions, loading, fetchQuestionsByProduct, fetchQuestionsByUser, createQuestion, deleteQuestion};
 }
 
 export default useQuestion;

@@ -18,7 +18,7 @@ const defaultAddress = {
 
 const PersonalInformationMenu = ({ user, title = "Personal Information" }) => {
   const { editUser } = useUser();
-  console.log(user);
+  
 
   const {handleResendVerificationEmail} = useVerify();
   const [editingField, setEditingField] = useState(null);
@@ -42,13 +42,13 @@ const PersonalInformationMenu = ({ user, title = "Personal Information" }) => {
         ? { ...defaultAddress, ...(user?.customerInfo?.address || user?.distributorInfo?.address || {}) }
         : user[fieldName] || ""
     }));
-    console.log(formData);
+   
   
 
   };
 
   const handleInputChange = (field, value) => {
-    console.log(field, value);
+    
     setFormData(prev => 
       field === 'address' 
         ? { ...prev, address: { ...prev.address, ...value } }
@@ -62,7 +62,8 @@ const PersonalInformationMenu = ({ user, title = "Personal Information" }) => {
       await editUser({ id: user?.id, [editingField]: formData[editingField] });
       setEditingField(null);
     } catch (error) {
-      console.log("Error updating user", error);
+      console.error('Error saving user data', error);
+      toast.error('Error saving user data');
     }
   };
 

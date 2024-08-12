@@ -44,11 +44,12 @@ const ReviewsSubmenu = ({productId, token, reviewRef, user}) => {
                     <h3>{review.rating}</h3>
                     <StarIcon style={{ color: "yellow" }} />
                   </div>
-                  <p>Posted on: <strong>{formatDateTime(review.createdAt)}</strong></p>
-                  <p>Posted by: <strong>{review.user.name || user?.name}</strong></p>
+                  <p> on: {formatDateTime(review.createdAt)}</p>
+                  <p> by: {review.user.name || user?.name} </p>
                 </div>
               </div>
-            ))}
+            ))} 
+            {reviews && reviews.length === 0 && !loading && <div className="no-reviews">No reviews yet</div>}
           </div>
           <ReviewModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onsubmit={handleAddReview}></ReviewModal>
         </div>

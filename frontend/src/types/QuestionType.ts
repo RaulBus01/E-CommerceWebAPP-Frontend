@@ -17,7 +17,12 @@ interface questionData{
     replies?: replyData[];
 }
 interface postQuestionData{
-    product: string;
+    id: string;
+    user: reviewUserData;
+    product: questionProductData;
     content: string;
+    createdAt: string;        
+    updatedAt: string;
+    replies?: replyData[];
 }
 export type {questionData, postQuestionData}; 

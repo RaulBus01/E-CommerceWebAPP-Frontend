@@ -29,7 +29,7 @@ const useCart = (token:string) => {
   const editProductQuantity = async (product,type) => {
     let quantity = product.quantity;
     let stock = product.product.stock;
-    console.log(token);
+    
 
     if (type === "increase" && stock > 0) {
       quantity++;

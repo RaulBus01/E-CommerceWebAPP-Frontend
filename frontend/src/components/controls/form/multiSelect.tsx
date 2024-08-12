@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 
 const MultiSelect = ({ categories, onCategoriesSelected, initialSelections }) => {
-  console.log(initialSelections);
+
   const [selections, setSelections] = useState<Array<string>>([]);
  
   const [options, setOptions] = useState([categories]);

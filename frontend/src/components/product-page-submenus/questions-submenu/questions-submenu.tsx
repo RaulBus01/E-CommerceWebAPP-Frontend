@@ -13,10 +13,9 @@ const QuestionsSubmenu = ({productId, token, user}) => {
     const [replyContent, setReplyContent] = useState({});
     const [expandedReplies, setExpandedReplies] = useState({});
 
-    const {loading: questionsLoading, questions, fetchQuestionsByProduct, createQuestion} = useQuestion(token,user.id,productId);
+    const {loading: questionsLoading, productQuestions, fetchQuestionsByProduct, createQuestion,setProductQuestions} = useQuestion(token,user.id,productId);
     const {createReply, loading: replyLoading} = useReply(token);
 
-    console.log(questions);
 
     useEffect(() => {
       fetchQuestionsByProduct(productId);
@@ -24,10 +23,18 @@ const QuestionsSubmenu = ({productId, token, user}) => {
 
     const handleAddQuestion = async (question: {content: string}) => {
         const newQuestion: postQuestionData = {
+          user: user,
+
           ...question,
           product: productId,
+          createdAt: new Date().toISOString(),
+          replies: [],
         };
         await createQuestion(newQuestion);
+      
+
+        setProductQuestions([...productQuestions, newQuestion]);
+     
     };
 
     const toggleReply = (questionId) => {
@@ -61,12 +68,12 @@ const QuestionsSubmenu = ({productId, token, user}) => {
     return(
         <div className="product-reviews-container">
           <div className="product-reviews-header">
-            <h1>Questions about the product ({questions?.length || "0"})</h1>
+            <h1>Questions about the product ({productQuestions?.length || "0"})</h1>
             <button onClick={() => setIsModalOpen(true)}>Add a question</button>
           </div>
           <div className="question-cells-container">
             {questionsLoading && <Spinner />}
-            {questions && questions.map((question) => (
+            {productQuestions && productQuestions.map((question) => (
               <div key={question?.id} className="question-cell">
                 <div className="question-container">
                     <div className="left-review-cell">
@@ -76,7 +83,7 @@ const QuestionsSubmenu = ({productId, token, user}) => {
                     <div className="right-review-cell">
                       <div className="review-rating-container">
                       </div>
-                      <p>Posted on: <strong>{formatDateTime(question?.createdAt)}</strong></p>
+                      <p>on: <strong>{formatDateTime(question?.createdAt)}</strong></p>
                     </div>
                 </div>
                 <div className="replies-container">
@@ -88,7 +95,7 @@ const QuestionsSubmenu = ({productId, token, user}) => {
                           <p>{reply?.content}</p>
                         </div>
                         <div className="right-review-cell">
-                          <p>Posted on: <strong>{formatDateTime(reply?.createdAt)}</strong></p>
+                          <p>on: <strong>{formatDateTime(reply?.createdAt)}</strong></p>
                         </div>
                       </div>
                     ))}

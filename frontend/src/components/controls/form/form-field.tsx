@@ -117,7 +117,7 @@ const FormField: React.FC<FormFieldProps> = ({
     const file = selectedFiles[index];
 
     
-    console.log(file);
+   
     
     return (
       <div key={index} className="image-input-container">

@@ -86,7 +86,7 @@ const CartPage = () => {
   };
 
   const handleCheckout = () => {
-    console.log(cart);
+   
     navigate("/checkout", { state: { cart, token, user } });
   };
 

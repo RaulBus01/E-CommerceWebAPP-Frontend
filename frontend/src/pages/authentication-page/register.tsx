@@ -11,7 +11,7 @@ import RegisterForm from '../../components/controls/form/registerForm.tsx'
 const RegisterPage: React.FC = () => {
   const { register } = useAuth()
   const{userRole} = useParams()
-  console.log(userRole)
+
 
   const navigate = useNavigate()
   const handleSubmit = async (data: registerDataCustomer | registerDataDistributor) => {
@@ -44,7 +44,7 @@ const RegisterPage: React.FC = () => {
       <div className="auth-header">
         <h1 className="auth-title" >
           <a href="/" >
-          Bookstore
+          Candee Shop
           </a>
           </h1>
         </div>

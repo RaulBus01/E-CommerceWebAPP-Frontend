@@ -45,7 +45,7 @@ const useProduct = (byCategory = false): UseOrderResult => {
     try {
       const response = await _get(`/products/findAll`, {}, {});
       setProducts(response.products);
-      console.log("fetch products!kjasndkfmasl");
+     
     } catch (error: any) {
       console.error("Error fetching all products:", error);
     } finally {
