@@ -74,7 +74,6 @@ const DistributorProductPage = ({type}: {type: string}) => {
     });
 
     try {
-      console.log('Editing product with ID:', formData._id);
       const response = type === 'edit-product' ? await editProduct(formData._id, formDataToSend): await addProduct(formDataToSend);
       if(response === 'Product updated successfully' || response === 'Product added successfully') {
          toast.success(response);
@@ -90,7 +89,6 @@ const DistributorProductPage = ({type}: {type: string}) => {
       toast.error('Error adding product');
     }
   };
-  console.log(formData);
   return (
     <div className="add-product-container">
       <header>

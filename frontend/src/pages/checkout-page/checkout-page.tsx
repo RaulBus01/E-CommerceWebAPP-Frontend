@@ -118,8 +118,8 @@ const CheckoutPage = () => {
                     <div className="order-price-info">
                         <h2>Order summary</h2>
                         <div className="order-price-fields">
-                            <h3>Products: {productsPrice().toFixed(2)} lei</h3>
-                            {productsPrice().toFixed(2) > 100 ? <h3>Free shipping</h3> : <h3>Shipping: {shipping} lei</h3>}
+                            <h3>Products: {productsPrice().toFixed(2)} $</h3>
+                            {productsPrice().toFixed(2) > 100 ? <h3>Free shipping</h3> : <h3>Shipping: {shipping} $</h3>}
                             <h2 className="order-total-text">Order total: {orderTotal.toFixed(2)}</h2>
                         </div>
                     </div>

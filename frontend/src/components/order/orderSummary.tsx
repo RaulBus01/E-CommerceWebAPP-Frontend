@@ -19,7 +19,7 @@ const OrderSummary = ({order}:{order:orderData}) => {
         <span>Order : #{order?.orderNumber}</span>  
 
         <span className="orderDate">Placed on: {formatDateTime(order.createdAt)}</span>
-        <span className="orderTotal">Total: {Math.round(order.totalPrice)} Lei</span>
+        <span className="orderTotal">Total: {Math.round(order.totalPrice)} $</span>
      
         
       </div>

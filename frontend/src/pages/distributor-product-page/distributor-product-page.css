@@ -4,17 +4,16 @@
     align-items: center;
     background-color: var(--secondary-color);
 
-    height: 100vh;
-
-    
+    height: auto;
+    padding-bottom: 20px;
 }
 .add-product header{
-  display: flex;
+    display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
-.add-product-container   main{
+.add-product-container main{
   
   display: flex;
   flex-direction: row;

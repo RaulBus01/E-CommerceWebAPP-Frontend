@@ -131,11 +131,11 @@ const CartPage = () => {
                     <div>{product?.product?.discountPrice < product.product.price ? (
                       <>
                         <span className="discount-price">
-                          {product?.product?.discountPrice} Lei
+                          {product?.product?.discountPrice} $
                         </span>
                       </>
                     ) : (
-                      <span>{product?.product?.price} Lei</span>
+                      <span>{product?.product?.price} $</span>
                     )}</div>
                     <div>
                       Total:{" "}
@@ -195,16 +195,16 @@ const CartPage = () => {
         {cart.products && cart.products.length > 0 && (
           <div className="cart-total">
             <div className="summary">Order Summary</div>
-            <div className="product-price-details">Product Price: {totalPrice} Lei</div>
+            <div className="product-price-details">Product Price: {totalPrice} $</div>
             <div className="shipping-details">
               {totalPrice > 100 ? (
                 <div>Shipping: Free</div>
               ) : (
-                <div>Shipping: {shipping} Lei</div>
+                <div>Shipping: {shipping} $</div>
               )}
             </div>
             <div className="total">
-              Cart Total: {totalPrice > 100 ? totalPrice : totalPrice + shipping} Lei
+              Cart Total: {totalPrice > 100 ? totalPrice : totalPrice + shipping} $
             </div>
             {user?.customerInfo?.isVerified ? (
               <div
