@@ -115,17 +115,22 @@ const ProductPage = () => {
               {product?.name && <h1>{product?.name}</h1>}
               {product?.calculatedDiscountPercentage > 0 ? (
                 <div className="discount-price-display">
-                  <h3>{product?.price} lei</h3>
-                  <h1>{product?.discountPrice}lei(-{product.calculatedDiscountPercentage}%)</h1>
+                  <h3>{product?.price} $</h3>
+                  <h1>{product?.discountPrice}$(-{product.calculatedDiscountPercentage}%)</h1>
                 </div>
                 ) : (
-                  <h1>{product?.price} lei</h1>
+                  <h1>{product?.price} $</h1>
                 )
               }
               <div className="rating-product-display" onClick={scrollToReviews}>
                 <h3>{product?.ratingProduct}</h3>
                 <StarIcon style={{ color: "yellow" }} />
                 <p>({product?.numberOfReviews || "0"})</p>
+                {product?.stock > 0 ? (
+                  <p style={{color: "#12FE01"}}>In stock</p>
+                ) : (
+                  <p style={{color: "var(--danger-color)"}}>Out of stock</p>
+                )}
               </div>
               <div className="product-button-container">
                 <button>

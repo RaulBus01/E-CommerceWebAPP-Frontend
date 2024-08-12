@@ -21,7 +21,7 @@ const Navbar = () => {
         <ul>
           <li>
             <NavLink to="/" className="nav-link">
-              <img className="logo" src="src/assets/Logo.png" alt="logo" />
+              <img className="logo" src="src/assets/CANDEELogo.png" alt="logo" />
             </NavLink>
           </li>
           <li className="search-bar-container">

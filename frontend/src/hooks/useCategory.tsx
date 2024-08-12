@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useAuth } from './useAuth';
 import { _get } from '../utils/api';
 import { Category } from '../types/CategoryType';
 

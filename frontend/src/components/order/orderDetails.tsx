@@ -162,16 +162,16 @@ const OrderDetails: React.FC = () => {
               <img src={p?.product?.images[0]} alt="Product" />
               <div className="product-description">
                 <p className="product-name">{p?.product?.name}</p>
-                <p className="product-price">{p?.product?.price}<sup> Lei</sup></p>
+                <p className="product-price">{p?.product?.price}<sup> $</sup></p>
                 <p className="product-quantity">{p?.quantity} buc</p>
               </div>
             </div>
           ))}
           <div className="order-summary">
             <h3>Order Summary</h3>
-            <p>Subtotal: <strong>{Math.round(order?.totalPrice as number)}<sup> Lei</sup></strong></p>
-            <p>Shipping: <strong>12.99<sup> Lei</sup></strong></p>
-            <p>Total: <strong>{Math.round(order?.totalPrice as number) + 12.99}<sup> Lei</sup></strong></p>
+            <p>Subtotal: <strong>{Math.round(order?.totalPrice as number)}<sup> $</sup></strong></p>
+            <p>Shipping: <strong>12.99<sup> $</sup></strong></p>
+            <p>Total: <strong>{Math.round(order?.totalPrice as number) + 12.99}<sup> $</sup></strong></p>
           </div>
         </div>
       </div>

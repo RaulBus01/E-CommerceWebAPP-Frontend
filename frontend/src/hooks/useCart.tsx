@@ -5,19 +5,24 @@ import { _post, _get, _put, _delete } from '../utils/api';
 interface CartProduct {
   product: productData;
   quantity: number;
+  loading?: boolean;
 }
 
 const useCart = (token:string) => {
  
   const [cart, setCart] = useState<{ products: CartProduct[] }>({ products: [] });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchCart = async () => {
       try {
+        setLoading(true);
         const response = await _get(`/cart/find`, token);
         setCart(response.cart);
       } catch (err) {
         console.error('Failed to fetch cart:', err);
+      }finally{
+        setLoading(false);
       }
     };
 
@@ -73,7 +78,7 @@ const useCart = (token:string) => {
     }
   }
 
-  return { cart, setCart, editProductQuantity, removeProduct, addProductToCart, emptyCart };
+  return { cart, setCart, editProductQuantity, removeProduct, addProductToCart, emptyCart, loading };
 };
 
 export default useCart;

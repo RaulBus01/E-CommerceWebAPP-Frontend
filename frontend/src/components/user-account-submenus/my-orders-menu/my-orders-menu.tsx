@@ -1,9 +1,9 @@
 import React from "react";
 import './my-orders-menu.css';
 
-import  {formatDateTime}  from "../../../utils/formatDataTime";
 import useOrder from "../../../hooks/useOrder";
 import OrderSummary from "../../order/orderSummary";
+import Spinner from "../../spinner/spinner";
 
 
 const MyOrdersMenu = ({token}) => {
@@ -16,7 +16,7 @@ const MyOrdersMenu = ({token}) => {
         return(
             <div className="my-orders-menu">
                 <h2>My Orders</h2>
-                <p>Loading...</p>
+                <Spinner />
             </div>
         );
     }

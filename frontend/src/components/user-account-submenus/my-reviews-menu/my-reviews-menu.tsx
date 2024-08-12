@@ -7,6 +7,7 @@ import StarIcon from '@mui/icons-material/Star';
 import useReview from "../../../hooks/useReview";
 import { userData } from "../../../types/UserType";
 import { useNavigate } from "react-router";
+import Spinner from "../../spinner/spinner";
 
 const MyReviewsMenu = ({token,user}:{token:string,user?:userData | null}) => {
     const { reviews, loading: reviewsLoading, deleteReview, setReviews, fetchReviewsByUser } =  useReview(token as string)
@@ -31,6 +32,19 @@ const MyReviewsMenu = ({token,user}:{token:string,user?:userData | null}) => {
 
     const handleImageClick = (productId: string) => {
         navigate(`/product/${productId}`);
+    }
+
+    if(reviewsLoading){
+        return (
+            <div className="my-reviews-menu">
+                <div className="my-reviews-header">
+                    <h2>My Reviews</h2>
+                </div>
+                <div className="reviews-container">
+                    <Spinner />
+                </div>
+            </div>
+        );
     }
 
     return (

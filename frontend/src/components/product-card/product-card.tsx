@@ -90,11 +90,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading, isFavourite
         {<p onClick={handleProductPage} className="product-name">{product?.name}</p>}
         {product?.calculatedDiscountPercentage > 0 ? (
           <div className="discount-price-display">
-              <h3>{product?.price} lei</h3>
-              <h2>{product?.discountPrice}lei(-{product.calculatedDiscountPercentage}%)</h2>
+              <h3>{product?.price} $</h3>
+              <h2>{product?.discountPrice}$(-{product.calculatedDiscountPercentage}%)</h2>
           </div>
         ) : (
-          <h2>{product?.price} lei</h2>
+          <h2>{product?.price} $</h2>
         )}
       </div>
       <div className="rating-container">
@@ -102,6 +102,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, loading, isFavourite
         <p>
           {product?.ratingProduct || "N/A"} ({product?.numberOfReviews || 0})
         </p>
+        {product?.stock > 0 ? (
+          <p style={{ color: "var(--success-color)" }}>In stock</p>
+        ) : (
+          <p style={{ color: "var(--danger-color)" }}>Out of stock</p>
+        )}
       </div>
       <div className="button-container">
         {user?.role === "customer" ? 
