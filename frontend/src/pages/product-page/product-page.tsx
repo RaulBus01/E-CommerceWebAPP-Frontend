@@ -22,7 +22,7 @@ const ProductPage = () => {
   const [selectedImage, setSelectedImage] = useState<string>(product?.images[0] || "");
 
   const reviewRef = useRef<HTMLDivElement>(null);
-  
+  console.log(product);
   const loadSelectedMenu = () => {
     switch (selectedMenu){
       case "Reviews":
@@ -75,6 +75,14 @@ const ProductPage = () => {
     setSelectedImage(image);
   }
 
+  const calculateDiscountPercentage = (price: number, discountPrice: number): number => {
+    return Math.round(((price - discountPrice) / price) * 100);
+  };
+
+  if (product?.discountPrice && product?.price) {
+    product.calculatedDiscountPercentage = calculateDiscountPercentage(product.price, product.discountPrice);
+  }
+
   if (loading || !product) {
     return(
       <div>
@@ -102,7 +110,15 @@ const ProductPage = () => {
               </div>
             </div>
             <div className="buy-data">
-              <h1>{product?.price} lei</h1>
+              {product?.calculatedDiscountPercentage > 0 ? (
+                <div className="discount-price-display">
+                  <h3>{product?.price} lei</h3>
+                  <h1>{product?.discountPrice}lei(-{product.calculatedDiscountPercentage}%)</h1>
+                </div>
+                ) : (
+                  <h1>{product?.price} lei</h1>
+                )
+              }
               <div className="rating-product-display" onClick={scrollToReviews}>
                 <h3>{product?.ratingProduct}</h3>
                 <StarIcon style={{ color: "yellow" }} />

@@ -92,6 +92,13 @@
     color: var(--third-color);
 }
 
+.discount-price-display{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
 .rating-product-display{
     display: flex;
     flex-direction: row;

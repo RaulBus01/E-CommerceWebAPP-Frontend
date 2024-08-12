@@ -19,7 +19,6 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
     useEffect(() => {
         if (userId) {
             fetchQuestionsByUser(userId);
-            fetchQuestionsByUser(userId);
         }
     }, [userId]);
    
@@ -63,11 +62,11 @@ const MyQuestionsMenu = ({token,userId,user} : {token:string,userId?:string,user
             {questions && questions.length > 0 ? (
                 <div className="questions-container">
                     {questions.map((question) => (
-                        <div key={question.id} className="question-item">
+                        <div key={question?.id} className="question-item">
                           <div className="question-data">
                              <div className="question-product">
-                                        <img src={question.product.images[0]} onClick={() => handleImageClick(question.product._id)}></img>
-                                        <div className="product-name">{question.product.name}</div>
+                                        <img src={question?.product?.images[0]} onClick={() => handleImageClick(question?.product?._id)}></img>
+                                        <div className="product-name">{question?.product?.name}</div>
                             </div>
                             <div className="question-content">
                                 <div className="question-info"> {question?.user?.name} </div>
