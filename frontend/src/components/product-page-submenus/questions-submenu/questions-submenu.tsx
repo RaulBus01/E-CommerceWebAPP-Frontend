@@ -25,7 +25,7 @@ const QuestionsSubmenu = ({productId, token, user}) => {
     const handleAddQuestion = async (question: {content: string}) => {
         const newQuestion: postQuestionData = {
           ...question,
-          productId: productId,
+          product: productId,
         };
         await createQuestion(newQuestion);
     };

@@ -24,6 +24,7 @@
   padding: 10px;
   text-align: center;
   font-weight: bold;
+  font-size: 1.5rem;
 }
 
 .dropdown-toggle::after {
@@ -112,11 +113,12 @@
     flex-direction: row;
     align-items: center;
     padding: 0;
+    gap:10px;
   
   }
 
   .dropdown-toggle {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     padding: 10px;
   }
 
